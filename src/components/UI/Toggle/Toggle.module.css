@@ -1,0 +1,56 @@
+/* Checkbox.module.css */
+
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+}
+
+.checkboxLabel {
+  color: #333;
+  margin-right: 8px;
+}
+
+.checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #3498db;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.3s;
+}
+
+.checkbox:checked {
+  border-color: #2980b9; /* Darker blue for checked state */
+  background-color: #2980b9;
+}
+
+.checkbox:checked::before {
+  content: '\2713'; /* Unicode checkmark character */
+  font-size: 14px;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.checkboxIcon {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background-color: #fff;
+  border: 2px solid #fff;
+  margin: 2px;
+  transform: scale(0);
+  transition: transform 0.3s;
+}
+
+.checkbox:checked .checkboxIcon {
+  transform: scale(1);
+}
