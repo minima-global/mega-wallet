@@ -8,8 +8,8 @@
  * @returns a string representation of a cookie
  */
 
-export function getCookie(_name: string): string | undefined {
-  const name = _name + "=";
+export function getCookie(cname: string): string | undefined {
+  const name = cname + "=";
   const ca = document.cookie.split(";");
   for (let i = 0; i < ca.length; i++) {
     let c = ca[i];
@@ -19,9 +19,8 @@ export function getCookie(_name: string): string | undefined {
     if (c.indexOf(name) === 0) {
       return c.substring(name.length, c.length);
     }
-
-    return "";
   }
+  return "";
 }
 
 export default getCookie;

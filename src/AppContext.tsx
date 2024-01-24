@@ -10,8 +10,10 @@ interface IProps {
 const AppProvider = ({ children }: IProps) => {
   const loaded = useRef(false);
 
-  const [_promptLogin, setPromptLogin] = useState(false);
+  /** This is the main address we use after giving the secret key */
+  const [_address, setAddress] = useState<null | string>(null);
 
+  const [_promptLogin, setPromptLogin] = useState(false);
   const [loginForm, setLoginForm] = useState<{
     _seedPhrase: string;
     _rememberMe: boolean;
@@ -27,16 +29,17 @@ const AppProvider = ({ children }: IProps) => {
       loaded.current = true;
       (window as any).MDS.init((msg) => {
         if (msg.event === "inited") {
+          console.log(document.cookie);
           const rem = utils.getCookie("rememberme");
-          console.log("What is remember me", rem);
 
           if (rem === "true") {
             setLoginForm((prevState) => ({ ...prevState, _rememberMe: true })); // this'll keep the state of the checkbox
 
             const secretSauce = utils.getCookie("secretsauce");
+            console.log(secretSauce);
             setLoginForm((prevState) => ({
               ...prevState,
-              _secret: secretSauce,
+              ["_seedPhrase"]: secretSauce,
             })); // this'll keep the state of the secret
           }
         }
@@ -68,6 +71,9 @@ const AppProvider = ({ children }: IProps) => {
         setLoginForm,
 
         generateSecret,
+
+        _address,
+        setAddress,
       }}
     >
       {children}

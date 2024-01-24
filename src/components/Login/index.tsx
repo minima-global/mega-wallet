@@ -6,8 +6,14 @@ import * as utils from "../../utils";
 import Toggle from "../UI/Toggle";
 
 const Login = () => {
-  const { _promptLogin, loginForm, setLoginForm, generateSecret } =
-    useContext(appContext);
+  const {
+    _promptLogin,
+    loginForm,
+    setLoginForm,
+    generateSecret,
+    setAddress,
+    promptLogin,
+  } = useContext(appContext);
 
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -50,6 +56,33 @@ const Login = () => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     setLoading(true);
+
+    const isRememberMeChecked = loginForm._rememberMe;
+    const secretSauce = loginForm._seedPhrase.trim();
+    console.log("secretSauce", secretSauce);
+    console.log(isRememberMeChecked);
+    if (isRememberMeChecked) {
+      utils.setCookie("rememberme", "true", 7);
+      utils.setCookie("secretsauce", secretSauce, 7);
+    }
+
+    if (!isRememberMeChecked) {
+      utils.setCookie("rememberme", "", 365);
+      utils.setCookie("secretsauce", "", 365);
+    }
+
+    // Generate a key
+    (window as any).MDS.cmd(
+      `keys action:genkey phrase:"${loginForm._seedPhrase}"`,
+      function (resp) {
+        // Get the address
+        const address = resp.response.miniaddress;
+
+        // Jump to the main balance page
+        setAddress(address);
+        promptLogin();
+      }
+    );
   };
 
   if (_promptLogin) {
