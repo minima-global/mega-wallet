@@ -13,7 +13,7 @@ const AppProvider = ({ children }: IProps) => {
   /** This is the main address we use after giving the secret key */
   const [_address, setAddress] = useState<null | string>(null);
 
-  const [_promptLogin, setPromptLogin] = useState(false);
+  const [_promptLogin, setPromptLogin] = useState<null | boolean>(null);
   const [loginForm, setLoginForm] = useState<{
     _seedPhrase: string;
     _rememberMe: boolean;
@@ -39,8 +39,21 @@ const AppProvider = ({ children }: IProps) => {
             console.log(secretSauce);
             setLoginForm((prevState) => ({
               ...prevState,
-              ["_seedPhrase"]: secretSauce,
+              _seedPhrase: secretSauce,
             })); // this'll keep the state of the secret
+
+            // Generate a key
+            (window as any).MDS.cmd(
+              `keys action:genkey phrase:"${secretSauce}"`,
+              function (resp) {
+                // Get the address
+                const address = resp.response.miniaddress;
+                console.log(address);
+                // Jump to the main balance page
+                setAddress(address);
+                promptLogin();
+              }
+            );
           }
         }
       });
