@@ -1,0 +1,35 @@
+.balance * {
+  text-align: center;
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+  margin: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.balance {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0 16px;
+}
+.balance h6 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.balance p:first-of-type {
+  font-size: 3rem;
+  font-weight: 500;
+}
+.balance p:last-of-type {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+@media only screen and (min-width: 590px) {
+
+  .balance {
+    margin: 0 32px;
+  }
+ 
+}

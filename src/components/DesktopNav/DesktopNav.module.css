@@ -1,0 +1,42 @@
+.desktop__navigation {
+  display: none;
+  margin: 0 32px;
+}
+@media only screen and (min-width: 590px) {
+  .desktop__navigation {
+    display: block;
+  }
+  .desktop__navigation nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 69px;
+    gap: 16px;
+  }
+  .desktop__navigation nav a {
+    text-decoration: none;
+    background-color: #282B2E;
+    padding: 12px;
+    border-radius: 4px;
+    color: #E9E9EB;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  .desktop__navigation nav a * {
+    line-height: 1.5;
+    letter-spacing: 0.05em;
+    padding: 0;
+    margin: 0;
+  }
+  .desktop__navigation nav a p {
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+  .desktop__navigation nav a img {
+    width: 14px;
+    height: 14px;
+  }
+}

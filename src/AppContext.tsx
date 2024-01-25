@@ -12,8 +12,20 @@ const AppProvider = ({ children }: IProps) => {
 
   /** This is the main address we use after giving the secret key */
   const [_address, setAddress] = useState<null | string>(null);
+  const [_balance, setBalance] = useState<null | object[]>(null);
+
+  const [_currentNavigation, setCurrentNavigation] = useState("balance");
 
   const [_promptLogin, setPromptLogin] = useState<null | boolean>(null);
+  const [_promptDialogWithMessage, setPromptDialogWithMessage] = useState<
+    false | string
+  >(false);
+  const [_promptDialogWithError, setPromptDialogWithError] = useState<
+    false | string
+  >(false);
+  const [_promptTokenSelectionDialog, setPromptTokenSelection] = useState<
+    null | boolean
+  >(null);
   const [loginForm, setLoginForm] = useState<{
     _seedPhrase: string;
     _rememberMe: boolean;
@@ -39,7 +51,7 @@ const AppProvider = ({ children }: IProps) => {
             console.log(secretSauce);
             setLoginForm((prevState) => ({
               ...prevState,
-              _seedPhrase: secretSauce,
+              ["_seedPhrase"]: secretSauce,
             })); // this'll keep the state of the secret
 
             // Generate a key
@@ -49,6 +61,32 @@ const AppProvider = ({ children }: IProps) => {
                 // Get the address
                 const address = resp.response.miniaddress;
                 console.log(address);
+
+                // get their balance
+                getBalance(address);
+
+                // Jump to the main balance page
+                setAddress(address);
+                promptLogin();
+              }
+            );
+          }
+        }
+
+        if (msg.event === "NEWBALANCE") {
+          const hasSecretCode = loginForm._seedPhrase !== null;
+          if (hasSecretCode) {
+            // Generate a key
+            (window as any).MDS.cmd(
+              `keys action:genkey phrase:"${loginForm._seedPhrase}"`,
+              function (resp) {
+                // Get the address
+                const address = resp.response.miniaddress;
+                console.log(address);
+
+                // get their balance
+                getBalance(address);
+
                 // Jump to the main balance page
                 setAddress(address);
                 promptLogin();
@@ -62,6 +100,29 @@ const AppProvider = ({ children }: IProps) => {
 
   const promptLogin = () => {
     setPromptLogin((prevState) => !prevState);
+  };
+
+  const promptTokenSelectionDialog = () => {
+    setPromptTokenSelection((prevState) => !prevState);
+  };
+
+  const promptDialogWithMessage = (message: string | false) => {
+    setPromptDialogWithMessage(message ? message : false);
+  };
+
+  const promptDialogWithError = (message: string | false) => {
+    setPromptDialogWithError(message ? message : false);
+  };
+
+  const handleNavigation = (page: string) => {
+    setCurrentNavigation(page);
+  };
+
+  const getBalance = (address: string) => {
+    (window as any).MDS.cmd(`balance address:${address}`, function (resp) {
+      console.log(resp);
+      setBalance(resp.response);
+    });
   };
 
   const generateSecret = () => {
@@ -80,6 +141,18 @@ const AppProvider = ({ children }: IProps) => {
         _promptLogin,
         promptLogin,
 
+        _promptTokenSelectionDialog,
+        promptTokenSelectionDialog,
+
+        _promptDialogWithMessage,
+        promptDialogWithMessage,
+
+        _promptDialogWithError,
+        promptDialogWithError,
+
+        _currentNavigation,
+        handleNavigation,
+
         loginForm,
         setLoginForm,
 
@@ -87,6 +160,8 @@ const AppProvider = ({ children }: IProps) => {
 
         _address,
         setAddress,
+
+        _balance,
       }}
     >
       {children}
