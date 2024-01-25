@@ -16,6 +16,12 @@ const TokenSelect = ({ _balance, setActive, active }: IProps) => {
   const { _promptTokenSelectionDialog, promptTokenSelectionDialog } =
     useContext(appContext);
 
+  const [filter, setFilterText] = useState("");
+
+  const handleFilterTextChange = (evt) => {
+    setFilterText(evt.target.value);
+  };
+
   const springProps = useSpring({
     opacity: _promptTokenSelectionDialog ? 1 : 0,
     transform: _promptTokenSelectionDialog
@@ -130,8 +136,14 @@ const TokenSelect = ({ _balance, setActive, active }: IProps) => {
                           <path d="M6 6l12 12" />
                         </svg>
                       </div>
-                      <input placeholder="Search tokens" type="search" />
+                      <input
+                        value={filter}
+                        onChange={handleFilterTextChange}
+                        placeholder="Search tokens"
+                        type="search"
+                      />
                       <Tokens
+                        filterText={filter}
                         selectionMode
                         selectToken={handleTokenSelection}
                       />
