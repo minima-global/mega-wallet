@@ -3,6 +3,24 @@ import styles from "./Balance.module.css";
 import { appContext } from "../../AppContext";
 import TokenSelect from "../TokenSelect";
 import * as utils from "../../utils";
+import * as Yup from "yup";
+
+const yupValidator = Yup.object().shape({
+  token: Yup.object().required("Token field required"),
+  amount: Yup.string()
+    .required("Amount field required")
+    .matches(
+      /^[^a-zA-Z\\;'",]+$/,
+      'Invalid number.  Make sure to use only digits, "." for decimals and nothing for thousands. (e.g 1000.234)'
+    )
+    .nullable(),
+  address: Yup.string()
+    .matches(/0|M[xX][0-9a-zA-Z]+/, "Invalid address")
+    .min(59, "Invalid address, too short")
+    .max(66, "Invalid address, too long")
+    .required("Address field required")
+    .nullable(),
+});
 
 const Send = () => {
   const {
@@ -17,13 +35,19 @@ const Send = () => {
 
   const myForm = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<false | string>(false);
 
   const [sendForm, setSendForm] = useState<{
     token: null;
-    amount: number;
-    address: string;
+    amount: string | null;
+    address: string | null;
     code: string;
-  }>({ token: null, amount: 0, address: "", code: loginForm._seedPhrase });
+  }>({
+    token: null,
+    amount: null,
+    address: null,
+    code: loginForm._seedPhrase,
+  });
 
   useEffect(() => {
     if (sendForm.token === null && _balance !== null) {
@@ -35,9 +59,27 @@ const Send = () => {
     }
   }, [_balance]);
 
+  useEffect(() => {
+    yupValidator
+      .validate(sendForm)
+      .then(() => {
+        setError(false);
+      })
+      .catch((err) => {
+        setError(err.message as string);
+      });
+  }, [sendForm]);
+
   if (_currentNavigation !== "send") {
     return null;
   }
+
+  const handleTokenSelect = (token: any) => {
+    setSendForm((prevData) => ({
+      ...prevData,
+      ["token"]: token,
+    }));
+  };
 
   const handleToggleVisibility = () => {
     toggleVisiblity((prevState) => !prevState);
@@ -67,7 +109,7 @@ const Send = () => {
         const { script, privatekey } = resp.response;
         const keyuses = utils.randomInteger(0, 200000);
 
-        const rawTransaction = `swerendfrom fromaddress:${_address} address:${address} amount:${amount} tokenid:${token.tokenid} script:"${script}" privatekey:${privatekey} keyuses:${keyuses}`;
+        const rawTransaction = `sendfrom fromaddress:${_address} address:${address} amount:${amount} tokenid:${token.tokenid} script:"${script}" privatekey:${privatekey} keyuses:${keyuses}`;
 
         (window as any).MDS.cmd(rawTransaction, function (respo) {
           console.log(respo);
@@ -99,23 +141,32 @@ const Send = () => {
       <section className={styles["tokens"]}>
         <h6>Transfer tokens</h6>
         <form ref={myForm} onSubmit={handleSubmit} className="grid">
-          <TokenSelect _balance={_balance} />
+          <TokenSelect
+            setActive={handleTokenSelect}
+            active={sendForm.token}
+            _balance={_balance}
+          />
           <input
+            required
             onChange={handleInputChange}
-            value={sendForm.amount}
-            type="number"
+            value={sendForm.amount ? sendForm.amount : ""}
+            type="text"
             name="amount"
             placeholder="Your amount"
             className="mb-2"
           />
           <input
+            required
             autoComplete="off"
             onChange={handleInputChange}
-            value={sendForm.address}
+            value={sendForm.address ? sendForm.address : ""}
             type="text"
             name="address"
             placeholder="Recipient address"
             className="mb-2"
+            pattern="/0|M[xX][0-9a-zA-Z]+/"
+            min={59}
+            max={66}
           />
           <label className="grid gap-1 relative">
             <span className="mx-4 text-sm text-teal-500">Secret code</span>
@@ -130,7 +181,7 @@ const Send = () => {
               className="mb-4"
             />
             <button
-              className="absolute text-green-500 right-0 top-8 active:outline-none !border-none focus:border-none hover:border-none focus:outline-none"
+              className="absolute text-teal-500 right-0 top-8 active:outline-none !border-none focus:border-none hover:border-none focus:outline-none"
               onClick={handleToggleVisibility}
             >
               {!visibility && (
@@ -172,10 +223,15 @@ const Send = () => {
               )}
             </button>
           </label>
+          {error && (
+            <span className="text-red-900 font-bold bg-red-500 p-2 rounded mx-auto">
+              {error}
+            </span>
+          )}
           <button
-            disabled={loading}
+            disabled={loading || Boolean(error)}
             type="submit"
-            className="p-4 bg-teal-500 text-lg font-bold mt-4 disabled:cursor-not-allowed"
+            className="p-4 bg-teal-500 text-lg font-bold mt-4 disabled:text-gray-900 disabled:cursor-not-allowed disabled:bg-teal-800"
           >
             {loading && (
               <svg

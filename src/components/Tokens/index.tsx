@@ -18,7 +18,7 @@ const Tokens = ({ selectToken, selectionMode = false }: IProps) => {
         token.tokenid === "0x00" ? (
           <li
             onClick={selectToken ? () => selectToken(token) : () => null}
-            className={`grid grid-cols-[auto_1fr] items-center gap-2 bg-black p-1 rounded ${
+            className={`grid grid-cols-[auto_1fr] items-center gap-2 bg-black p-1 mb-2 rounded ${
               selectionMode ? "hover:bg-teal-500 border-teal-500 border" : ""
             }`}
             key={token.tokenid}
@@ -29,7 +29,7 @@ const Tokens = ({ selectToken, selectionMode = false }: IProps) => {
                 <h6 className="font-bold">Minima</h6>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="fill-blue-500"
+                  className="fill-blue-500 ml-1"
                   width="18"
                   height="24"
                   viewBox="0 0 24 24"
@@ -54,13 +54,39 @@ const Tokens = ({ selectToken, selectionMode = false }: IProps) => {
           </li>
         ) : (
           <li
-            className="grid grid-cols-[auto_1fr] items-center gap-2 bg-black p-4 rounded"
+            onClick={selectToken ? () => selectToken(token) : () => null}
+            className={`grid grid-cols-[auto_1fr] items-center gap-2 bg-black p-1 rounded ${
+              selectionMode ? "hover:bg-teal-500 border-teal-500 border" : ""
+            }`}
             key={token.tokenid}
           >
-            <img alt="token-icon" src="./assets/token.svg" />
+            <img
+              alt="token-icon"
+              src={
+                "url" in token.token && token.token.url.length
+                  ? token.token.url
+                  : `https://robohash.org/${token.tokenid}`
+              }
+              className="bg-[#080A0B] w-[56px]"
+            />
             <div>
-              <h6>{token.name}</h6>
-              <p>{token.confirmed}</p>
+              <h6>
+                {"name" in token.token && typeof token.token.name === "string"
+                  ? token.token.name
+                  : "N/A"}
+              </h6>
+              {!selectionMode && (
+                <p className="text-white text-sm font-mono">
+                  {token.confirmed}
+                </p>
+              )}
+              {selectionMode && (
+                <p className="text-white text-sm">
+                  {token.token && "ticker" in token.token
+                    ? token.token.ticker
+                    : ""}
+                </p>
+              )}
             </div>
           </li>
         )

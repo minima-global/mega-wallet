@@ -9,11 +9,12 @@ import Tokens from "../Tokens";
 
 interface IProps {
   _balance: object[] | null;
+  setActive: (token: any) => void;
+  active: any;
 }
-const TokenSelect = ({ _balance }: IProps) => {
+const TokenSelect = ({ _balance, setActive, active }: IProps) => {
   const { _promptTokenSelectionDialog, promptTokenSelectionDialog } =
     useContext(appContext);
-  const [active, setActive] = useState<null | any>(null);
 
   const springProps = useSpring({
     opacity: _promptTokenSelectionDialog ? 1 : 0,
@@ -54,7 +55,47 @@ const TokenSelect = ({ _balance }: IProps) => {
               className="w-[48px] h-[48px] rounded-full"
             />
             <div>
-              <h3 className="font-bold">Minima</h3>
+              <div className="grid grid-cols-[auto_1fr]">
+                <h6 className="font-bold">Minima</h6>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="fill-blue-500 ml-1"
+                  width="18"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2"
+                  stroke="currentColor"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M5 7.2a2.2 2.2 0 0 1 2.2 -2.2h1a2.2 2.2 0 0 0 1.55 -.64l.7 -.7a2.2 2.2 0 0 1 3.12 0l.7 .7c.412 .41 .97 .64 1.55 .64h1a2.2 2.2 0 0 1 2.2 2.2v1c0 .58 .23 1.138 .64 1.55l.7 .7a2.2 2.2 0 0 1 0 3.12l-.7 .7a2.2 2.2 0 0 0 -.64 1.55v1a2.2 2.2 0 0 1 -2.2 2.2h-1a2.2 2.2 0 0 0 -1.55 .64l-.7 .7a2.2 2.2 0 0 1 -3.12 0l-.7 -.7a2.2 2.2 0 0 0 -1.55 -.64h-1a2.2 2.2 0 0 1 -2.2 -2.2v-1a2.2 2.2 0 0 0 -.64 -1.55l-.7 -.7a2.2 2.2 0 0 1 0 -3.12l.7 -.7a2.2 2.2 0 0 0 .64 -1.55v-1" />
+                  <path d="M9 12l2 2l4 -4" />
+                </svg>
+              </div>
+              <p className="font-mono">{active.confirmed}</p>
+            </div>
+          </div>
+        )}
+
+        {active && active.tokenid !== "0x00" && (
+          <div className="grid grid-cols-[auto_1fr] gap-2">
+            <img
+              alt="minima-token"
+              src={
+                "url" in active.token && active.token.url.length
+                  ? active.token.url
+                  : `https://robohash.org/${active.tokenid}`
+              }
+              className="w-[48px] h-[48px] rounded-full"
+            />
+            <div>
+              <h3 className="font-bold">
+                {"name" in active.token && typeof active.token.name === "string"
+                  ? active.token.name
+                  : "N/A"}
+              </h3>
               <p className="font-mono">{active.confirmed}</p>
             </div>
           </div>
