@@ -15,8 +15,7 @@ const AppProvider = ({ children }: IProps) => {
   const [_balance, setBalance] = useState<null | object[]>(null);
 
   const [_currentNavigation, setCurrentNavigation] = useState("balance");
-
-  const [_promptLogin, setPromptLogin] = useState<null | boolean>(null);
+  const [_promptLogin, setPromptLogin] = useState<boolean>(true);
   const [_promptDialogWithMessage, setPromptDialogWithMessage] = useState<
     false | string
   >(false);
@@ -29,69 +28,56 @@ const AppProvider = ({ children }: IProps) => {
   const [loginForm, setLoginForm] = useState<{
     _seedPhrase: string;
     _rememberMe: boolean;
-    _secret: undefined | string;
+    _secret: string;
   }>({
     _seedPhrase: "",
     _rememberMe: false,
     _secret: "",
   });
 
+  const [_currencyFormat, setCurrencyFormat] = useState<{
+    decimal: string;
+    thousands: string;
+  }>({
+    decimal: ".",
+    thousands: ",",
+  });
+
   useEffect(() => {
     if (!loaded.current) {
       loaded.current = true;
+
       (window as any).MDS.init((msg) => {
         if (msg.event === "inited") {
-          console.log(document.cookie);
-          const rem = utils.getCookie("rememberme");
+          try {
+            const rem = utils.getCookie("rememberme");
 
-          if (rem === "true") {
-            setLoginForm((prevState) => ({ ...prevState, _rememberMe: true })); // this'll keep the state of the checkbox
+            if (rem === "true") {
+              setLoginForm((prevState) => ({
+                ...prevState,
+                _rememberMe: true,
+              })); // this'll keep the state of the checkbox
 
-            const secretSauce = utils.getCookie("secretsauce");
-            console.log(secretSauce);
-            setLoginForm((prevState) => ({
-              ...prevState,
-              ["_seedPhrase"]: secretSauce,
-            })); // this'll keep the state of the secret
+              const secretSauce: any = utils.getCookie("secretsauce");
 
-            // Generate a key
-            (window as any).MDS.cmd(
-              `keys action:genkey phrase:"${secretSauce}"`,
-              function (resp) {
-                // Get the address
-                const address = resp.response.miniaddress;
-                console.log(address);
+              setLoginForm((prevState) => ({
+                ...prevState,
+                _seedPhrase: secretSauce,
+              })); // this'll keep the state of the checkbox
 
-                // get their balance
-                getBalance(address);
-
-                // Jump to the main balance page
-                setAddress(address);
-                promptLogin();
-              }
-            );
+              createAccount(secretSauce);
+            }
+          } catch (error) {
+            setPromptLogin(true);
           }
         }
 
         if (msg.event === "NEWBALANCE") {
-          const hasSecretCode = loginForm._seedPhrase !== null;
-          if (hasSecretCode) {
-            // Generate a key
-            (window as any).MDS.cmd(
-              `keys action:genkey phrase:"${loginForm._seedPhrase}"`,
-              function (resp) {
-                // Get the address
-                const address = resp.response.miniaddress;
-                console.log(address);
-
-                // get their balance
-                getBalance(address);
-
-                // Jump to the main balance page
-                setAddress(address);
-                promptLogin();
-              }
-            );
+          console.log(`new balance!`);
+          console.log(_address);
+          // get their balance
+          if (_address) {
+            getBalance(_address);
           }
         }
       });
@@ -118,6 +104,13 @@ const AppProvider = ({ children }: IProps) => {
     setCurrentNavigation(page);
   };
 
+  const promptLogout = () => {
+    utils.setCookie("rememberme", "false", 365);
+    utils.setCookie("secretsauce", "", 365);
+    setPromptLogin(true);
+    resetAccount();
+  };
+
   const getBalance = (address: string) => {
     (window as any).MDS.cmd(`balance address:${address}`, function (resp) {
       console.log(resp);
@@ -125,13 +118,35 @@ const AppProvider = ({ children }: IProps) => {
     });
   };
 
+  const resetAccount = () => {
+    setAddress(null);
+    setBalance(null);
+    setLoginForm({ _seedPhrase: "", _rememberMe: false, _secret: "" });
+  };
+
+  const createAccount = (secretCode: string) => {
+    // Generate a key
+    (window as any).MDS.cmd(
+      `keys action:genkey phrase:"${secretCode}"`,
+      function (resp) {
+        // Get the address
+        const address = resp.response.miniaddress;
+        setAddress(address);
+
+        (window as any).MDS.cmd(`balance address:${address}`, function (resp) {
+          setBalance(resp.response);
+
+          promptLogin();
+        });
+      }
+    );
+  };
+
   const generateSecret = () => {
-    (window as any).MDS.cmd("random", (resp) => {
-      console.log(resp);
-      setLoginForm((prevState) => ({
-        ...prevState,
-        _secret: resp.response.keycode,
-      })); // this'll keep the state of the secret
+    return new Promise((resolve) => {
+      (window as any).MDS.cmd("random", (resp) => {
+        resolve(resp.response.keycode);
+      });
     });
   };
 
@@ -140,6 +155,9 @@ const AppProvider = ({ children }: IProps) => {
       value={{
         _promptLogin,
         promptLogin,
+
+        _currencyFormat,
+        setCurrencyFormat,
 
         _promptTokenSelectionDialog,
         promptTokenSelectionDialog,
@@ -153,6 +171,8 @@ const AppProvider = ({ children }: IProps) => {
         _currentNavigation,
         handleNavigation,
 
+        promptLogout,
+
         loginForm,
         setLoginForm,
 
@@ -160,6 +180,8 @@ const AppProvider = ({ children }: IProps) => {
 
         _address,
         setAddress,
+
+        createAccount,
 
         _balance,
       }}

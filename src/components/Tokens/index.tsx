@@ -1,7 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { appContext } from "../../AppContext";
 
 import * as utils from "../../utils";
+import useFormatMinimaNumber from "../../utils/useMakeNumber";
 
 interface IProps {
   selectionMode: boolean;
@@ -10,6 +11,7 @@ interface IProps {
 }
 const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
   const { _balance } = useContext(appContext);
+  const { makeMinimaNumber } = useFormatMinimaNumber();
 
   if (!_balance) {
     return <div>No tokens available.</div>;
@@ -81,7 +83,7 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                 </div>
                 {!selectionMode && (
                   <p className="text-white text-sm font-mono">
-                    {token.confirmed}
+                    {makeMinimaNumber(token.confirmed, 2000)}
                   </p>
                 )}
                 {selectionMode && <p className="text-white text-sm">MINIMA</p>}
@@ -112,7 +114,7 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                 </h6>
                 {!selectionMode && (
                   <p className="text-white text-sm font-mono">
-                    {token.confirmed}
+                    {makeMinimaNumber(token.confirmed, 2000)}
                   </p>
                 )}
                 {selectionMode && (

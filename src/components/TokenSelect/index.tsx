@@ -6,13 +6,15 @@ import { useSpring, animated, config } from "react-spring";
 import styles from "./TokenSelect.module.css";
 import Dialog from "../UI/Dialog";
 import Tokens from "../Tokens";
+import { useFormikContext } from "formik";
+import useFormatMinimaNumber from "../../utils/useMakeNumber";
 
 interface IProps {
   _balance: object[] | null;
-  setActive: (token: any) => void;
-  active: any;
 }
-const TokenSelect = ({ _balance, setActive, active }: IProps) => {
+const TokenSelect = ({ _balance }: IProps) => {
+  const formik: any = useFormikContext();
+  const { makeMinimaNumber } = useFormatMinimaNumber();
   const { _promptTokenSelectionDialog, promptTokenSelectionDialog } =
     useContext(appContext);
 
@@ -31,8 +33,8 @@ const TokenSelect = ({ _balance, setActive, active }: IProps) => {
   });
 
   useEffect(() => {
-    if (_balance && !active) {
-      setActive(_balance[0]);
+    if (_balance && !formik.values.token) {
+      formik.setFieldValue("token", _balance[0]);
     }
   }, [_balance]);
 
@@ -41,13 +43,14 @@ const TokenSelect = ({ _balance, setActive, active }: IProps) => {
   }
 
   const handleTokenSelection = (token: any) => {
-    setActive(token);
+    formik.setFieldValue("token", token);
     promptTokenSelectionDialog();
   };
 
+  const active = formik.values.token;
+
   return (
     <>
-      {/*   border: 2px solid #464C4F; */}
       <div
         className="px-4 py-2 bg-inherit border-2 border-[#464C4F] mb-2 rounded-full hover:bg-teal-500 hover:cursor-pointer"
         onClick={promptTokenSelectionDialog}
@@ -80,7 +83,9 @@ const TokenSelect = ({ _balance, setActive, active }: IProps) => {
                   <path d="M9 12l2 2l4 -4" />
                 </svg>
               </div>
-              <p className="font-mono">{active.confirmed}</p>
+              <p className="font-mono">
+                {makeMinimaNumber(active.confirmed, 2000)}
+              </p>
             </div>
           </div>
         )}
@@ -102,7 +107,9 @@ const TokenSelect = ({ _balance, setActive, active }: IProps) => {
                   ? active.token.name
                   : "N/A"}
               </h3>
-              <p className="font-mono">{active.confirmed}</p>
+              <p className="font-mono">
+                {makeMinimaNumber(active.confirmed, 2000)}
+              </p>
             </div>
           </div>
         )}
@@ -117,9 +124,11 @@ const TokenSelect = ({ _balance, setActive, active }: IProps) => {
                   <div className="bg-black h-[50vh] w-full p-4 rounded">
                     <section className={styles["tokens"]}>
                       <div className="grid grid-cols-[1fr_auto] items-center">
-                        <h1 className="text-lg">Select a token</h1>
+                        <h1 className="text-lg dark:text-teal-500">
+                          Select a token
+                        </h1>
                         <svg
-                          className="text-gray-500"
+                          className="text-gray-500 hover:scale-105 hover:text-gray-600 hover:cursor-pointer hover:outline-offset-2"
                           onClick={promptTokenSelectionDialog}
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
