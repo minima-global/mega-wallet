@@ -4,7 +4,7 @@ export function copyToClipboard(text) {
     navigator.clipboard
       .writeText(text)
       .then(() => {
-        console.log("Text successfully copied to clipboard");
+        // console.log("Text successfully copied to clipboard");
       })
       .catch((err) => {
         console.error("Unable to copy text to clipboard", err);
@@ -21,7 +21,7 @@ export function copyToClipboard(text) {
 
     try {
       document.execCommand("copy");
-      console.log("Text successfully copied to clipboard");
+      // console.log("Text successfully copied to clipboard");
     } catch (err) {
       console.error("Unable to copy text to clipboard", err);
     } finally {

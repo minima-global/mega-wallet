@@ -39,7 +39,27 @@ const TokenSelect = ({ _balance }: IProps) => {
   }, [_balance]);
 
   if (!_balance) {
-    return <div>Loading...</div>;
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="animate-spin mx-auto mb-2"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M10 20.777a8.942 8.942 0 0 1 -2.48 -.969" />
+        <path d="M14 3.223a9.003 9.003 0 0 1 0 17.554" />
+        <path d="M4.579 17.093a8.961 8.961 0 0 1 -1.227 -2.592" />
+        <path d="M3.124 10.5c.16 -.95 .468 -1.85 .9 -2.675l.169 -.305" />
+        <path d="M6.907 4.579a8.954 8.954 0 0 1 3.093 -1.356" />
+      </svg>
+    );
   }
 
   const handleTokenSelection = (token: any) => {
@@ -60,7 +80,7 @@ const TokenSelect = ({ _balance }: IProps) => {
           <div className="grid grid-cols-[auto_1fr] gap-2">
             <img
               alt="minima-token"
-              src="/assets/token.svg"
+              src="./assets/token.svg"
               className="w-[48px] h-[48px] rounded-full"
             />
             <div>
@@ -121,10 +141,14 @@ const TokenSelect = ({ _balance }: IProps) => {
             <div className="h-full grid items-center">
               <animated.div style={springProps}>
                 <div className="relative left-0 right-0 bottom-0 top-0 bg-transparent">
-                  <div className="bg-black h-[50vh] w-full p-4 rounded">
+                  <div
+                    className={`bg-black w-[calc(100%_-_16px)] overflow-auto mx-auto md:w-full p-4 rounded ${
+                      _balance.length < 5 ? "h-[50vh]" : "h-auto max-h-[50vh]"
+                    }`}
+                  >
                     <section className={styles["tokens"]}>
                       <div className="grid grid-cols-[1fr_auto] items-center">
-                        <h1 className="text-lg dark:text-teal-500">
+                        <h1 className="text-lg text-white dark:text-teal-500">
                           Select a token
                         </h1>
                         <svg

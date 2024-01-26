@@ -27,7 +27,7 @@ const DialogWithMessage = () => {
           <Dialog dismiss={() => promptDialogWithMessage(false)}>
             <div className="h-full grid items-center">
               <animated.div style={springProps}>
-                <div className="bg-black w-[calc(100%_-_16px)] md:w-full p-4 rounded mx-auto">
+                <div className="bg-white shadow-xl dark:shadow-none dark:bg-black w-[calc(100%_-_16px)] md:w-full p-4 rounded mx-auto">
                   <div>
                     <h1 className="text-lg md:text-2xl">Status</h1>
 
@@ -37,7 +37,7 @@ const DialogWithMessage = () => {
                       <div className="flex justify-end items-end">
                         <button
                           onClick={() => promptDialogWithMessage(false)}
-                          className="bg-white text-black font-bold h-max"
+                          className="bg-black text-white dark:text-black dark:bg-white  font-bold h-max"
                         >
                           Ok
                         </button>

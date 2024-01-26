@@ -14,6 +14,7 @@ const AppProvider = ({ children }: IProps) => {
   const [_address, setAddress] = useState<null | string>(null);
   const [_balance, setBalance] = useState<null | object[]>(null);
 
+  const [_promptMegaMMR, setPromptMegaMMR] = useState<null | boolean>(null);
   const [_currentNavigation, setCurrentNavigation] = useState("balance");
   const [_promptLogin, setPromptLogin] = useState<boolean>(true);
   const [_promptDialogWithMessage, setPromptDialogWithMessage] = useState<
@@ -44,42 +45,71 @@ const AppProvider = ({ children }: IProps) => {
   });
 
   useEffect(() => {
+    if (_address) {
+      (window as any).MDS.cmd(`balance address:${_address}`, function (resp) {
+        // console.log("got respective balance", resp.response);
+        setBalance(resp.response);
+      });
+    }
+  }, [_currentNavigation, _promptTokenSelectionDialog]);
+
+  useEffect(() => {
     if (!loaded.current) {
       loaded.current = true;
 
       (window as any).MDS.init((msg) => {
         if (msg.event === "inited") {
-          try {
-            const rem = utils.getCookie("rememberme");
-
-            if (rem === "true") {
-              setLoginForm((prevState) => ({
-                ...prevState,
-                _rememberMe: true,
-              })); // this'll keep the state of the checkbox
-
-              const secretSauce: any = utils.getCookie("secretsauce");
-
-              setLoginForm((prevState) => ({
-                ...prevState,
-                _seedPhrase: secretSauce,
-              })); // this'll keep the state of the checkbox
-
-              createAccount(secretSauce);
+          (window as any).MDS.cmd("megammr", (resp) => {
+            if (!resp.response.enabled) {
+              setPromptMegaMMR(true);
             }
-          } catch (error) {
-            setPromptLogin(true);
-          }
-        }
+            if (resp.response.enabled) {
+              setPromptMegaMMR(false);
+            }
+          });
 
-        if (msg.event === "NEWBALANCE") {
-          console.log(`new balance!`);
-          console.log(_address);
-          // get their balance
-          if (_address) {
-            getBalance(_address);
+          const rem = utils.getCookie("rememberme");
+
+          if (rem === "true") {
+            setLoginForm((prevState) => ({
+              ...prevState,
+              _rememberMe: true,
+            })); // this'll keep the state of the checkbox
+
+            const secretSauce: any = utils.getCookie("secretsauce");
+
+            setLoginForm((prevState) => ({
+              ...prevState,
+              _seedPhrase: secretSauce,
+            })); // this'll keep the state of the checkbox
+
+            createAccount(secretSauce);
           }
         }
+        /** Does not work with this wallet */
+        // if (msg.event === "NEWBALANCE") {
+        //   // console.log(`new balance!`);
+
+        //   const secretSauce: any = utils.getCookie("secretsauce");
+        //   // console.log("we got the secretSUACE", secretSauce);
+        //   (window as any).MDS.cmd(
+        //     `keys action:genkey phrase:"${secretSauce}"`,
+        //     function (resp) {
+        //       // console.log("got addressed", resp.response.miniaddress);
+        //       // Get the address
+        //       const address = resp.response.miniaddress;
+        //       setAddress(address);
+
+        //       (window as any).MDS.cmd(
+        //         `balance address:${address}`,
+        //         function (resp) {
+        //           // console.log("got respective balance", resp.response);
+        //           setBalance(resp.response);
+        //         }
+        //       );
+        //     }
+        //   );
+        // }
       });
     }
   }, [loaded]);
@@ -90,6 +120,10 @@ const AppProvider = ({ children }: IProps) => {
 
   const promptTokenSelectionDialog = () => {
     setPromptTokenSelection((prevState) => !prevState);
+  };
+
+  const promptMegaMMR = () => {
+    setPromptMegaMMR((prevState) => !prevState);
   };
 
   const promptDialogWithMessage = (message: string | false) => {
@@ -105,23 +139,18 @@ const AppProvider = ({ children }: IProps) => {
   };
 
   const promptLogout = () => {
-    utils.setCookie("rememberme", "false", 365);
-    utils.setCookie("secretsauce", "", 365);
     setPromptLogin(true);
     resetAccount();
-  };
-
-  const getBalance = (address: string) => {
-    (window as any).MDS.cmd(`balance address:${address}`, function (resp) {
-      console.log(resp);
-      setBalance(resp.response);
-    });
   };
 
   const resetAccount = () => {
     setAddress(null);
     setBalance(null);
-    setLoginForm({ _seedPhrase: "", _rememberMe: false, _secret: "" });
+    const rem = utils.getCookie("rememberme");
+
+    if (rem !== "true") {
+      setLoginForm({ _seedPhrase: "", _rememberMe: false, _secret: "" });
+    }
   };
 
   const createAccount = (secretCode: string) => {
@@ -131,12 +160,11 @@ const AppProvider = ({ children }: IProps) => {
       function (resp) {
         // Get the address
         const address = resp.response.miniaddress;
+
         setAddress(address);
 
         (window as any).MDS.cmd(`balance address:${address}`, function (resp) {
           setBalance(resp.response);
-
-          promptLogin();
         });
       }
     );
@@ -153,6 +181,9 @@ const AppProvider = ({ children }: IProps) => {
   return (
     <appContext.Provider
       value={{
+        _promptMegaMMR,
+        promptMegaMMR,
+
         _promptLogin,
         promptLogin,
 

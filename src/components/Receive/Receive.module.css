@@ -16,7 +16,6 @@
 }
 .tokens input {
   background-color: transparent;
-  color: #A7A7B0;
   border: 2px solid #464C4F;
   border-radius: 30px;
   line-height: 1.5;
@@ -30,13 +29,13 @@
   width: 14px;
   appearance: none;
   -webkit-appearance: none;
-  background-image: url("../../../public/assets/close.svg");
+  background-image: url("/public/assets/close.svg");
   background-size: 14px 14px;
 }
 .tokens input:focus {
   border: 4px solid #4FE3C1;
   outline-width: 0;
-  color: #F9F9FA;
+  /* color: #F9F9FA; */
   font-weight: 500;
   line-height: 1.5;
   letter-spacing: 0.05em;
@@ -52,6 +51,8 @@
   line-height: 1.5;
   letter-spacing: 0.05em;
 }
+
+
 
 
 

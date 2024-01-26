@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import styles from "./Balance.module.css";
 import { appContext } from "../../AppContext";
 import TokenSelect from "../TokenSelect";
@@ -26,6 +26,7 @@ const yupValidator = Yup.object().shape({
 
 const Send = () => {
   const {
+    _promptLogin,
     _currentNavigation,
     loginForm,
     _balance,
@@ -47,13 +48,36 @@ const Send = () => {
     config: config.gentle,
   });
 
-  if (_currentNavigation !== "send") {
-    return null;
-  }
-
   const handleToggleVisibility = () => {
     toggleVisiblity((prevState) => !prevState);
   };
+  if (_currentNavigation !== "send" || _promptLogin) {
+    return null;
+  }
+
+  if (!_balance) {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="animate-spin mx-auto"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M10 20.777a8.942 8.942 0 0 1 -2.48 -.969" />
+        <path d="M14 3.223a9.003 9.003 0 0 1 0 17.554" />
+        <path d="M4.579 17.093a8.961 8.961 0 0 1 -1.227 -2.592" />
+        <path d="M3.124 10.5c.16 -.95 .468 -1.85 .9 -2.675l.169 -.305" />
+        <path d="M6.907 4.579a8.954 8.954 0 0 1 3.093 -1.356" />
+      </svg>
+    );
+  }
 
   return (
     <animated.div style={springProps}>
@@ -61,7 +85,7 @@ const Send = () => {
         <h6>Transfer tokens</h6>
         <Formik
           initialValues={{
-            token: _balance[0],
+            token: _balance ? _balance[0] : null,
             amount: "",
             address: "",
             code: loginForm._seedPhrase,
@@ -80,7 +104,7 @@ const Send = () => {
                 const rawTransaction = `sendfrom fromaddress:${_address} address:${address} amount:${amount} tokenid:${token.tokenid} script:"${script}" privatekey:${privatekey} keyuses:${keyuses}`;
 
                 (window as any).MDS.cmd(rawTransaction, function (respo) {
-                  console.log(respo);
+                  // console.log(respo);
                   if (!respo.status) {
                     setLoading(false);
 
@@ -135,9 +159,6 @@ const Send = () => {
                     ? "outline !outline-red-500"
                     : ""
                 }`}
-                pattern="0|M[xX][0-9a-zA-Z]+"
-                min={59}
-                max={66}
               />
               {touched.address && errors.address && (
                 <span className="my-2 bg-red-500 rounded px-4 py-1">
@@ -155,7 +176,7 @@ const Send = () => {
                   className="mb-4"
                 />
                 <button
-                  className="absolute text-teal-500 right-0 top-8 active:outline-none !border-none focus:border-none hover:border-none focus:outline-none"
+                  className="absolute text-teal-500 right-6 top-10 active:outline-none !border-none focus:border-none hover:border-none focus:outline-none p-0"
                   onClick={handleToggleVisibility}
                 >
                   {!visibility && (
@@ -201,7 +222,7 @@ const Send = () => {
               <button
                 disabled={loading || !isValid}
                 type="submit"
-                className="p-4 bg-teal-500 text-lg font-bold mt-4 disabled:text-gray-900 disabled:cursor-not-allowed disabled:bg-teal-800 dark:text-black"
+                className=" p-4 bg-teal-500 text-lg font-bold mt-4 disabled:text-gray-900 disabled:cursor-not-allowed disabled:bg-teal-800 text-black"
               >
                 {loading && (
                   <svg

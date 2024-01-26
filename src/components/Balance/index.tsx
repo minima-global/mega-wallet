@@ -4,10 +4,10 @@ import { appContext } from "../../AppContext";
 import useFormatMinimaNumber from "../../utils/useMakeNumber";
 
 const Balance = () => {
-  const { _balance } = useContext(appContext);
+  const { _balance, _promptLogin } = useContext(appContext);
   const { makeMinimaNumber } = useFormatMinimaNumber();
 
-  if (!_balance) {
+  if (!_balance || _promptLogin) {
     return (
       <section className={styles["balance"]}>
         <h6>Hello Minimalist</h6>

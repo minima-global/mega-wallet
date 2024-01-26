@@ -30,11 +30,7 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
         ) || utils.containsText(t.tokenid, filterText)
     ).length === 0
   ) {
-    return (
-      <div className="mx-auto text-white">
-        No tokens found matching your search
-      </div>
-    );
+    return <div className="mx-auto ">No tokens found matching your search</div>;
   }
 
   return (
@@ -55,7 +51,7 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
           token.tokenid === "0x00" ? (
             <li
               onClick={selectToken ? () => selectToken(token) : () => null}
-              className={`grid grid-cols-[auto_1fr] items-center gap-2 bg-black p-1 mb-2 rounded ${
+              className={`grid grid-cols-[auto_1fr] items-center gap-2 bg-white dark:bg-black p-1 mb-2 rounded ${
                 selectionMode ? "hover:bg-teal-500 border-teal-500 border" : ""
               }`}
               key={token.tokenid}
@@ -63,10 +59,10 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
               <img alt="token-icon" src="./assets/token.svg" className="w-14" />
               <div>
                 <div className="grid grid-cols-[auto_1fr]">
-                  <h6 className="font-bold">Minima</h6>
+                  <h6 className="font-bold ">Minima</h6>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="fill-blue-500 ml-1"
+                    className="fill-blue-500 text-black ml-1"
                     width="18"
                     height="24"
                     viewBox="0 0 24 24"
@@ -82,17 +78,17 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                   </svg>
                 </div>
                 {!selectionMode && (
-                  <p className="text-white text-sm font-mono">
+                  <p className="text-sm font-mono">
                     {makeMinimaNumber(token.confirmed, 2000)}
                   </p>
                 )}
-                {selectionMode && <p className="text-white text-sm">MINIMA</p>}
+                {selectionMode && <p className="font-bold text-sm">MINIMA</p>}
               </div>
             </li>
           ) : (
             <li
               onClick={selectToken ? () => selectToken(token) : () => null}
-              className={`grid grid-cols-[auto_1fr] items-center gap-2 bg-black p-1 rounded ${
+              className={`grid grid-cols-[auto_1fr] items-center gap-2 bg-white dark:bg-black p-1 mb-2 rounded ${
                 selectionMode ? "hover:bg-teal-500 border-teal-500 border" : ""
               }`}
               key={token.tokenid}
@@ -113,12 +109,12 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                     : "N/A"}
                 </h6>
                 {!selectionMode && (
-                  <p className="text-white text-sm font-mono">
+                  <p className="text-sm font-mono">
                     {makeMinimaNumber(token.confirmed, 2000)}
                   </p>
                 )}
                 {selectionMode && (
-                  <p className="text-white text-sm">
+                  <p className="text-sm font-bold">
                     {token.token && "ticker" in token.token
                       ? token.token.ticker
                       : ""}

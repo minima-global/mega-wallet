@@ -7,15 +7,18 @@ import Toggle from "../UI/Toggle";
 
 const Login = () => {
   const {
+    _promptMegaMMR,
     _promptLogin,
+    promptLogin,
     loginForm,
     setLoginForm,
     generateSecret,
     createAccount,
+    handleNavigation,
   } = useContext(appContext);
 
   // will use this to generate a help section later
-  const [step, setStep] = useState(0);
+  const [step] = useState(0);
 
   const [copied, setCopied] = useState(false);
 
@@ -90,10 +93,40 @@ const Login = () => {
     // generate a key, set our balance, navigate to dashboard
     createAccount(secretSauce);
 
+    handleNavigation("balance");
+    promptLogin();
+
+    if (visibility) handleToggleVisibility();
+
     setTimeout(() => {
       setLoading(false);
     }, 2000);
   };
+
+  if (_promptMegaMMR) {
+    return (
+      <Dialog>
+        <div className="h-full grid items-center">
+          <div className="z-[1000] bg-white rounded-lg mx-4 md:mx-0 min-h-[40vh] p-4  text-left grid grid-cols-1 grid-rows-[auto_1fr] shadow-xl">
+            <div className="grid grid-cols-[auto_1fr] gap-2 items-center">
+              <img alt="brand-icon" src="./assets/icon.svg" className="w-8" />
+              <h1 className="text-2xl text-black dark:text-black font-bold">
+                Wallet
+              </h1>
+            </div>
+            <div>
+              <h1 className="text-black text-xl mt-4 mb-0 pb-0">
+                Wallet unavailable!
+              </h1>
+              <p className="text-sm mt-1 dark:text-black">
+                A <code>-megammr</code> node is required to use this Wallet.
+              </p>
+            </div>
+          </div>
+        </div>
+      </Dialog>
+    );
+  }
 
   if (!_promptLogin) {
     return null;
@@ -102,9 +135,9 @@ const Login = () => {
   return (
     <Dialog>
       <div className="h-full grid items-center">
-        <div className="z-[1000] bg-white rounded-lg mx-4 md:mx-0 min-h-[40vh] p-4 dark:bg-white text-left grid grid-cols-1 grid-rows-[auto_1fr]">
+        <div className="z-[1000] bg-white rounded-lg mx-4 md:mx-0 min-h-[40vh] p-4 dark:bg-white text-left grid grid-cols-1 grid-rows-[auto_1fr] shadow-xl">
           <div className="grid grid-cols-[auto_1fr] gap-2 items-center">
-            <img alt="brand-icon" src="/assets/icon.svg" className="w-8" />
+            <img alt="brand-icon" src="./assets/icon.svg" className="w-8" />
             <h1 className="text-2xl text-black dark:text-black font-bold">
               Wallet
             </h1>
@@ -122,7 +155,7 @@ const Login = () => {
                     </span>
                     <input
                       type={`${visibility ? "text" : "password"}`}
-                      className="bg-slate-200 text-black p-3 rounded-lg focus:bg-white hover:bg-white hover:outline-black focus:outline hover:outline"
+                      className="bg-slate-200 text-black p-3 rounded-lg focus:bg-white focus:text-black hover:bg-white hover:outline-black focus:outline hover:outline shadow-xl"
                       placeholder="Your secret phrase"
                       name="_seedPhrase"
                       onChange={handleInputChange}
@@ -140,7 +173,7 @@ const Login = () => {
                           width="24"
                           height="24"
                           viewBox="0 0 24 24"
-                          stroke-width="2"
+                          strokeWidth="2"
                           stroke="currentColor"
                           fill="none"
                           strokeLinecap="round"
@@ -172,7 +205,7 @@ const Login = () => {
                       )}
                     </button>
 
-                    {loginForm._secret.length && (
+                    {!!loginForm._secret.length && (
                       <p className="text-sm mt-2 dark:text-black">
                         Make sure you store a copy of your secret somewhere
                         safe. Hyphens (-) are required. You cannot recover it
@@ -180,7 +213,13 @@ const Login = () => {
                       </p>
                     )}
                   </label>
-
+                  <div className="flex items-center justify-end mt-2">
+                    <Toggle
+                      label="Remember me?"
+                      onChange={handleRememberMe}
+                      checkedStatus={loginForm._rememberMe}
+                    />
+                  </div>
                   <div className="grid">
                     <button
                       disabled={loading}
@@ -189,14 +228,6 @@ const Login = () => {
                     >
                       Login
                     </button>
-
-                    <div className="flex items-center justify-end mt-2">
-                      <Toggle
-                        label="Remember me?"
-                        onChange={handleRememberMe}
-                        checkedStatus={loginForm._rememberMe}
-                      />
-                    </div>
                   </div>
 
                   <>
@@ -211,7 +242,7 @@ const Login = () => {
                         disabled={loading}
                         type="button"
                         onClick={handleGenerate}
-                        className="w-full font-bold text-grey bg-[#f7f7f7] max-w-[200px] flex justify-between dark:text-black disabled:cursor-not-allowed"
+                        className="w-full font-bold text-black bg-[#f7f7f7] max-w-[200px] flex justify-between dark:text-black disabled:cursor-not-allowed"
                       >
                         {loginForm._secret.length > 0
                           ? "Re-generate"
@@ -241,7 +272,7 @@ const Login = () => {
                             copied
                               ? "outline-2 outline-offset-2 shadow-2xl outline-red-500 "
                               : ""
-                          } relative items-center w-full mt-1 font-bold text-grey bg-teal-300 max-w-[200px] flex justify-between dark:text-black`}
+                          } relative items-center w-full mt-1 font-bold text-black bg-teal-300 max-w-[200px] flex justify-between dark:text-black`}
                         >
                           {!copied ? "Copy" : "Copied"}
                           <svg

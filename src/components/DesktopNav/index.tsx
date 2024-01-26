@@ -9,9 +9,44 @@ const DesktopNav = () => {
       <nav>
         <button
           className={`bg-black flex items-center justify-center gap-3 transition-all delay-100 duration-100 font-bold ${
-            _currentNavigation === "send"
-              ? "bg-opacity-50 outline outline-teal-500"
-              : ""
+            _currentNavigation === "balance" ? " outline outline-teal-500" : ""
+          }`}
+          disabled={_currentNavigation === "balance"}
+          onClick={() => handleNavigation("balance")}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className={`${
+              _currentNavigation === "balance"
+                ? "text-white fill-teal-400 font-extrabold transition-all delay-100 duration-100"
+                : ""
+            }`}
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            strokeWidth="2"
+            stroke="currentColor"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M17 8v-3a1 1 0 0 0 -1 -1h-10a2 2 0 0 0 0 4h12a1 1 0 0 1 1 1v3m0 4v3a1 1 0 0 1 -1 1h-12a2 2 0 0 1 -2 -2v-12" />
+            <path d="M20 12v4h-4a2 2 0 0 1 0 -4h4" />
+          </svg>
+          <p
+            className={`${
+              _currentNavigation === "balance"
+                ? "text-teal-500 font-extrabold transition-all delay-200 duration-100"
+                : ""
+            }`}
+          >
+            Balance
+          </p>
+        </button>
+        <button
+          className={`bg-black flex items-center justify-center gap-3 transition-all delay-100 duration-100 font-bold ${
+            _currentNavigation === "send" ? " outline outline-teal-500" : ""
           }`}
           disabled={_currentNavigation === "send"}
           onClick={() => handleNavigation("send")}
@@ -48,9 +83,7 @@ const DesktopNav = () => {
         </button>
         <button
           className={`bg-black flex items-center justify-center gap-3 transition-all delay-100 duration-100 font-bold ${
-            _currentNavigation === "receive"
-              ? "bg-opacity-50 outline outline-teal-500"
-              : ""
+            _currentNavigation === "receive" ? " outline outline-teal-500" : ""
           }`}
           disabled={_currentNavigation === "receive"}
           onClick={() => handleNavigation("receive")}
@@ -84,46 +117,6 @@ const DesktopNav = () => {
             }`}
           >
             Receive
-          </p>
-        </button>
-
-        <button
-          className={`bg-black flex items-center justify-center gap-3 transition-all delay-100 duration-100 font-bold ${
-            _currentNavigation === "balance"
-              ? "bg-opacity-50 outline outline-teal-500"
-              : ""
-          }`}
-          disabled={_currentNavigation === "balance"}
-          onClick={() => handleNavigation("balance")}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className={`${
-              _currentNavigation === "balance"
-                ? "text-white fill-teal-400 font-extrabold transition-all delay-100 duration-100"
-                : ""
-            }`}
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            strokeWidth="2"
-            stroke="currentColor"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M17 8v-3a1 1 0 0 0 -1 -1h-10a2 2 0 0 0 0 4h12a1 1 0 0 1 1 1v3m0 4v3a1 1 0 0 1 -1 1h-12a2 2 0 0 1 -2 -2v-12" />
-            <path d="M20 12v4h-4a2 2 0 0 1 0 -4h4" />
-          </svg>
-          <p
-            className={`${
-              _currentNavigation === "balance"
-                ? "text-teal-500 font-extrabold transition-all delay-200 duration-100"
-                : ""
-            }`}
-          >
-            Balance
           </p>
         </button>
       </nav>

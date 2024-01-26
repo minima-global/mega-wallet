@@ -1,13 +1,19 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { appContext } from "../../AppContext";
 import Tokens from "../Tokens";
 import styles from "./Wallet.module.css";
 import { useSpring, animated, config } from "react-spring";
 
 const Wallet = () => {
-  const { _currentNavigation } = useContext(appContext);
+  const { _currentNavigation, _promptLogin } = useContext(appContext);
 
   const [filter, setFilterText] = useState("");
+
+  useEffect(() => {
+    if (_currentNavigation !== "balance") {
+      setFilterText("");
+    }
+  }, [_currentNavigation]);
 
   const springProps = useSpring({
     opacity: _currentNavigation === "balance" ? 1 : 0,
@@ -22,7 +28,7 @@ const Wallet = () => {
     setFilterText(evt.target.value);
   };
 
-  if (_currentNavigation !== "balance") {
+  if (_currentNavigation !== "balance" || _promptLogin) {
     return null;
   }
 
