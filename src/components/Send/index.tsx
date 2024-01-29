@@ -3,9 +3,9 @@ import styles from "./Balance.module.css";
 import { appContext } from "../../AppContext";
 import TokenSelect from "../TokenSelect";
 import { useSpring, animated, config } from "react-spring";
-import * as utils from "../../utils";
 import * as Yup from "yup";
 import { Formik } from "formik";
+import KeyUsage from "../KeyUsage";
 
 const yupValidator = Yup.object().shape({
   token: Yup.object().required("Token field required"),
@@ -22,19 +22,22 @@ const yupValidator = Yup.object().shape({
     .max(66, "Invalid address, too long")
     .required("Address field required")
     .nullable(),
+  keyuses: Yup.number(),
 });
 
 const Send = () => {
   const {
+    _keyUsages,
+    _privateKey,
+    _script,
     _promptLogin,
     _currentNavigation,
-    loginForm,
     _balance,
     _address,
     promptDialogWithMessage,
     promptDialogWithError,
+    updateKeyUsage,
   } = useContext(appContext);
-  const [visibility, toggleVisiblity] = useState(false);
 
   const myForm = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
@@ -48,9 +51,6 @@ const Send = () => {
     config: config.gentle,
   });
 
-  const handleToggleVisibility = () => {
-    toggleVisiblity((prevState) => !prevState);
-  };
   if (_currentNavigation !== "send" || _promptLogin) {
     return null;
   }
@@ -63,11 +63,11 @@ const Send = () => {
         width="24"
         height="24"
         viewBox="0 0 24 24"
-        stroke-width="2"
+        strokeWidth="2"
         stroke="currentColor"
         fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       >
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M10 20.777a8.942 8.942 0 0 1 -2.48 -.969" />
@@ -88,51 +88,54 @@ const Send = () => {
             token: _balance ? _balance[0] : null,
             amount: "",
             address: "",
-            code: loginForm._seedPhrase,
+            keyuses:
+              _keyUsages && _keyUsages[_address] > 0 ? _keyUsages[_address] : 1,
           }}
-          onSubmit={(formData) => {
+          onSubmit={(formData, { resetForm }) => {
             setLoading(true);
-            const { token, address, amount, code } = formData;
+            const { token, address, amount, keyuses } = formData;
 
-            (window as any).MDS.cmd(
-              `keys action:genkey phrase:"${code}"`,
-              function (resp) {
-                (window as any).MDS.log(JSON.stringify(resp));
-                const { script, privatekey } = resp.response;
-                const keyuses = utils.randomInteger(0, 200000);
+            // const keyuses = utils.randomInteger(1, 150000);
 
-                const rawTransaction = `sendfrom fromaddress:${_address} address:${address} amount:${amount} tokenid:${token.tokenid} script:"${script}" privatekey:${privatekey} keyuses:${keyuses}`;
+            const rawTransaction = `sendfrom fromaddress:${_address} address:${address} amount:${amount} tokenid:${token.tokenid} script:"${_script}" privatekey:${_privateKey} keyuses:${keyuses}`;
 
-                (window as any).MDS.cmd(rawTransaction, function (respo) {
-                  // console.log(respo);
-                  if (!respo.status) {
-                    setLoading(false);
+            (window as any).MDS.cmd(rawTransaction, function (respo) {
+              // console.log(respo);
+              if (!respo.status) {
+                setLoading(false);
 
-                    promptDialogWithError(respo.error as string);
-                    return;
-                  }
-
-                  if (respo.status) {
-                    setLoading(false);
-
-                    if (myForm.current) {
-                      myForm.current.reset();
-                    }
-
-                    promptDialogWithMessage(
-                      "Your transaction has been successfully sent!"
-                    );
-                  }
-                });
+                promptDialogWithError(respo.error as string);
+                return;
               }
-            );
+
+              if (respo.status) {
+                // update keyUsages
+                updateKeyUsage(_address, keyuses + 1);
+
+                setLoading(false);
+
+                resetForm();
+
+                promptDialogWithMessage(
+                  "Your transaction has been successfully sent!"
+                );
+              }
+            });
           }}
           validationSchema={yupValidator}
         >
-          {({ getFieldProps, errors, touched, isValid, handleSubmit }) => (
+          {({
+            getFieldProps,
+            errors,
+            touched,
+            isValid,
+            handleSubmit,
+            isSubmitting,
+          }) => (
             <form ref={myForm} onSubmit={handleSubmit} className="grid">
               <TokenSelect _balance={_balance} />
               <input
+                disabled={isSubmitting}
                 required
                 {...getFieldProps("amount")}
                 type="text"
@@ -149,6 +152,7 @@ const Send = () => {
                 </span>
               )}
               <input
+                disabled={isSubmitting}
                 required
                 autoComplete="off"
                 {...getFieldProps("address")}
@@ -165,7 +169,10 @@ const Send = () => {
                   {errors.address}
                 </span>
               )}
-              <label className="grid gap-1 relative">
+
+              <KeyUsage />
+
+              {/* <label className="grid gap-1 relative">
                 <span className="mx-4 text-sm text-teal-500">Secret code</span>
                 <input
                   readOnly
@@ -217,7 +224,7 @@ const Send = () => {
                     </svg>
                   )}
                 </button>
-              </label>
+              </label> */}
 
               <button
                 disabled={loading || !isValid}

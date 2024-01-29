@@ -1,18 +1,26 @@
 import { createContext, useRef, useEffect, useState } from "react";
 
 import * as utils from "./utils";
+import { sql } from "./utils/SQL";
 
 export const appContext = createContext({} as any);
 
 interface IProps {
   children: any;
 }
+interface KeyUsages {
+  address: number;
+}
+
 const AppProvider = ({ children }: IProps) => {
   const loaded = useRef(false);
 
   /** This is the main address we use after giving the secret key */
   const [_address, setAddress] = useState<null | string>(null);
   const [_balance, setBalance] = useState<null | object[]>(null);
+  const [_privateKey, setPrivateKey] = useState<null | string>(null);
+  const [_keyUsages, setKeyUsages] = useState<KeyUsages[]>([]);
+  const [_script, setScript] = useState<null | string>(null);
 
   const [_promptMegaMMR, setPromptMegaMMR] = useState<null | boolean>(null);
   const [_currentNavigation, setCurrentNavigation] = useState("balance");
@@ -47,7 +55,6 @@ const AppProvider = ({ children }: IProps) => {
   useEffect(() => {
     if (_address) {
       (window as any).MDS.cmd(`balance address:${_address}`, function (resp) {
-        // console.log("got respective balance", resp.response);
         setBalance(resp.response);
       });
     }
@@ -85,31 +92,21 @@ const AppProvider = ({ children }: IProps) => {
 
             createAccount(secretSauce);
           }
+
+          (async () => {
+            await sql(
+              `CREATE TABLE IF NOT EXISTS cache (name varchar(255), data longtext);`
+            );
+
+            const keyUsage: any = await sql(
+              `SELECT * FROM cache WHERE name = 'KEYUSAGE'`
+            );
+
+            if (keyUsage) {
+              setKeyUsages(JSON.parse(keyUsage.DATA));
+            }
+          })();
         }
-        /** Does not work with this wallet */
-        // if (msg.event === "NEWBALANCE") {
-        //   // console.log(`new balance!`);
-
-        //   const secretSauce: any = utils.getCookie("secretsauce");
-        //   // console.log("we got the secretSUACE", secretSauce);
-        //   (window as any).MDS.cmd(
-        //     `keys action:genkey phrase:"${secretSauce}"`,
-        //     function (resp) {
-        //       // console.log("got addressed", resp.response.miniaddress);
-        //       // Get the address
-        //       const address = resp.response.miniaddress;
-        //       setAddress(address);
-
-        //       (window as any).MDS.cmd(
-        //         `balance address:${address}`,
-        //         function (resp) {
-        //           // console.log("got respective balance", resp.response);
-        //           setBalance(resp.response);
-        //         }
-        //       );
-        //     }
-        //   );
-        // }
       });
     }
   }, [loaded]);
@@ -159,13 +156,17 @@ const AppProvider = ({ children }: IProps) => {
       `keys action:genkey phrase:"${secretCode}"`,
       function (resp) {
         // Get the address
-        const address = resp.response.miniaddress;
+        const { miniaddress, privatekey, script } = resp.response;
+        setPrivateKey(privatekey);
+        setScript(script);
+        setAddress(miniaddress);
 
-        setAddress(address);
-
-        (window as any).MDS.cmd(`balance address:${address}`, function (resp) {
-          setBalance(resp.response);
-        });
+        (window as any).MDS.cmd(
+          `balance address:${miniaddress}`,
+          function (resp) {
+            setBalance(resp.response);
+          }
+        );
       }
     );
   };
@@ -176,6 +177,31 @@ const AppProvider = ({ children }: IProps) => {
         resolve(resp.response.keycode);
       });
     });
+  };
+
+  const updateKeyUsage = async (address: string, count: number) => {
+    const updatedData = {
+      ..._keyUsages,
+      [address]: count,
+    };
+
+    setKeyUsages(updatedData);
+
+    const rows = await sql(`SELECT * FROM cache WHERE name = 'KEYUSAGE'`);
+
+    if (!rows) {
+      await sql(
+        `INSERT INTO cache (name, data) VALUES ('KEYUSAGE', '${JSON.stringify(
+          updatedData
+        )}')`
+      );
+    } else {
+      await sql(
+        `UPDATE cache SET data = '${JSON.stringify(
+          updatedData
+        )}' WHERE name = 'KEYUSAGE'`
+      );
+    }
   };
 
   return (
@@ -209,8 +235,14 @@ const AppProvider = ({ children }: IProps) => {
 
         generateSecret,
 
+        _privateKey,
+        _script,
+
         _address,
         setAddress,
+
+        _keyUsages,
+        updateKeyUsage,
 
         createAccount,
 

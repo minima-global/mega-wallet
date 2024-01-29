@@ -46,11 +46,11 @@ const TokenSelect = ({ _balance }: IProps) => {
         width="24"
         height="24"
         viewBox="0 0 24 24"
-        stroke-width="2"
+        strokeWidth="2"
         stroke="currentColor"
         fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       >
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M10 20.777a8.942 8.942 0 0 1 -2.48 -.969" />
@@ -72,8 +72,10 @@ const TokenSelect = ({ _balance }: IProps) => {
   return (
     <>
       <div
-        className="px-4 py-2 bg-inherit border-2 border-[#464C4F] mb-2 rounded-full hover:bg-teal-500 hover:cursor-pointer"
-        onClick={promptTokenSelectionDialog}
+        className={`px-4 py-2 bg-inherit border-2 border-[#464C4F] mb-2 rounded-full hover:bg-teal-500 hover:cursor-pointer ${
+          formik.isSubmitting ? "opacity-40 cursor-not-allowed" : ""
+        }`}
+        onClick={!formik.isSubmitting ? promptTokenSelectionDialog : null}
         id="active"
       >
         {active && active.tokenid === "0x00" && (
