@@ -25,6 +25,7 @@ const AppProvider = ({ children }: IProps) => {
   const [_promptMegaMMR, setPromptMegaMMR] = useState<null | boolean>(null);
   const [_currentNavigation, setCurrentNavigation] = useState("balance");
   const [_promptLogin, setPromptLogin] = useState<boolean>(true);
+  const [_promptLogoutDialog, setPromptLogoutDialog] = useState<boolean>(false);
   const [_promptDialogWithMessage, setPromptDialogWithMessage] = useState<
     false | string
   >(false);
@@ -138,7 +139,12 @@ const AppProvider = ({ children }: IProps) => {
     setCurrentNavigation(page);
   };
 
+  const promptLogoutDialog = () => {
+    setPromptLogoutDialog((prevState) => !prevState);
+  };
+
   const promptLogout = () => {
+    setPromptLogoutDialog(false);
     setPromptLogin(true);
     resetAccount();
   };
@@ -232,6 +238,8 @@ const AppProvider = ({ children }: IProps) => {
         handleNavigation,
 
         promptLogout,
+        _promptLogoutDialog,
+        promptLogoutDialog,
 
         loginForm,
         setLoginForm,

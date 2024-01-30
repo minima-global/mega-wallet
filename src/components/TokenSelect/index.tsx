@@ -107,6 +107,9 @@ const TokenSelect = ({ _balance }: IProps) => {
               </div>
               <p className="font-mono">
                 {makeMinimaNumber(active.confirmed, 2000)}
+                {active.unconfirmed != "0"
+                  ? "/" + makeMinimaNumber(active.unconfirmed, 2000)
+                  : null}
               </p>
             </div>
           </div>
@@ -131,6 +134,9 @@ const TokenSelect = ({ _balance }: IProps) => {
               </h3>
               <p className="font-mono">
                 {makeMinimaNumber(active.confirmed, 2000)}
+                {active.unconfirmed != "0"
+                  ? "/" + makeMinimaNumber(active.unconfirmed, 2000)
+                  : null}
               </p>
             </div>
           </div>

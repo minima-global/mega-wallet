@@ -80,6 +80,9 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                 {!selectionMode && (
                   <p className="text-sm font-mono">
                     {makeMinimaNumber(token.confirmed, 2000)}
+                    {token.unconfirmed != "0"
+                      ? "/" + makeMinimaNumber(token.unconfirmed, 2000)
+                      : null}
                   </p>
                 )}
                 {selectionMode && <p className="font-bold text-sm">MINIMA</p>}
@@ -111,6 +114,9 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                 {!selectionMode && (
                   <p className="text-sm font-mono">
                     {makeMinimaNumber(token.confirmed, 2000)}
+                    {token.unconfirmed != "0"
+                      ? "/" + makeMinimaNumber(token.unconfirmed, 2000)
+                      : null}
                   </p>
                 )}
                 {selectionMode && (

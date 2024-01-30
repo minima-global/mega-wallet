@@ -222,7 +222,7 @@ const Login = () => {
                   </div>
                   <div className="grid">
                     <button
-                      disabled={loading}
+                      disabled={loading || loginForm._seedPhrase.length === 0}
                       type="submit"
                       className="mt-3 w-full bg-black text-white font-bold p-3 disabled:bg-gray-500 disabled:cursor-not-allowed"
                     >
