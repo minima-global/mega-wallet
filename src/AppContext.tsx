@@ -54,9 +54,12 @@ const AppProvider = ({ children }: IProps) => {
 
   useEffect(() => {
     if (_address) {
-      (window as any).MDS.cmd(`balance address:${_address}`, function (resp) {
-        setBalance(resp.response);
-      });
+      (window as any).MDS.cmd(
+        `balance megammr:true address:${_address}`,
+        function (resp) {
+          setBalance(resp.response);
+        }
+      );
     }
   }, [_currentNavigation, _promptTokenSelectionDialog]);
 
@@ -162,7 +165,7 @@ const AppProvider = ({ children }: IProps) => {
         setAddress(miniaddress);
 
         (window as any).MDS.cmd(
-          `balance address:${miniaddress}`,
+          `balance megammr:true address:${miniaddress}`,
           function (resp) {
             setBalance(resp.response);
           }
