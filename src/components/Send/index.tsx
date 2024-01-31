@@ -6,6 +6,7 @@ import { useSpring, animated, config } from "react-spring";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import KeyUsage from "../KeyUsage";
+import FetchBalanceButton from "../FetchBalanceButton";
 
 const yupValidator = Yup.object().shape({
   token: Yup.object().required("Token field required"),
@@ -22,7 +23,10 @@ const yupValidator = Yup.object().shape({
     .max(66, "Invalid address, too long")
     .required("Address field required")
     .nullable(),
-  keyuses: Yup.number(),
+  keyuses: Yup.number().max(
+    250000,
+    "Number must be less than or equal to 250000."
+  ),
 });
 
 const Send = () => {
@@ -82,8 +86,12 @@ const Send = () => {
   return (
     <animated.div style={springProps}>
       <section className={styles["tokens"]}>
-        <h6>Transfer tokens</h6>
+        <div className="flex justify-between">
+          <h6>Transfer tokens</h6>
+          <FetchBalanceButton />
+        </div>
         <Formik
+          enableReinitialize={true}
           initialValues={{
             token: _balance ? _balance[0] : null,
             amount: "",
@@ -91,7 +99,7 @@ const Send = () => {
             keyuses:
               _keyUsages && _keyUsages[_address] > 0 ? _keyUsages[_address] : 1,
           }}
-          onSubmit={(formData, { resetForm }) => {
+          onSubmit={(formData, { resetForm, setSubmitting }) => {
             setLoading(true);
             const { token, address, amount, keyuses } = formData;
 
@@ -103,6 +111,7 @@ const Send = () => {
               // console.log(respo);
               if (!respo.status) {
                 setLoading(false);
+                setSubmitting(false);
 
                 promptDialogWithError(respo.error as string);
                 return;

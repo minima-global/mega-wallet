@@ -56,10 +56,14 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
               }`}
               key={token.tokenid}
             >
-              <img alt="token-icon" src="./assets/token.svg" className="w-14" />
-              <div>
+              <img
+                alt="token-icon"
+                src="./assets/token.svg"
+                className="w-14 min-w-14"
+              />
+              <div className="overflow-hidden">
                 <div className="grid grid-cols-[auto_1fr]">
-                  <h6 className="font-bold ">Minima</h6>
+                  <h6 className="font-bold truncate">Minima</h6>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="fill-blue-500 text-black ml-1"
@@ -78,8 +82,8 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                   </svg>
                 </div>
                 {!selectionMode && (
-                  <p className="text-sm font-mono">
-                    {makeMinimaNumber(token.confirmed, 2000)}
+                  <p className="text-sm font-mono truncate">
+                    {makeMinimaNumber(token.unconfirmed, 2000)}
                     {token.unconfirmed != "0"
                       ? "/" + makeMinimaNumber(token.unconfirmed, 2000)
                       : null}
@@ -103,16 +107,16 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                     ? token.token.url
                     : `https://robohash.org/${token.tokenid}`
                 }
-                className="bg-[#080A0B] w-[56px]"
+                className="bg-[#080A0B] w-[56px] min-w-[56px] h-[56px] min-h-[56px]"
               />
-              <div>
-                <h6>
+              <div className="overflow-hidden">
+                <h6 className="font-bold truncate">
                   {"name" in token.token && typeof token.token.name === "string"
                     ? token.token.name
                     : "N/A"}
                 </h6>
                 {!selectionMode && (
-                  <p className="text-sm font-mono">
+                  <p className="text-sm font-mono truncate">
                     {makeMinimaNumber(token.confirmed, 2000)}
                     {token.unconfirmed != "0"
                       ? "/" + makeMinimaNumber(token.unconfirmed, 2000)

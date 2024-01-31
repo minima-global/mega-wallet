@@ -19,7 +19,7 @@ const KeyUsage = () => {
       <div className="flex justify-between">
         <span className="ml-4 text-sm text-teal-500">Key uses</span>
 
-        <Tooltip message="Keeping your key use number different on every transaction mantains your anonymity.">
+        <Tooltip message="You must change your key uses number on every transaction. This will increment automatically when you use the same computer, but you must set it yourself if you change machines.">
           <svg
             className="text-orange-400"
             xmlns="http://www.w3.org/2000/svg"

@@ -5,7 +5,7 @@
 
 .tooltip-content {
   visibility: hidden;
-  width: 120px;
+  width: 220px;
   background-color: #555;
   color: #fff;
   text-align: center;
@@ -24,9 +24,10 @@
 
 @media screen and (max-width: 600px) {
   .tooltip-content {
+    width: 180px;
     bottom: auto;
     top: 125%;
     right: 0;
-    margin-left: -120px;
+    margin-left: -180px;
   }
 }

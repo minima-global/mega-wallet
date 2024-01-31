@@ -35,6 +35,9 @@ const AppProvider = ({ children }: IProps) => {
   const [_promptTokenSelectionDialog, setPromptTokenSelection] = useState<
     null | boolean
   >(null);
+  const [_promptingFetchingBalance, setPromptFetchBalance] = useState<
+    null | boolean
+  >(null);
   const [loginForm, setLoginForm] = useState<{
     _seedPhrase: string;
     _rememberMe: boolean;
@@ -53,14 +56,25 @@ const AppProvider = ({ children }: IProps) => {
     thousands: ",",
   });
 
+  const getBalance = () => {
+    setPromptFetchBalance(true);
+    (window as any).MDS.cmd(
+      `balance megammr:true address:${_address}`,
+      function (resp) {
+        resp.response.map(createImages);
+
+        setBalance(resp.response);
+
+        setTimeout(() => {
+          setPromptFetchBalance(false);
+        }, 2500);
+      }
+    );
+  };
+
   useEffect(() => {
     if (_address) {
-      (window as any).MDS.cmd(
-        `balance megammr:true address:${_address}`,
-        function (resp) {
-          setBalance(resp.response);
-        }
-      );
+      getBalance();
     }
   }, [_currentNavigation, _promptTokenSelectionDialog]);
 
@@ -173,11 +187,35 @@ const AppProvider = ({ children }: IProps) => {
         (window as any).MDS.cmd(
           `balance megammr:true address:${miniaddress}`,
           function (resp) {
+            resp.response.map(createImages);
+
             setBalance(resp.response);
           }
         );
       }
     );
+  };
+
+  const createImages = async (t: any) => {
+    const customToken = t.tokenid !== "0x00";
+
+    if (customToken) {
+      const hasImage = t.token && "url" in t.token && t.token.url.length > 0;
+
+      if (hasImage) {
+        const tokenUrl = t.token.url;
+        const compressedImage = tokenUrl.startsWith("<artimage>", 0);
+        const ipfsImage = tokenUrl.startsWith("https://ipfs.io/ipns/", 0);
+
+        if (compressedImage) {
+          t.token.url = utils.makeTokenImage(t.token.url, t.tokenid);
+        }
+
+        if (ipfsImage) {
+          t.token.url = await utils.fetchIPFSImageUri(t.token.url);
+        }
+      }
+    }
   };
 
   const generateSecret = () => {
@@ -258,6 +296,8 @@ const AppProvider = ({ children }: IProps) => {
         createAccount,
 
         _balance,
+        getBalance,
+        _promptingFetchingBalance,
       }}
     >
       {children}

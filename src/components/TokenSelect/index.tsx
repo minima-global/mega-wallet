@@ -85,9 +85,9 @@ const TokenSelect = ({ _balance }: IProps) => {
               src="./assets/token.svg"
               className="w-[48px] h-[48px] rounded-full"
             />
-            <div>
+            <div className="overflow-hidden">
               <div className="grid grid-cols-[auto_1fr]">
-                <h6 className="font-bold">Minima</h6>
+                <h6 className="font-bold truncate">Minima</h6>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="fill-blue-500 ml-1"
@@ -105,7 +105,7 @@ const TokenSelect = ({ _balance }: IProps) => {
                   <path d="M9 12l2 2l4 -4" />
                 </svg>
               </div>
-              <p className="font-mono">
+              <p className="font-mono truncate">
                 {makeMinimaNumber(active.confirmed, 2000)}
                 {active.unconfirmed != "0"
                   ? "/" + makeMinimaNumber(active.unconfirmed, 2000)
@@ -126,13 +126,13 @@ const TokenSelect = ({ _balance }: IProps) => {
               }
               className="w-[48px] h-[48px] rounded-full"
             />
-            <div>
-              <h3 className="font-bold">
+            <div className="overflow-hidden">
+              <h3 className="font-bold truncate">
                 {"name" in active.token && typeof active.token.name === "string"
                   ? active.token.name
                   : "N/A"}
               </h3>
-              <p className="font-mono">
+              <p className="font-mono truncate">
                 {makeMinimaNumber(active.confirmed, 2000)}
                 {active.unconfirmed != "0"
                   ? "/" + makeMinimaNumber(active.unconfirmed, 2000)
