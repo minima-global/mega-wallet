@@ -83,7 +83,7 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                 </div>
                 {!selectionMode && (
                   <p className="text-sm font-mono truncate">
-                    {makeMinimaNumber(token.unconfirmed, 2000)}
+                    {makeMinimaNumber(token.confirmed, 2000)}
                     {token.unconfirmed != "0"
                       ? "/" + makeMinimaNumber(token.unconfirmed, 2000)
                       : null}
