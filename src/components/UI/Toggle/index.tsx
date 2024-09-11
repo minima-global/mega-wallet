@@ -8,7 +8,7 @@ interface IProps {
 const Toggle = ({ onChange, checkedStatus, label }: IProps) => {
   return (
     <div className={styles.checkboxContainer}>
-      <label className={`${styles.checkboxLabel} text-sm`}>{label}</label>
+      <label className={`text-neutral-900 mr-2 text-sm`}>{label}</label>
       <input
         checked={checkedStatus}
         type="checkbox"
