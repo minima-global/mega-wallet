@@ -29,14 +29,6 @@ const TokenSelect = ({ _balance }: IProps) => {
     setFilterText(evt.target.value);
   };
 
-  const springProps = useSpring({
-    opacity: _promptTokenSelectionDialog ? 1 : 0,
-    transform: _promptTokenSelectionDialog
-      ? "translateY(0%) scale(1)"
-      : "translateY(-50%) scale(0.8)",
-    config: config.wobbly,
-  });
-
   useEffect(() => {
     if (_balance && !formik.values.token) {
       formik.setFieldValue("token", _balance[0]);
@@ -147,51 +139,47 @@ const TokenSelect = ({ _balance }: IProps) => {
         display={_promptTokenSelectionDialog}
         dismiss={() => null}
       >
-        <div className="h-full grid items-center">
-          <animated.div style={springProps}>
-            <div className="relative left-0 right-0 bottom-0 top-0 bg-transparent">
-              <div
-                className={`bg-black overflow-auto mx-auto md:w-full p-4 rounded ${
-                  _balance.length < 5 ? "h-[50vh]" : "h-auto max-h-[50vh]"
-                }`}
-              >
-                <section>
-                  <div className="grid grid-cols-[1fr_auto] items-center">
-                    <h3 className={titleStyle}>Select a token</h3>
-                    <svg
-                      className="text-gray-500 hover:scale-105 hover:text-gray-600 hover:cursor-pointer hover:outline-offset-2"
-                      onClick={promptTokenSelectionDialog}
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      strokeWidth="2"
-                      stroke="currentColor"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                      <path d="M18 6l-12 12" />
-                      <path d="M6 6l12 12" />
-                    </svg>
-                  </div>
-                  <input
-                    value={filter}
-                    onChange={handleFilterTextChange}
-                    placeholder="Search tokens"
-                    type="search"
-                    className={searchInputStyle}
-                  />
-                  <Tokens
-                    filterText={filter}
-                    selectionMode
-                    selectToken={handleTokenSelection}
-                  />
-                </section>
+        <div className="relative left-0 right-0 bottom-0 top-0 bg-transparent">
+          <div
+            className={`bg-black overflow-auto mx-auto md:w-full p-4 rounded ${
+              _balance.length < 5 ? "h-[50vh]" : "h-auto max-h-[50vh]"
+            }`}
+          >
+            <section>
+              <div className="grid grid-cols-[1fr_auto] items-center">
+                <h3 className={titleStyle}>Select a token</h3>
+                <svg
+                  className="text-gray-500 hover:scale-105 hover:text-gray-600 hover:cursor-pointer hover:outline-offset-2"
+                  onClick={promptTokenSelectionDialog}
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2"
+                  stroke="currentColor"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M18 6l-12 12" />
+                  <path d="M6 6l12 12" />
+                </svg>
               </div>
-            </div>
-          </animated.div>
+              <input
+                value={filter}
+                onChange={handleFilterTextChange}
+                placeholder="Search tokens"
+                type="search"
+                className={searchInputStyle}
+              />
+              <Tokens
+                filterText={filter}
+                selectionMode
+                selectToken={handleTokenSelection}
+              />
+            </section>
+          </div>
         </div>
       </AnimatedSelect>
     </>

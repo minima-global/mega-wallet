@@ -203,8 +203,12 @@ const Dashboard = () => {
         )}
 
       <div className={styles["grid"]}>
-        <header>
-          <img alt="icon" src="./assets/icon.svg" />
+        <header className="bg-[#1b1b1b]">
+          <img
+            alt="icon"
+            src="./assets/icon-white.svg"
+            className="opacity-60"
+          />
           <div>
             <button
               onClick={promptLogoutDialog}
@@ -214,7 +218,7 @@ const Dashboard = () => {
             </button>
           </div>
         </header>
-        <main>
+        <main className="px-4 sm:px-0">
           <section>
             <section />
             <DialogWithError />
