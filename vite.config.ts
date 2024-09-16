@@ -7,7 +7,7 @@ export default ({ mode }) => {
   let devEnv = "";
   const env = Object.assign(
     globalThis.process.env,
-    loadEnv(mode, globalThis.process.cwd())
+    loadEnv(mode, globalThis.process.cwd()),
   );
 
   if (mode === "development") {
@@ -39,5 +39,15 @@ export default ({ mode }) => {
         },
       }),
     ],
+    server: {
+      proxy: {
+        // Proxy API requests from React dev server to Node.js proxy on port 3000
+        "/api": {
+          target: "http://localhost:3000", // Proxy server URL
+          changeOrigin: true,
+          // rewrite: (path) => path.replace(/^\/api/, ""), // Remove "/api" prefix
+        },
+      },
+    },
   });
 };

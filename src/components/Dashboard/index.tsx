@@ -28,7 +28,7 @@ const Dashboard = () => {
 
   const handleToggleVisibility = () => {
     setPassword((prevState) =>
-      prevState === "password" ? "text" : "password"
+      prevState === "password" ? "text" : "password",
     );
   };
 
@@ -199,7 +199,7 @@ const Dashboard = () => {
             </animated.div>
           </Dialog>,
 
-          document.body
+          document.body,
         )}
 
       <div className={styles["grid"]}>
@@ -208,7 +208,7 @@ const Dashboard = () => {
           <div>
             <button
               onClick={promptLogoutDialog}
-              className="bg-orange-300 text-black"
+              className="bg-neutral-800 font-bold text-xs hover:bg-neutral-900"
             >
               Logout
             </button>

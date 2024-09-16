@@ -63,13 +63,6 @@ button {
     cursor: pointer;
     transition: border-color 0.25s;
 }
-button:hover {
-    border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-    outline: 4px auto -webkit-focus-ring-color;
-}
 
 @media (prefers-color-scheme: light) {
     :root {
@@ -88,4 +81,22 @@ select {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+}
+
+input[type="search"] {
+    -webkit-appearance: none; /* Removes default WebKit styling for search inputs */
+    appearance: none; /* For modern browsers */
+    outline: none;
+}
+
+/* Hide the search clear (X) button in WebKit-based browsers */
+input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Hide the search icon in WebKit-based browsers */
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+    appearance: none;
 }

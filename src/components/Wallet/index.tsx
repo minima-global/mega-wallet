@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { appContext } from "../../AppContext";
 import Tokens from "../Tokens";
-import styles from "./Wallet.module.css";
 import { useSpring, animated, config } from "react-spring";
 import FetchBalanceButton from "../FetchBalanceButton";
+import { searchInputStyle } from "../../styles";
 
 const Wallet = () => {
   const { _currentNavigation, _promptLogin } = useContext(appContext);
@@ -35,15 +35,18 @@ const Wallet = () => {
 
   return (
     <animated.div style={springProps}>
-      <section className={styles["tokens"]}>
-        <div className="flex justify-between items-center">
-          <h6>Your tokens</h6>
+      <section>
+        <div className="flex">
+          <h6 className="flex-grow font-bold tracking-wide text-neutral-400">
+            Your tokens
+          </h6>
           <FetchBalanceButton />
         </div>
         <input
           onChange={handleFilterTextChange}
           placeholder="Search tokens"
           type="search"
+          className={searchInputStyle}
         />
         <Tokens filterText={filter} selectionMode={false} />
       </section>

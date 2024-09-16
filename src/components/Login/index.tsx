@@ -3,9 +3,7 @@ import { appContext } from "../../AppContext";
 import Dialog from "../UI/Dialog";
 
 import * as utils from "../../utils";
-import Toggle from "../UI/Toggle";
 import AnimatedDialog from "../UI/AnimatedDialog";
-import BrandIcon from "../UI/Icons/BrandIcon";
 import {
   inputWrapperStyle,
   primaryFormButtonStyle,
@@ -15,6 +13,8 @@ import VisibleIcon from "../UI/Icons/VisibleIcon";
 import HideIcon from "../UI/Icons/HideIcon";
 import KeyIcon from "../UI/Icons/KeyIcon";
 import CopyIcon from "../UI/Icons/CopyIcon";
+import ModernCheckbox from "../UI/Toggle";
+import isMobileDevice from "../../utils/isMobile";
 
 const Login = () => {
   const {
@@ -26,6 +26,7 @@ const Login = () => {
     generateSecret,
     createAccount,
     handleNavigation,
+    notify,
   } = useContext(appContext);
 
   // will use this to generate a help section later
@@ -50,6 +51,11 @@ const Login = () => {
 
   const handleCopy = () => {
     setCopied(true);
+    const isMobile = isMobileDevice();
+
+    if (!isMobile) {
+      notify("Copied secret to clipboard");
+    }
     utils.copyToClipboard(loginForm._secret);
   };
 
@@ -64,6 +70,8 @@ const Login = () => {
     evt.preventDefault();
     // generate a new secret
     const secret = await generateSecret();
+    // notify
+    notify("Generated a new secret (remember to save it somewhere safe)");
     // un-hide password field
     toggleVisiblity(true);
     // set it to the input automatically
@@ -161,13 +169,31 @@ const Login = () => {
         {step === 0 && (
           <>
             <div>
-              <p className="text-sm mt-4 text-neutral-700 font-bold tracking-wide flex flex-wrap items-center gap-1 justify-center">
-                <span>Login with your secret key or click generate</span>
-                <span className="inline-block">
-                  <KeyIcon fill="currentColor" />
-                </span>
-                <span>to create a new one</span>
-              </p>
+              {loginForm._seedPhrase.length === 0 && (
+                <p className="text-sm mt-4 text-neutral-700 font-bold tracking-wide flex flex-wrap items-center gap-1 justify-center">
+                  <span>Login with your secret key or click generate</span>
+                  <span className="inline-block">
+                    <KeyIcon fill="currentColor" />
+                  </span>
+                  <span>to create a new one</span>
+                </p>
+              )}
+              {loginForm._seedPhrase.length > 0 && (
+                <div>
+                  <p className="text-sm mt-4 text-neutral-700 font-bold tracking-wide flex flex-wrap items-center gap-1 justify-center text-center">
+                    Make sure you store a copy{" "}
+                    <span className="text-black">
+                      <CopyIcon fill="currentColor" size={16} />
+                    </span>{" "}
+                    of your secret somewhere safe. Hyphens (-) are required.{" "}
+                    <br />
+                    <br />
+                    <span className="font-bold text-neutral-700 bg-yellow-500 px-2">
+                      You cannot recover it later
+                    </span>
+                  </p>
+                </div>
+              )}
             </div>
             <div className="mt-4">
               <form className="grid gap-1" onSubmit={handleSubmit}>
@@ -202,7 +228,7 @@ const Login = () => {
                       {loginForm._seedPhrase.length > 0 && (
                         <span
                           onClick={handleCopy}
-                          className={`text-black ${copied && "text-teal-300 animate-pulse"}`}
+                          className={`text-black ${copied && "text-teal-700 animate-pulse"}`}
                         >
                           <CopyIcon fill="currentColor" size={22} />
                         </span>
@@ -210,33 +236,24 @@ const Login = () => {
                     </div>
                   </div>
                 </div>
-                {loginForm._seedPhrase.length > 0 && (
-                  <div>
-                    <p className="text-sm mt-4 text-neutral-700 font-bold tracking-wide flex flex-wrap items-center gap-1 justify-center text-center">
-                      Make sure you store a copy{" "}
-                      <span className="text-black">
-                        <CopyIcon fill="currentColor" size={16} />
-                      </span>{" "}
-                      of your secret somewhere safe. Hyphens (-) are required.
-                      You cannot recover it later.
-                    </p>
+
+                <div className="my-8">
+                  <div className="flex">
+                    <ModernCheckbox
+                      label="Remember me?"
+                      onChange={handleRememberMe}
+                      checked={loginForm._rememberMe}
+                    />
                   </div>
-                )}
-                <div className="flex items-center justify-end mt-8">
-                  <Toggle
-                    label="Remember me?"
-                    onChange={handleRememberMe}
-                    checkedStatus={loginForm._rememberMe}
-                  />
-                </div>
-                <div className="mt-1">
-                  <button
-                    disabled={loading || loginForm._seedPhrase.length === 0}
-                    type="submit"
-                    className={primaryFormButtonStyle}
-                  >
-                    Login
-                  </button>
+                  <div className="mt-1">
+                    <button
+                      disabled={loading || loginForm._seedPhrase.length === 0}
+                      type="submit"
+                      className={primaryFormButtonStyle}
+                    >
+                      Login
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>

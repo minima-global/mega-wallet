@@ -9,7 +9,9 @@ const DesktopNav = () => {
       <nav>
         <button
           className={`bg-black flex items-center justify-center gap-3 transition-all delay-100 duration-100 font-bold ${
-            _currentNavigation === "balance" ? " outline outline-teal-500" : ""
+            _currentNavigation === "balance"
+              ? "outline outline-teal-500 !bg-[#1B1B1B]"
+              : ""
           }`}
           disabled={_currentNavigation === "balance"}
           onClick={() => handleNavigation("balance")}
@@ -18,7 +20,7 @@ const DesktopNav = () => {
             xmlns="http://www.w3.org/2000/svg"
             className={`${
               _currentNavigation === "balance"
-                ? "text-white fill-teal-400 font-extrabold transition-all delay-100 duration-100"
+                ? "text-white font-extrabold transition-all delay-100 duration-100"
                 : ""
             }`}
             width="24"
@@ -37,7 +39,7 @@ const DesktopNav = () => {
           <p
             className={`${
               _currentNavigation === "balance"
-                ? "text-teal-500 font-extrabold transition-all delay-200 duration-100"
+                ? "font-extrabold transition-all delay-200 duration-100"
                 : ""
             }`}
           >
@@ -46,7 +48,9 @@ const DesktopNav = () => {
         </button>
         <button
           className={`bg-black flex items-center justify-center gap-3 transition-all delay-100 duration-100 font-bold ${
-            _currentNavigation === "send" ? " outline outline-teal-500" : ""
+            _currentNavigation === "send"
+              ? " outline outline-teal-500 !bg-[#1B1B1B]"
+              : ""
           }`}
           disabled={_currentNavigation === "send"}
           onClick={() => handleNavigation("send")}
@@ -55,7 +59,7 @@ const DesktopNav = () => {
             xmlns="http://www.w3.org/2000/svg"
             className={`${
               _currentNavigation === "send"
-                ? "text-white fill-teal-400 font-extrabold transition-all delay-100 duration-100"
+                ? "text-white font-extrabold transition-all delay-100 duration-100"
                 : ""
             }`}
             width="24"
@@ -74,7 +78,7 @@ const DesktopNav = () => {
           <p
             className={`${
               _currentNavigation === "send"
-                ? "text-teal-500 font-extrabold transition-all delay-200 duration-100"
+                ? " font-extrabold transition-all delay-200 duration-100"
                 : ""
             }`}
           >
@@ -83,7 +87,9 @@ const DesktopNav = () => {
         </button>
         <button
           className={`bg-black flex items-center justify-center gap-3 transition-all delay-100 duration-100 font-bold ${
-            _currentNavigation === "receive" ? " outline outline-teal-500" : ""
+            _currentNavigation === "receive"
+              ? " outline outline-teal-500 !bg-[#1B1B1B]"
+              : ""
           }`}
           disabled={_currentNavigation === "receive"}
           onClick={() => handleNavigation("receive")}
@@ -92,7 +98,7 @@ const DesktopNav = () => {
             xmlns="http://www.w3.org/2000/svg"
             className={`${
               _currentNavigation === "receive"
-                ? "text-white fill-teal-400 font-extrabold transition-all delay-100 duration-100"
+                ? "text-white font-extrabold transition-all delay-100 duration-100"
                 : ""
             }`}
             width="24"
@@ -112,7 +118,7 @@ const DesktopNav = () => {
           <p
             className={`${
               _currentNavigation === "receive"
-                ? "text-teal-500 font-extrabold transition-all delay-200 duration-100"
+                ? "font-extrabold transition-all delay-200 duration-100"
                 : ""
             }`}
           >
