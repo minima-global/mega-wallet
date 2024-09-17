@@ -74,7 +74,7 @@ const AnimatedDialog = ({
           <div
             onClick={dismiss}
             style={{ zIndex: !up ? zIndex - 1 : up - 2 }}
-            className={`fixed backdrop-blur-sm left-0 right-0 top-0 bottom-0 bg-neutral-200/90 dark:bg-neutral-200/90`}
+            className={`fixed backdrop-blur-sm left-0 right-0 top-0 bottom-0 bg-neutral-200/90 dark:bg-[#242424]/100`}
           />,
           document.body,
         )}

@@ -141,7 +141,7 @@ const TokenSelect = ({ _balance }: IProps) => {
       >
         <div className="relative left-0 right-0 bottom-0 top-0 bg-transparent">
           <div
-            className={`bg-black overflow-auto mx-auto md:w-full p-4 rounded ${
+            className={`overflow-auto mx-auto md:w-full p-4 rounded ${
               _balance.length < 5 ? "h-[50vh]" : "h-auto max-h-[50vh]"
             }`}
           >

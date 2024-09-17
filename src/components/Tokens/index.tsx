@@ -3,6 +3,7 @@ import { appContext } from "../../AppContext";
 
 import * as utils from "../../utils";
 import useFormatMinimaNumber from "../../utils/useMakeNumber";
+import { tokenAmountStyle, tokenNameStyle, tokenStyle } from "../../styles";
 
 interface IProps {
   selectionMode: boolean;
@@ -65,9 +66,7 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
           token.tokenid === "0x00" ? (
             <li
               onClick={selectToken ? () => selectToken(token) : () => null}
-              className={`grid grid-cols-[auto_1fr] border border-neutral-600 hover:border-neutral-500 items-center gap-2 bg-white dark:bg-[#1b1b1b] p-1 mb-2 rounded-lg ${
-                selectionMode ? "" : ""
-              }`}
+              className={`${tokenStyle} ${selectionMode ? "" : ""}`}
               key={token.tokenid}
             >
               <div className="aspect-square w-12 h-12 overflow-hidden">
@@ -79,29 +78,23 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
               </div>
               <div className="overflow-hidden border-l border-l-neutral-600 px-2">
                 <div className="grid grid-cols-[auto_1fr]">
-                  <h6 className="font-bold truncate text-neutral-400">
-                    Minima
-                  </h6>
+                  <h6 className={tokenNameStyle}>Minima</h6>
                 </div>
                 {!selectionMode && (
-                  <p className="text-sm truncate text-neutral-300">
+                  <p className={tokenAmountStyle}>
                     {makeMinimaNumber(token.confirmed, 2000)}
                     {token.unconfirmed != "0"
                       ? "/" + makeMinimaNumber(token.unconfirmed, 2000)
                       : null}
                   </p>
                 )}
-                {selectionMode && (
-                  <p className="font-bold text-sm text-neutral-300">MINIMA</p>
-                )}
+                {selectionMode && <p className={tokenAmountStyle}>MINIMA</p>}
               </div>
             </li>
           ) : (
             <li
               onClick={selectToken ? () => selectToken(token) : () => null}
-              className={`grid grid-cols-[auto_1fr] border border-neutral-600 hover:border-neutral-500 items-center gap-2 bg-white dark:bg-[#1b1b1b] p-1 mb-2 rounded-lg ${
-                selectionMode ? "" : ""
-              }`}
+              className={`${tokenStyle} ${selectionMode ? "" : ""}`}
               key={token.tokenid}
             >
               <div className="aspect-square w-12 h-12 overflow-hidden">
@@ -117,13 +110,13 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
               </div>
 
               <div className="overflow-hidden border-l border-l-neutral-600 px-2">
-                <h6 className="font-bold truncate text-neutral-400">
+                <h6 className={tokenNameStyle}>
                   {"name" in token.token && typeof token.token.name === "string"
                     ? token.token.name
                     : "N/A"}
                 </h6>
                 {!selectionMode && (
-                  <p className="text-sm truncate text-neutral-300">
+                  <p className={tokenAmountStyle}>
                     {makeMinimaNumber(token.confirmed, 2000)}
                     {token.unconfirmed != "0"
                       ? "/" + makeMinimaNumber(token.unconfirmed, 2000)
@@ -131,7 +124,7 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                   </p>
                 )}
                 {selectionMode && (
-                  <p className="text-sm truncate text-neutral-300">
+                  <p className={tokenAmountStyle}>
                     {token.token && "ticker" in token.token
                       ? token.token.ticker
                       : ""}

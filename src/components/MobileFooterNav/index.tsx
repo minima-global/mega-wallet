@@ -3,23 +3,23 @@ import { appContext } from "../../AppContext";
 
 const NavButton = ({ name, icon, isActive, onClick }) => (
   <button
-    className={`flex items-center justify-center gap-2 px-4 py-2 transition-all duration-200 ${
+    className={`flex flex-col items-center justify-center py-2 px-4 transition-all duration-200 ${
       isActive
-        ? "bg-white dark:bg-neutral-800 text-teal-600 dark:text-teal-400 border-b-2 border-teal-500"
-        : "bg-[#f0f0f0] dark:bg-[#2a2a2a] text-gray-600 dark:text-gray-300 hover:bg-[#e8e8e8] dark:hover:bg-[#303030]"
+        ? "text-teal-500"
+        : "text-gray-600 hover:text-teal-500 dark:text-gray-400 dark:hover:text-teal-400"
     }`}
     disabled={isActive}
     onClick={onClick}
     aria-current={isActive ? "page" : undefined}
   >
     {icon}
-    <span className={`text-sm ${isActive ? "font-semibold" : "font-medium"}`}>
+    <span className={`text-xs mt-1 ${isActive ? "font-bold" : "font-medium"}`}>
       {name}
     </span>
   </button>
 );
 
-const DesktopNav = () => {
+const MobileFooterNav = () => {
   const { _currentNavigation, handleNavigation } = useContext(appContext);
 
   const navItems = [
@@ -84,24 +84,22 @@ const DesktopNav = () => {
   ];
 
   return (
-    <nav
-      className=" justify-center p-2 hidden md:flex"
-      aria-label="Main Navigation"
-    >
-      <ul className="flex space-x-2">
-        {navItems.map((item) => (
-          <li key={item.name}>
+    <footer className="w-full bg-white dark:bg-neutral-900 shadow-lg block md:hidden">
+      <nav aria-label="Footer Navigation">
+        <div className="grid grid-cols-3 px-4">
+          {navItems.map((item) => (
             <NavButton
+              key={item.name}
               name={item.name}
               icon={item.icon}
               isActive={_currentNavigation === item.name.toLowerCase()}
               onClick={() => handleNavigation(item.name.toLowerCase())}
             />
-          </li>
-        ))}
-      </ul>
-    </nav>
+          ))}
+        </div>
+      </nav>
+    </footer>
   );
 };
 
-export default DesktopNav;
+export default MobileFooterNav;

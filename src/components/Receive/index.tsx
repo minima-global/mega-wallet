@@ -1,13 +1,15 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import styles from "./Receive.module.css";
 import { appContext } from "../../AppContext";
 import { useSpring, animated, config } from "react-spring";
 import QRCode from "react-qr-code";
 import * as utils from "../../utils";
+import { titleStyle } from "../../styles";
+import isMobileDevice from "../../utils/isMobile";
 
 const Receive = () => {
-  const { _currentNavigation, _address, _promptLogin } = useContext(appContext);
-  const inputRef = useRef(null);
+  const { _currentNavigation, _address, _promptLogin, notify } =
+    useContext(appContext);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const [copied, setCopied] = useState(false);
 
@@ -30,11 +32,19 @@ const Receive = () => {
 
   const handleCopy = () => {
     setCopied(true);
+    const isMobile = isMobileDevice();
+
+    if (!isMobile) {
+      notify("Copied your address to clipboard");
+    }
     utils.copyToClipboard(_address);
   };
 
   const handleDoubleClick = () => {
     handleCopy();
+    if (inputRef.current) {
+      inputRef.current.select();
+    }
   };
 
   if (_currentNavigation !== "receive" || _promptLogin) {
@@ -67,81 +77,62 @@ const Receive = () => {
 
   return (
     <animated.div style={springProps}>
-      <section className={styles["tokens"]}>
-        <div className="mx-auto">
-          <QRCode value={_address} />
+      <div className="max-w-md mx-auto p-6 rounded-lg">
+        <div className="flex flex-col items-center space-y-6">
+          <div className="bg-white dark:bg-[#1b1b1b] p-4 rounded-lg shadow-inner shadow-neutral-200 dark:shadow-[#1b1b1b]">
+            <QRCode value={_address} size={200} />
+          </div>
 
-          <input
-            ref={inputRef}
-            readOnly
-            value={_address}
-            type="text"
-            name="amount"
-            placeholder="Your amount"
-            className="mb-2 w-full mt-8"
-            onDoubleClick={handleDoubleClick}
-          />
-          <button
-            type="button"
-            onClick={handleCopy}
-            style={{
-              appearance: "none",
-              padding: 8,
-              border: 0,
-              outline: 0,
-              cursor: "pointer",
-            }}
-            className={`${
-              copied
-                ? "outline-2 outline-offset-2 shadow-2xl outline-red-500 "
-                : ""
-            } text-black mx-auto relative items-center w-full mt-1 font-bold text-grey bg-teal-300 max-w-[200px] flex justify-between dark:text-black`}
-          >
-            {!copied ? "Copy" : "Copied"}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="28"
-              viewBox="0 -960 960 960"
-              width="28"
-              style={{
-                color: "#0809ab",
-                position: "relative",
-                top: 0,
-                right: 0,
-                strokeDasharray: 50,
-                strokeDashoffset: copied ? -50 : 0,
-                transition: "all 300ms ease-in-out",
-                opacity: copied ? 0 : 1,
-              }}
-            >
-              <path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z" />
-            </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              style={{
-                color: "black",
-                position: "absolute",
-                top: 12,
-                right: 10,
-                strokeDasharray: 50,
-                strokeDashoffset: copied ? 0 : -50,
-                transition: "all 300ms ease-in-out",
-              }}
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M5 12l5 5l10 -10" />
-            </svg>
-          </button>
+          <div className="w-full space-y-2">
+            <label htmlFor="address" className={titleStyle}>
+              Your Address
+            </label>
+            <div className="flex text-sm text-gray-900 bg-gray-100 border border-gray-300 rounded-md focus:border-transparent dark:bg-[#1b1b1b] dark:text-white dark:border-neutral-700 rounded-r-lg">
+              <input
+                ref={inputRef}
+                id="address"
+                readOnly
+                value={_address}
+                type="text"
+                className="w-full bg-transparent focus:outline-none px-3 truncate"
+                onDoubleClick={handleDoubleClick}
+              />
+              <button
+                type="button"
+                onClick={handleCopy}
+                className={`rounded-l-none text-sm rounded-md transition-all duration-200 ${
+                  copied
+                    ? "bg-teal-500 text-white dark:text-[#1b1b1b]"
+                    : "bg-teal-500 text-white hover:bg-teal-600 dark:text-[#1b1b1b]"
+                }`}
+              >
+                {copied ? (
+                  <span className="flex items-center">
+                    Copied
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 ml-1"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                ) : (
+                  "Copy"
+                )}
+              </button>
+            </div>
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              Double-click to copy the entire address
+            </p>
+          </div>
         </div>
-      </section>
+      </div>
     </animated.div>
   );
 };

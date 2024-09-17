@@ -5,6 +5,8 @@ import Dialog from "../UI/Dialog";
 import * as utils from "../../utils";
 import AnimatedDialog from "../UI/AnimatedDialog";
 import {
+  dialogTitleStyle,
+  inputIconStyle,
   inputWrapperStyle,
   primaryFormButtonStyle,
   wrappedInputStyle,
@@ -28,9 +30,6 @@ const Login = () => {
     handleNavigation,
     notify,
   } = useContext(appContext);
-
-  // will use this to generate a help section later
-  const [step] = useState(0);
 
   const [copied, setCopied] = useState(false);
 
@@ -129,7 +128,7 @@ const Login = () => {
           <div className="z-[1000] bg-white rounded-lg mx-4 md:mx-0 min-h-[40vh] p-4  text-left grid grid-cols-1 grid-rows-[auto_1fr] shadow-xl">
             <div className="grid grid-cols-[auto_1fr] gap-2 items-center">
               <img alt="brand-icon" src="./assets/icon.svg" className="w-8" />
-              <h1 className="text-2xl text-black dark:text-black font-bold">
+              <h1 className="text-2xl text-black dark:text-neutral-100 font-bold">
                 Wallet
               </h1>
             </div>
@@ -153,112 +152,111 @@ const Login = () => {
 
   return (
     <AnimatedDialog up={2000} display={_promptLogin} dismiss={() => null}>
-      <div>
+      <div className="min-h-[calc(100vh_-_100px)] flex flex-col md:block">
         <div className="flex gap-2 justify-center">
           <div className="w-8 h-8 overflow-hidden rounded-lg flex">
             <img
               alt="brand-icon"
               src="./assets/icon.svg"
-              className="h-full w-full aspect-square"
+              className="h-full w-full aspect-square block dark:hidden"
+            />
+            <img
+              alt="brand-icon"
+              src="./assets/icon-white.svg"
+              className="h-full w-full aspect-square hidden dark:block opacity-30"
             />
           </div>
-          <h1 className="text-2xl tracking-wide my-auto font-bold text-black">
-            Wallet
-          </h1>
+          <h1 className={dialogTitleStyle}>Wallet</h1>
         </div>
-        {step === 0 && (
-          <>
-            <div>
-              {loginForm._seedPhrase.length === 0 && (
-                <p className="text-sm mt-4 text-neutral-700 font-bold tracking-wide flex flex-wrap items-center gap-1 justify-center">
-                  <span>Login with your secret key or click generate</span>
-                  <span className="inline-block">
-                    <KeyIcon fill="currentColor" />
-                  </span>
-                  <span>to create a new one</span>
-                </p>
-              )}
-              {loginForm._seedPhrase.length > 0 && (
-                <div>
-                  <p className="text-sm mt-4 text-neutral-700 font-bold tracking-wide flex flex-wrap items-center gap-1 justify-center text-center">
-                    Make sure you store a copy{" "}
-                    <span className="text-black">
-                      <CopyIcon fill="currentColor" size={16} />
-                    </span>{" "}
-                    of your secret somewhere safe. Hyphens (-) are required.{" "}
-                    <br />
-                    <br />
-                    <span className="font-bold text-neutral-700 bg-yellow-500 px-2">
-                      You cannot recover it later
-                    </span>
-                  </p>
-                </div>
-              )}
-            </div>
-            <div className="mt-4">
-              <form className="grid gap-1" onSubmit={handleSubmit}>
-                <div className={inputWrapperStyle}>
-                  <span className="text-xs text-neutral-600 font-bold">
-                    Enter your secret
-                  </span>
-                  <div className="flex">
-                    <input
-                      type={`${visibility ? "text" : "password"}`}
-                      placeholder="Your secret phrase"
-                      name="_seedPhrase"
-                      onChange={handleInputChange}
-                      value={loginForm._seedPhrase}
-                      className={`${wrappedInputStyle} flex-grow`}
-                    />
-                    <div className="flex gap-2">
-                      <span
-                        onClick={handleToggleVisibility}
-                        className="text-black"
-                      >
-                        {!visibility && (
-                          <VisibleIcon fill="currentColor" size={22} />
-                        )}
-                        {visibility && (
-                          <HideIcon fill="currentColor" size={22} />
-                        )}
-                      </span>
-                      <span onClick={handleGenerate} className="text-black">
-                        <KeyIcon fill="currentColor" size={22} />
-                      </span>
-                      {loginForm._seedPhrase.length > 0 && (
-                        <span
-                          onClick={handleCopy}
-                          className={`text-black ${copied && "text-teal-700 animate-pulse"}`}
-                        >
-                          <CopyIcon fill="currentColor" size={22} />
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
 
-                <div className="my-8">
-                  <div className="flex">
-                    <ModernCheckbox
-                      label="Remember me?"
-                      onChange={handleRememberMe}
-                      checked={loginForm._rememberMe}
-                    />
-                  </div>
-                  <div className="mt-1">
-                    <button
-                      disabled={loading || loginForm._seedPhrase.length === 0}
-                      type="submit"
-                      className={primaryFormButtonStyle}
-                    >
-                      Login
-                    </button>
-                  </div>
-                </div>
-              </form>
+        <div>
+          {loginForm._seedPhrase.length === 0 && (
+            <p className="text-sm mt-4 text-neutral-700 font-bold tracking-wide flex flex-wrap items-center gap-1 justify-center">
+              <span>Login with your secret key or click generate</span>
+              <span className="inline-block">
+                <KeyIcon fill="currentColor" />
+              </span>
+              <span>to create a new one</span>
+            </p>
+          )}
+          {loginForm._seedPhrase.length > 0 && (
+            <div className="mb-4">
+              <p className="text-sm mt-4 text-neutral-700 dark:text-neutral-600 font-bold tracking-wide flex flex-wrap items-center gap-1 justify-center text-center">
+                Make sure you store a copy{" "}
+                <span className={inputIconStyle}>
+                  <CopyIcon fill="currentColor" size={16} />
+                </span>{" "}
+                of your secret somewhere safe. Hyphens (-) are required. <br />
+                <br />
+                <span className="font-bold text-neutral-700 bg-yellow-500 dark:bg-neutral-400 dark:font-semibold dark:shadow-inner px-2">
+                  You cannot recover it later
+                </span>
+              </p>
             </div>
-          </>
-        )}
+          )}
+        </div>
+
+        <form className="flex flex-col flex-grow gap-1" onSubmit={handleSubmit}>
+          <div className="flex-grow">
+            <div
+              className={`${inputWrapperStyle} dark:!border-neutral-100 dark:!border`}
+            >
+              <span className="text-xs text-neutral-600 font-bold">
+                Enter your secret
+              </span>
+              <div className="flex">
+                <input
+                  type={`${visibility ? "text" : "password"}`}
+                  placeholder="Your secret phrase"
+                  name="_seedPhrase"
+                  onChange={handleInputChange}
+                  value={loginForm._seedPhrase}
+                  className={`${wrappedInputStyle} flex-grow`}
+                />
+                <div className="flex gap-2">
+                  <span
+                    onClick={handleToggleVisibility}
+                    className={inputIconStyle}
+                  >
+                    {!visibility && (
+                      <VisibleIcon fill="currentColor" size={22} />
+                    )}
+                    {visibility && <HideIcon fill="currentColor" size={22} />}
+                  </span>
+                  <span onClick={handleGenerate} className={inputIconStyle}>
+                    <KeyIcon fill="currentColor" size={22} />
+                  </span>
+                  {loginForm._seedPhrase.length > 0 && (
+                    <span
+                      onClick={handleCopy}
+                      className={`${inputIconStyle} ${copied && "text-teal-700 animate-pulse"}`}
+                    >
+                      <CopyIcon fill="currentColor" size={22} />
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="mt-auto md:my-8">
+            <div className="flex mb-4">
+              <ModernCheckbox
+                label="Remember me?"
+                onChange={handleRememberMe}
+                checked={loginForm._rememberMe}
+              />
+            </div>
+            <div className="mt-1">
+              <button
+                disabled={loading || loginForm._seedPhrase.length === 0}
+                type="submit"
+                className={primaryFormButtonStyle}
+              >
+                Login
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </AnimatedDialog>
   );

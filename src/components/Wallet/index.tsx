@@ -3,7 +3,7 @@ import { appContext } from "../../AppContext";
 import Tokens from "../Tokens";
 import { useSpring, animated, config } from "react-spring";
 import FetchBalanceButton from "../FetchBalanceButton";
-import { searchInputStyle } from "../../styles";
+import { searchInputStyle, titleStyle } from "../../styles";
 
 const Wallet = () => {
   const { _currentNavigation, _promptLogin } = useContext(appContext);
@@ -37,9 +37,7 @@ const Wallet = () => {
     <animated.div style={springProps}>
       <section>
         <div className="flex">
-          <h6 className="flex-grow font-bold tracking-wide text-neutral-400">
-            Your tokens
-          </h6>
+          <h6 className={titleStyle}>Your tokens</h6>
           <FetchBalanceButton />
         </div>
         <input

@@ -59,6 +59,8 @@ const AppProvider = ({ children }: IProps) => {
   });
 
   const getBalance = () => {
+    if (!_address) return;
+
     setPromptFetchBalance(true);
     return fetch(`/api/wallet/balance?address=${_address}`, {
       method: "POST",
@@ -74,6 +76,7 @@ const AppProvider = ({ children }: IProps) => {
         }
       })
       .then((json) => {
+        console.log(json);
         json.response.map(createImages);
 
         setBalance(json.response);
@@ -94,7 +97,7 @@ const AppProvider = ({ children }: IProps) => {
     if (_address) {
       getBalance();
     }
-  }, [_currentNavigation, _promptTokenSelectionDialog]);
+  }, [_currentNavigation, _address, _promptTokenSelectionDialog]);
 
   useEffect(() => {
     const rem = utils.getCookie("rememberme");

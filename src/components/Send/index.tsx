@@ -17,11 +17,14 @@ import CaretIcon from "../UI/Icons/CaretIcon";
 
 const yupValidator = Yup.object().shape({
   token: Yup.object().required("Token field required"),
-  amount: Yup.string()
-    .required("Amount field required")
-    .matches(
-      /^[^a-zA-Z\\;'",]+$/,
-      'Invalid number.  Make sure to use only digits, "." for decimals and nothing for thousands. (e.g 1000.234)',
+  amount: Yup.number()
+    .typeError("Amount must be a number") // Ensures input is a valid number
+    .positive("Amount must be greater than zero") // Ensure it's a positive number
+    .required("Amount field is required")
+    .test(
+      "is-decimal",
+      'Invalid number. Make sure to use only digits, "." for decimals and no separators for thousands (e.g., 1000.234)',
+      (value) => /^[^a-zA-Z\\;',"]+$/.test(value?.toString()), // Custom regex to match digits and decimals
     )
     .nullable(),
   address: Yup.string()
@@ -172,68 +175,74 @@ const Send = () => {
             handleSubmit,
             isSubmitting,
           }) => (
-            <form
-              ref={myForm}
-              onSubmit={handleSubmit}
-              className="grid gap-2 my-4"
-            >
-              <div className={`${inputWrapperStyle}`}>
-                <label className="text-xs text-neutral-100 dark:text-neutral-500">
-                  Enter amount
-                </label>
-                <div className="flex">
-                  <input
-                    disabled={isSubmitting}
-                    type="number"
-                    step="any"
-                    required
-                    {...getFieldProps("amount")}
-                    placeholder="Your amount"
-                    className={`${wrappedInputStyle} font-mono text-lg flex-grow`}
-                  />
-
-                  <TokenSelect _balance={_balance} />
-                </div>
-
-                {touched.amount && errors.amount && (
-                  <span className="text-xs text-neutral-100 rounded">
-                    {errors.amount}
-                  </span>
-                )}
-              </div>
-
-              <div className={`${inputWrapperStyle}`}>
-                <label className="text-xs text-neutral-100 dark:text-neutral-500">
-                  Enter recipient address
-                </label>
-                <div className="flex">
-                  <input
-                    autoComplete="off"
-                    disabled={isSubmitting}
-                    type="text"
-                    required
-                    {...getFieldProps("address")}
-                    placeholder="Mx/0x"
-                    className={`${wrappedInputStyle} font-mono text-lg flex-grow`}
-                  />
-                </div>
-
-                {touched.address && errors.address && (
-                  <span className="text-xs text-neutral-100 rounded">
-                    {errors.address}
-                  </span>
-                )}
-              </div>
-
-              <button
-                disabled={loading || !isValid}
-                type="submit"
-                className={`${primaryFormButtonStyle} my-8`}
+            <div className="min-h-[calc(100vh_-_200px)] flex flex-col md:block">
+              <form
+                ref={myForm}
+                onSubmit={handleSubmit}
+                className="gap-4 my-4 flex flex-col flex-grow"
               >
-                {loading && "Sending..."}
-                {!loading && "Send"}
-              </button>
-            </form>
+                <div className="flex-grow space-y-4">
+                  <div className={`${inputWrapperStyle}`}>
+                    <label className="text-xs text-neutral-400 dark:text-neutral-500">
+                      Enter amount
+                    </label>
+                    <div className="flex">
+                      <input
+                        disabled={isSubmitting}
+                        type="number"
+                        step="any"
+                        required
+                        {...getFieldProps("amount")}
+                        placeholder="Your amount"
+                        className={`${wrappedInputStyle} font-mono text-lg flex-grow ${touched.amount && errors.amount && "underline"} `}
+                      />
+
+                      <TokenSelect _balance={_balance} />
+                    </div>
+
+                    {touched.amount && errors.amount && (
+                      <span className="text-xs text-neutral-600 dark:text-neutral-100 rounded">
+                        {errors.amount}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className={`${inputWrapperStyle}`}>
+                    <label className="text-xs text-neutral-400 dark:text-neutral-500">
+                      Enter recipient address
+                    </label>
+                    <div className="flex">
+                      <input
+                        autoComplete="off"
+                        disabled={isSubmitting}
+                        type="text"
+                        required
+                        {...getFieldProps("address")}
+                        placeholder="Mx/0x"
+                        className={`${wrappedInputStyle} font-mono text-lg flex-grow ${touched.address && errors.address && "underline"}`}
+                      />
+                    </div>
+
+                    {touched.address && errors.address && (
+                      <span className="text-xs text-neutral-600 dark:text-neutral-100 rounded">
+                        {errors.address}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="mt-auto">
+                  <button
+                    disabled={loading || !isValid}
+                    type="submit"
+                    className={`${primaryFormButtonStyle} my-8`}
+                  >
+                    {loading && "Sending..."}
+                    {!loading && "Send"}
+                  </button>
+                </div>
+              </form>
+            </div>
           )}
         </Formik>
       </section>
