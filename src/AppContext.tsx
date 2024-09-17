@@ -17,6 +17,7 @@ interface KeyUsages {
 const credentials = btoa(`elias:123`);
 
 const AppProvider = ({ children }: IProps) => {
+  const loaded = useRef(null);
   /** This is the main address we use after giving the secret key */
   const [_address, setAddress] = useState<null | string>(null);
   const [_balance, setBalance] = useState<null | object[]>(null);
@@ -76,7 +77,6 @@ const AppProvider = ({ children }: IProps) => {
         }
       })
       .then((json) => {
-        console.log(json);
         json.response.map(createImages);
 
         setBalance(json.response);

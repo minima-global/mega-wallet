@@ -28,8 +28,6 @@ const Dashboard = () => {
   const {
     promptLogout,
     loginForm,
-    _currentNavigation,
-    handleNavigation,
     _promptLogoutDialog,
     promptLogoutDialog,
     notify,
