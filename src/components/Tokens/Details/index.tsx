@@ -2,14 +2,11 @@ import Decimal from "decimal.js";
 import NFTDisplay from "../../NFTDisplay";
 import AnimatedDialog from "../../UI/AnimatedDialog";
 import CloseIcon from "../../UI/Icons/CloseIcon";
-import { inputWrapperStyle, wrappedInputStyle } from "../../../styles";
+import { wrappedInputStyle } from "../../../styles";
 
-interface IProps {
-  token: null | any;
-  dismiss: () => void;
-}
 const Details = ({ token, dismiss }) => {
   const filterExtraMetadata = (token) => {
+    if (token && token.tokenid === "0x00") return false;
     const defaultProperties = [
       "name",
       "url",
@@ -37,6 +34,7 @@ const Details = ({ token, dismiss }) => {
   const oToken = {
     extraMetadata: filterExtraMetadata(token),
   };
+  console.log("oToken", oToken);
 
   console.log("token", token);
   const tokenImage =
@@ -46,13 +44,13 @@ const Details = ({ token, dismiss }) => {
         ? token.token.url // Use the token URL if it's available and not empty
         : "./assets/default-token.svg"; // Fallback to a default image
   const tokenName =
-    token && token === "0x00"
+    token && token.tokenid === "0x00"
       ? "Minima"
       : token?.token?.name && token?.token?.name.length > 0
         ? token.token.name
         : "No Name";
   const tokenDescription =
-    token && token === "0x00"
+    token && token.tokenid === "0x00"
       ? "Minima's Official Token"
       : token?.token?.description && token?.token?.description.length > 0
         ? token.token.description
@@ -80,6 +78,8 @@ const Details = ({ token, dismiss }) => {
       ? token.token.webvalidate
       : false;
 
+  // TO-DO webvalidate
+
   console.log("token validate", tokenWebValidate);
   return (
     <AnimatedDialog up={30} display={token !== null} dismiss={() => null}>
@@ -97,7 +97,10 @@ const Details = ({ token, dismiss }) => {
             description={tokenDescription}
           />
           <div className="w-full max-w-md space-y-4">
-            <h2 className="text-2xl font-bold text-center">{tokenName}</h2>
+            <div>
+              <h2 className="text-2xl font-bold text-center">{tokenName}</h2>
+              <div></div>
+            </div>
 
             <div className="bg-neutral-100 dark:bg-neutral-900 rounded-lg p-4 space-y-2 shadow-inner">
               <p className="text-sm text-neutral-600 dark:text-neutral-500">
@@ -139,7 +142,7 @@ const Details = ({ token, dismiss }) => {
 
                 <input
                   readOnly
-                  className={`${wrappedInputStyle} truncate pl-4`}
+                  className={`${wrappedInputStyle} dark:!text-neutral-200 truncate pl-4 text-right`}
                   value={token && token.tokenid}
                 />
               </div>
