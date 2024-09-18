@@ -14,10 +14,8 @@ interface KeyUsages {
   address: number;
 }
 
-const credentials = btoa(`elias:123`);
-
 const AppProvider = ({ children }: IProps) => {
-  const loaded = useRef(null);
+  const loaded = useRef(false);
   /** This is the main address we use after giving the secret key */
   const [_address, setAddress] = useState<null | string>(null);
   const [_balance, setBalance] = useState<null | object[]>(null);
@@ -63,34 +61,18 @@ const AppProvider = ({ children }: IProps) => {
     if (!_address) return;
 
     setPromptFetchBalance(true);
-    return fetch(`/api/wallet/balance?address=${_address}`, {
-      method: "POST",
-      headers: {
-        Authorization: `Basic ${credentials}`,
-      },
-    })
-      .then(async (resp) => {
-        if (resp.ok) {
-          return resp.json(); // Parse the JSON response
-        } else {
-          throw new Error("Failed to get balance for" + _address);
-        }
-      })
-      .then((json) => {
-        json.response.map(createImages);
+    (window as any).MDS.cmd(
+      `balance megammr:true address:${_address}`,
+      function (resp) {
+        resp.response.map(createImages);
 
-        setBalance(json.response);
+        setBalance(resp.response);
 
         setTimeout(() => {
           setPromptFetchBalance(false);
         }, 2500);
-
-        return true; // Resolve with the keycode
-      })
-      .catch((err) => {
-        console.error("Error:", err);
-        throw err; // Forward the error for any further catch blocks
-      });
+      },
+    );
   };
 
   useEffect(() => {
@@ -98,6 +80,57 @@ const AppProvider = ({ children }: IProps) => {
       getBalance();
     }
   }, [_currentNavigation, _address, _promptTokenSelectionDialog]);
+
+  useEffect(() => {
+    if (!loaded.current) {
+      loaded.current = true;
+
+      (window as any).MDS.init((msg) => {
+        if (msg.event === "inited") {
+          (window as any).MDS.cmd("megammr", (resp) => {
+            if (!resp.response.enabled) {
+              setPromptMegaMMR(true);
+            }
+            if (resp.response.enabled) {
+              setPromptMegaMMR(false);
+            }
+          });
+
+          const rem = utils.getCookie("rememberme");
+
+          if (rem === "true") {
+            setLoginForm((prevState) => ({
+              ...prevState,
+              _rememberMe: true,
+            })); // this'll keep the state of the checkbox
+
+            const secretSauce: any = utils.getCookie("secretsauce");
+
+            setLoginForm((prevState) => ({
+              ...prevState,
+              _seedPhrase: secretSauce,
+            })); // this'll keep the state of the checkbox
+
+            createAccount(secretSauce);
+          }
+
+          (async () => {
+            await sql(
+              `CREATE TABLE IF NOT EXISTS cache (name varchar(255), data longtext);`,
+            );
+
+            const keyUsage: any = await sql(
+              `SELECT * FROM cache WHERE name = 'KEYUSAGE'`,
+            );
+
+            if (keyUsage) {
+              setKeyUsages(JSON.parse(keyUsage.DATA));
+            }
+          })();
+        }
+      });
+    }
+  }, [loaded]);
 
   useEffect(() => {
     const rem = utils.getCookie("rememberme");
@@ -163,31 +196,27 @@ const AppProvider = ({ children }: IProps) => {
     }
   };
 
-  const createAccount = async (secretCode: string) => {
-    return fetch(`/api/wallet/seedphrase?seedphrase=${secretCode}`, {
-      method: "POST",
-      headers: {
-        Authorization: `Basic ${credentials}`,
-      },
-    })
-      .then(async (resp) => {
-        if (resp.ok) {
-          return resp.json(); // Parse the JSON response
-        } else {
-          throw new Error("Failed to generate account for" + secretCode);
-        }
-      })
-      .then((json) => {
-        const { miniaddress, privatekey, script } = json.response;
+  const createAccount = (secretCode: string) => {
+    // Generate a key
+    (window as any).MDS.cmd(
+      `keys action:genkey phrase:"${secretCode}"`,
+      function (resp) {
+        // Get the address
+        const { miniaddress, privatekey, script } = resp.response;
         setPrivateKey(privatekey);
         setScript(script);
         setAddress(miniaddress);
-        return true;
-      })
-      .catch((err) => {
-        console.error("Error:", err);
-        throw err; // Forward the error for any further catch blocks
-      });
+
+        (window as any).MDS.cmd(
+          `balance megammr:true address:${miniaddress}`,
+          function (resp) {
+            resp.response.map(createImages);
+
+            setBalance(resp.response);
+          },
+        );
+      },
+    );
   };
 
   const createImages = async (t: any) => {
@@ -213,26 +242,11 @@ const AppProvider = ({ children }: IProps) => {
   };
 
   const generateSecret = () => {
-    return fetch("/api/api/random", {
-      method: "POST",
-      headers: {
-        Authorization: `Basic ${credentials}`,
-      },
-    })
-      .then(async (resp) => {
-        if (resp.ok) {
-          return resp.json(); // Parse the JSON response
-        } else {
-          throw new Error("Failed to generate secret");
-        }
-      })
-      .then((json) => {
-        return json.response.keycode; // Resolve with the keycode
-      })
-      .catch((err) => {
-        console.error("Error:", err);
-        throw err; // Forward the error for any further catch blocks
+    return new Promise((resolve) => {
+      (window as any).MDS.cmd("random", (resp) => {
+        resolve(resp.response.keycode);
       });
+    });
   };
 
   const updateKeyUsage = async (address: string, count: number) => {
@@ -271,7 +285,6 @@ const AppProvider = ({ children }: IProps) => {
   return (
     <appContext.Provider
       value={{
-        credentials,
         notify,
         _promptMegaMMR,
         promptMegaMMR,

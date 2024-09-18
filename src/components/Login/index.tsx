@@ -171,7 +171,7 @@ const Login = () => {
 
         <div>
           {loginForm._seedPhrase.length === 0 && (
-            <p className="text-sm mt-4 text-neutral-700 font-bold tracking-wide flex flex-wrap items-center gap-1 justify-center">
+            <p className="text-sm mt-4 text-neutral-700 font-bold tracking-wide flex flex-wrap items-center gap-1 justify-center mb-4">
               <span>Login with your secret key or click generate</span>
               <span className="inline-block">
                 <KeyIcon fill="currentColor" />

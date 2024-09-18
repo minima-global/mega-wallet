@@ -3,6 +3,7 @@ import NFTDisplay from "../../NFTDisplay";
 import AnimatedDialog from "../../UI/AnimatedDialog";
 import CloseIcon from "../../UI/Icons/CloseIcon";
 import { wrappedInputStyle } from "../../../styles";
+import CheckmarkIcon from "../../UI/Icons/CheckmarkIcon";
 
 const Details = ({ token, dismiss }) => {
   const filterExtraMetadata = (token) => {
@@ -30,13 +31,34 @@ const Details = ({ token, dismiss }) => {
     return {}; // Return an empty object if token.token is null
   };
 
+  const validateToken = (token: any): boolean => {
+    if (!token) return;
+
+    if (token.tokenid === "0x00") return true;
+
+    (window as any).MDS.cmd(
+      "tokenvalidate tokenid:" + token.tokenid,
+      (resp) => {
+        console.log(resp);
+
+        if (!resp.status) {
+          return true;
+        }
+
+        if (resp.response.valid) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+    );
+  };
+
   // Filtered extra metadata
   const oToken = {
     extraMetadata: filterExtraMetadata(token),
   };
-  console.log("oToken", oToken);
 
-  console.log("token", token);
   const tokenImage =
     token && token.tokenid === "0x00"
       ? "./assets/token.svg" // Use default image for token id "0x00"
@@ -70,17 +92,6 @@ const Details = ({ token, dismiss }) => {
         ? token.token.external_url
         : "";
 
-  const tokenWebValidate =
-    token &&
-    token !== "0x00" &&
-    token?.token?.webvalidate &&
-    token?.token?.webvalidate.length > 0
-      ? token.token.webvalidate
-      : false;
-
-  // TO-DO webvalidate
-
-  console.log("token validate", tokenWebValidate);
   return (
     <AnimatedDialog up={30} display={token !== null} dismiss={() => null}>
       <div>
@@ -95,11 +106,16 @@ const Details = ({ token, dismiss }) => {
             imageUrl={tokenImage}
             name={tokenName}
             description={tokenDescription}
+            isTokenValidated={!!validateToken(token)}
           />
           <div className="w-full max-w-md space-y-4">
-            <div>
+            <div className="flex gap-1 justify-center items-center">
               <h2 className="text-2xl font-bold text-center">{tokenName}</h2>
-              <div></div>
+              {!!validateToken(token) && (
+                <div className="!text-blue-500">
+                  <CheckmarkIcon fill="currentColor" size={24} />
+                </div>
+              )}
             </div>
 
             <div className="bg-neutral-100 dark:bg-neutral-900 rounded-lg p-4 space-y-2 shadow-inner">

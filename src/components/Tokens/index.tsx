@@ -5,6 +5,7 @@ import * as utils from "../../utils";
 import useFormatMinimaNumber from "../../utils/useMakeNumber";
 import { tokenAmountStyle, tokenNameStyle, tokenStyle } from "../../styles";
 import Details from "./Details";
+import CheckmarkIcon from "../UI/Icons/CheckmarkIcon";
 
 interface IProps {
   selectionMode: boolean;
@@ -50,6 +51,25 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
     );
   }
 
+  const validateToken = (token: any): boolean => {
+    (window as any).MDS.cmd(
+      "tokenvalidate tokenid:" + token.tokenid,
+      (resp) => {
+        console.log(resp);
+
+        if (!resp.status) {
+          return true;
+        }
+
+        if (resp.response.valid) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+    );
+  };
+
   return (
     <>
       <Details token={viewToken} dismiss={() => setViewToken(null)} />
@@ -85,8 +105,11 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                   />
                 </div>
                 <div className="overflow-hidden border-l border-l-neutral-600 px-2">
-                  <div className="grid grid-cols-[auto_1fr]">
+                  <div className="flex">
                     <h6 className={tokenNameStyle}>Minima</h6>
+                    <div className="!text-blue-500 my-auto ml-1">
+                      <CheckmarkIcon fill="currentColor" size={16} />
+                    </div>
                   </div>
                   {!selectionMode && (
                     <p className={tokenAmountStyle}>
@@ -122,12 +145,20 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                 </div>
 
                 <div className="overflow-hidden border-l border-l-neutral-600 px-2">
-                  <h6 className={tokenNameStyle}>
-                    {"name" in token.token &&
-                    typeof token.token.name === "string"
-                      ? token.token.name
-                      : "N/A"}
-                  </h6>
+                  <div className="flex">
+                    <h6 className={tokenNameStyle}>
+                      {"name" in token.token &&
+                      typeof token.token.name === "string"
+                        ? token.token.name
+                        : "N/A"}
+                    </h6>
+                    {validateToken(token) && (
+                      <div className="!text-blue-500 my-auto ml-1">
+                        <CheckmarkIcon fill="currentColor" size={16} />
+                      </div>
+                    )}
+                  </div>
+
                   {!selectionMode && (
                     <p className={tokenAmountStyle}>
                       {makeMinimaNumber(token.confirmed, 2000)}

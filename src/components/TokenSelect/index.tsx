@@ -173,11 +173,14 @@ const TokenSelect = ({ _balance }: IProps) => {
                 type="search"
                 className={searchInputStyle}
               />
-              <Tokens
-                filterText={filter}
-                selectionMode
-                selectToken={handleTokenSelection}
-              />
+
+              <div className="relative overflow-y-auto h-[260px]">
+                <Tokens
+                  filterText={filter}
+                  selectionMode
+                  selectToken={handleTokenSelection}
+                />
+              </div>
             </section>
           </div>
         </div>

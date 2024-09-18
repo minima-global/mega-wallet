@@ -1,13 +1,17 @@
+import CheckmarkIcon from "../UI/Icons/CheckmarkIcon";
+
 interface NFTDisplayProps {
   imageUrl: string;
   name: string;
   description: string;
+  isTokenValidated: boolean;
 }
 
 export default function NFTDisplay({
   imageUrl,
   name,
   description,
+  isTokenValidated,
 }: NFTDisplayProps) {
   return (
     <div className="relative w-64 h-64 group">
@@ -20,7 +24,14 @@ export default function NFTDisplay({
         />
         <div className="absolute inset-0 bg-black bg-opacity-50 transition-opacity duration-300 opacity-0 group-hover:opacity-100"></div>
         <div className="absolute inset-0 p-4 flex flex-col justify-end transition-all duration-300 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
-          <h3 className="text-white text-xl font-bold mb-2">{name}</h3>
+          <div className="flex gap-1">
+            <h3 className="text-white text-xl font-bold mb-2">{name}</h3>
+            {!!isTokenValidated && (
+              <div className="!text-blue-500">
+                <CheckmarkIcon fill="currentColor" size={24} />
+              </div>
+            )}
+          </div>
           <p className="text-white text-sm">{description}</p>
         </div>
       </div>

@@ -1,5 +1,4 @@
 import { useContext, useRef, useState } from "react";
-import styles from "./Balance.module.css";
 import { appContext } from "../../AppContext";
 import TokenSelect from "../TokenSelect";
 import { useSpring, animated, config } from "react-spring";
@@ -9,11 +8,9 @@ import FetchBalanceButton from "../FetchBalanceButton";
 import {
   inputWrapperStyle,
   primaryFormButtonStyle,
-  selectableTokenWrapperStyle,
   titleStyle,
   wrappedInputStyle,
 } from "../../styles";
-import CaretIcon from "../UI/Icons/CaretIcon";
 
 const yupValidator = Yup.object().shape({
   token: Yup.object().required("Token field required"),
@@ -37,7 +34,6 @@ const yupValidator = Yup.object().shape({
 
 const Send = () => {
   const {
-    credentials,
     _keyUsages,
     _privateKey,
     _script,
@@ -47,7 +43,6 @@ const Send = () => {
     _address,
     promptDialogWithMessage,
     promptDialogWithError,
-    promptTokenSelectionDialog,
   } = useContext(appContext);
 
   const myForm = useRef<HTMLFormElement>(null);
@@ -112,36 +107,21 @@ const Send = () => {
 
             // const keyuses = utils.randomInteger(1, 150000);
 
-            // const rawTransaction = `sendfrom fromaddress:${_address} address:${address} amount:${amount} tokenid:${token.tokenid} script:"${_script}" privatekey:${_privateKey} keyuses:${keyuses}`;
-            return fetch(
-              `/api/wallet/send?fromaddress=${_address}&toaddress=${address}&tokenid=${token.tokenid}&amount=${amount}&script="${_script.replaceAll(" ", "_")}"&privatekey=${_privateKey}&keyuses=${keyuses}`,
-              {
-                method: "POST",
-                headers: {
-                  Authorization: `Basic ${credentials}`,
-                },
-              },
-            )
-              .then(async (resp) => {
-                console.log(resp);
-                if (resp.ok) {
-                  return resp.json(); // Parse the JSON response
-                } else {
-                  throw new Error("Failed to get balance for" + _address);
-                }
-              })
-              .then((json) => {
-                console.log(json);
+            const rawTransaction = `sendfrom fromaddress:${_address} address:${address} amount:${amount} tokenid:${token.tokenid} script:"${_script}" privatekey:${_privateKey} keyuses:${keyuses}`;
 
-                if (!json.status) {
-                  throw new Error(
-                    json.error && json.error.includes("Not enough funds")
-                      ? "Insufficient funds!"
-                      : json.error
-                        ? json.error
-                        : "Something went wrong",
-                  );
-                }
+            (window as any).MDS.cmd(rawTransaction, function (respo) {
+              console.log(respo);
+              if (!respo.status) {
+                setLoading(false);
+                setSubmitting(false);
+
+                promptDialogWithError(respo.error as string);
+                return;
+              }
+
+              if (respo.status) {
+                // update keyUsages
+                // updateKeyUsage(_address, keyuses + 1);
 
                 setLoading(false);
 
@@ -150,20 +130,8 @@ const Send = () => {
                 promptDialogWithMessage(
                   "Your transaction has been successfully sent!",
                 );
-              })
-              .catch((err) => {
-                console.error("Error:", err);
-                setLoading(false);
-                setSubmitting(false);
-
-                if (err instanceof Error) {
-                  return promptDialogWithError(err.message);
-                }
-
-                promptDialogWithError(err.error as string);
-
-                throw err; // Forward the error for any further catch blocks
-              });
+              }
+            });
           }}
           validationSchema={yupValidator}
         >
