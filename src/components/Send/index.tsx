@@ -1,20 +1,27 @@
 import { useContext, useRef, useState } from "react";
-import styles from "./Balance.module.css";
 import { appContext } from "../../AppContext";
 import TokenSelect from "../TokenSelect";
 import { useSpring, animated, config } from "react-spring";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import KeyUsage from "../KeyUsage";
 import FetchBalanceButton from "../FetchBalanceButton";
+import {
+  inputWrapperStyle,
+  primaryFormButtonStyle,
+  titleStyle,
+  wrappedInputStyle,
+} from "../../styles";
 
 const yupValidator = Yup.object().shape({
   token: Yup.object().required("Token field required"),
-  amount: Yup.string()
-    .required("Amount field required")
-    .matches(
-      /^[^a-zA-Z\\;'",]+$/,
-      'Invalid number.  Make sure to use only digits, "." for decimals and nothing for thousands. (e.g 1000.234)'
+  amount: Yup.number()
+    .typeError("Amount must be a number") // Ensures input is a valid number
+    .positive("Amount must be greater than zero") // Ensure it's a positive number
+    .required("Amount field is required")
+    .test(
+      "is-decimal",
+      'Invalid number. Make sure to use only digits, "." for decimals and no separators for thousands (e.g., 1000.234)',
+      (value) => /^[^a-zA-Z\\;',"]+$/.test(value?.toString()), // Custom regex to match digits and decimals
     )
     .nullable(),
   address: Yup.string()
@@ -23,10 +30,6 @@ const yupValidator = Yup.object().shape({
     .max(66, "Invalid address, too long")
     .required("Address field required")
     .nullable(),
-  keyuses: Yup.number().max(
-    250000,
-    "Number must be less than or equal to 250000."
-  ),
 });
 
 const Send = () => {
@@ -40,7 +43,6 @@ const Send = () => {
     _address,
     promptDialogWithMessage,
     promptDialogWithError,
-    updateKeyUsage,
   } = useContext(appContext);
 
   const myForm = useRef<HTMLFormElement>(null);
@@ -85,9 +87,9 @@ const Send = () => {
 
   return (
     <animated.div style={springProps}>
-      <section className={styles["tokens"]}>
+      <section>
         <div className="flex justify-between">
-          <h6>Transfer tokens</h6>
+          <h3 className={titleStyle}>Transfer tokens</h3>
           <FetchBalanceButton />
         </div>
         <Formik
@@ -108,7 +110,6 @@ const Send = () => {
             const rawTransaction = `sendfrom fromaddress:${_address} address:${address} amount:${amount} tokenid:${token.tokenid} script:"${_script}" privatekey:${_privateKey} keyuses:${keyuses}`;
 
             (window as any).MDS.cmd(rawTransaction, function (respo) {
-              // console.log(respo);
               if (!respo.status) {
                 setLoading(false);
                 setSubmitting(false);
@@ -119,14 +120,14 @@ const Send = () => {
 
               if (respo.status) {
                 // update keyUsages
-                updateKeyUsage(_address, keyuses + 1);
+                // updateKeyUsage(_address, keyuses + 1);
 
                 setLoading(false);
 
                 resetForm();
 
                 promptDialogWithMessage(
-                  "Your transaction has been successfully sent!"
+                  "Your transaction has been successfully sent!",
                 );
               }
             });
@@ -141,131 +142,74 @@ const Send = () => {
             handleSubmit,
             isSubmitting,
           }) => (
-            <form ref={myForm} onSubmit={handleSubmit} className="grid">
-              <TokenSelect _balance={_balance} />
-              <input
-                disabled={isSubmitting}
-                required
-                {...getFieldProps("amount")}
-                type="text"
-                placeholder="Your amount"
-                className={`mb-2 ${
-                  touched.amount && errors.amount
-                    ? "outline !outline-red-500"
-                    : ""
-                }`}
-              />
-              {touched.amount && errors.amount && (
-                <span className="my-2 bg-red-500 rounded px-4 py-1">
-                  {errors.amount}
-                </span>
-              )}
-              <input
-                disabled={isSubmitting}
-                required
-                autoComplete="off"
-                {...getFieldProps("address")}
-                type="text"
-                placeholder="Recipient address"
-                className={`mb-2 ${
-                  touched.address && errors.address
-                    ? "outline !outline-red-500"
-                    : ""
-                }`}
-              />
-              {touched.address && errors.address && (
-                <span className="my-2 bg-red-500 rounded px-4 py-1">
-                  {errors.address}
-                </span>
-              )}
-
-              <KeyUsage />
-
-              {/* <label className="grid gap-1 relative">
-                <span className="mx-4 text-sm text-teal-500">Secret code</span>
-                <input
-                  readOnly
-                  autoComplete="off"
-                  {...getFieldProps("code")}
-                  type={`${visibility ? "text" : "password"}`}
-                  placeholder="Secret code"
-                  className="mb-4"
-                />
-                <button
-                  className="absolute text-teal-500 right-6 top-10 active:outline-none !border-none focus:border-none hover:border-none focus:outline-none p-0"
-                  onClick={handleToggleVisibility}
-                >
-                  {!visibility && (
-                    <svg
-                      className=""
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      strokeWidth="2"
-                      stroke="currentColor"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                      <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
-                    </svg>
-                  )}
-
-                  {!!visibility && (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      strokeWidth="2"
-                      stroke="currentColor"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                      <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" />
-                      <path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87" />
-                      <path d="M3 3l18 18" />
-                    </svg>
-                  )}
-                </button>
-              </label> */}
-
-              <button
-                disabled={loading || !isValid}
-                type="submit"
-                className=" p-4 bg-teal-500 text-lg font-bold mt-4 disabled:text-gray-900 disabled:cursor-not-allowed disabled:bg-teal-800 text-black"
+            <div className="min-h-[calc(100vh_-_200px)] flex flex-col md:block">
+              <form
+                ref={myForm}
+                onSubmit={handleSubmit}
+                className="gap-4 my-4 flex flex-col flex-grow"
               >
-                {loading && (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="animate-spin text-yellow-800 mx-auto"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    strokeWidth="2"
-                    stroke="currentColor"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M10 20.777a8.942 8.942 0 0 1 -2.48 -.969" />
-                    <path d="M14 3.223a9.003 9.003 0 0 1 0 17.554" />
-                    <path d="M4.579 17.093a8.961 8.961 0 0 1 -1.227 -2.592" />
-                    <path d="M3.124 10.5c.16 -.95 .468 -1.85 .9 -2.675l.169 -.305" />
-                    <path d="M6.907 4.579a8.954 8.954 0 0 1 3.093 -1.356" />
-                    <path d="M12 9l-2 3h4l-2 3" />
-                  </svg>
-                )}
+                <div className="flex-grow space-y-4">
+                  <div className={`${inputWrapperStyle}`}>
+                    <label className="text-xs text-neutral-400 dark:text-neutral-500">
+                      Enter amount
+                    </label>
+                    <div className="flex">
+                      <input
+                        disabled={isSubmitting}
+                        type="number"
+                        step="any"
+                        required
+                        {...getFieldProps("amount")}
+                        placeholder="Your amount"
+                        className={`${wrappedInputStyle} font-mono text-lg flex-grow ${touched.amount && errors.amount && "underline"} `}
+                      />
 
-                {!loading && "Send"}
-              </button>
-            </form>
+                      <TokenSelect _balance={_balance} />
+                    </div>
+
+                    {touched.amount && errors.amount && (
+                      <span className="text-xs text-neutral-600 dark:text-neutral-100 rounded">
+                        {errors.amount}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className={`${inputWrapperStyle}`}>
+                    <label className="text-xs text-neutral-400 dark:text-neutral-500">
+                      Enter recipient address
+                    </label>
+                    <div className="flex">
+                      <input
+                        autoComplete="off"
+                        disabled={isSubmitting}
+                        type="text"
+                        required
+                        {...getFieldProps("address")}
+                        placeholder="Mx/0x"
+                        className={`${wrappedInputStyle} font-mono text-lg flex-grow ${touched.address && errors.address && "underline"}`}
+                      />
+                    </div>
+
+                    {touched.address && errors.address && (
+                      <span className="text-xs text-neutral-600 dark:text-neutral-100 rounded">
+                        {errors.address}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="mt-auto">
+                  <button
+                    disabled={loading || !isValid}
+                    type="submit"
+                    className={`${primaryFormButtonStyle} my-8`}
+                  >
+                    {loading && "Sending..."}
+                    {!loading && "Send"}
+                  </button>
+                </div>
+              </form>
+            </div>
           )}
         </Formik>
       </section>

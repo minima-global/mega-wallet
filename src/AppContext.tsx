@@ -3,6 +3,8 @@ import { createContext, useRef, useEffect, useState } from "react";
 import * as utils from "./utils";
 import { sql } from "./utils/SQL";
 
+import { toast } from "react-toastify";
+
 export const appContext = createContext({} as any);
 
 interface IProps {
@@ -14,7 +16,6 @@ interface KeyUsages {
 
 const AppProvider = ({ children }: IProps) => {
   const loaded = useRef(false);
-
   /** This is the main address we use after giving the secret key */
   const [_address, setAddress] = useState<null | string>(null);
   const [_balance, setBalance] = useState<null | object[]>(null);
@@ -57,7 +58,24 @@ const AppProvider = ({ children }: IProps) => {
   });
 
   const getBalance = () => {
+    if (!_address) return;
+
+    const now = Date.now();
+    const lastCalled = localStorage.getItem("getBalanceLastCalled");
+
+    // Check if _balance is defined, and apply the 60-second rule if it is
+    if (_balance) {
+      // If the last call was less than 60 seconds ago, don't call the method
+      if (lastCalled && now - Number(lastCalled) < 60000) {
+        return;
+      }
+    }
+
+    // Update the timestamp in localStorage
+    localStorage.setItem("getBalanceLastCalled", now.toString());
+
     setPromptFetchBalance(true);
+
     (window as any).MDS.cmd(
       `balance megammr:true address:${_address}`,
       function (resp) {
@@ -68,7 +86,7 @@ const AppProvider = ({ children }: IProps) => {
         setTimeout(() => {
           setPromptFetchBalance(false);
         }, 2500);
-      }
+      },
     );
   };
 
@@ -76,7 +94,7 @@ const AppProvider = ({ children }: IProps) => {
     if (_address) {
       getBalance();
     }
-  }, [_currentNavigation, _promptTokenSelectionDialog]);
+  }, [_currentNavigation, _address, _promptTokenSelectionDialog]);
 
   useEffect(() => {
     if (!loaded.current) {
@@ -113,11 +131,11 @@ const AppProvider = ({ children }: IProps) => {
 
           (async () => {
             await sql(
-              `CREATE TABLE IF NOT EXISTS cache (name varchar(255), data longtext);`
+              `CREATE TABLE IF NOT EXISTS cache (name varchar(255), data longtext);`,
             );
 
             const keyUsage: any = await sql(
-              `SELECT * FROM cache WHERE name = 'KEYUSAGE'`
+              `SELECT * FROM cache WHERE name = 'KEYUSAGE'`,
             );
 
             if (keyUsage) {
@@ -128,6 +146,26 @@ const AppProvider = ({ children }: IProps) => {
       });
     }
   }, [loaded]);
+
+  useEffect(() => {
+    const rem = utils.getCookie("rememberme");
+
+    if (rem === "true") {
+      setLoginForm((prevState) => ({
+        ...prevState,
+        _rememberMe: true,
+      })); // this'll keep the state of the checkbox
+
+      const secretSauce: any = utils.getCookie("secretsauce");
+
+      setLoginForm((prevState) => ({
+        ...prevState,
+        _seedPhrase: secretSauce,
+      })); // this'll keep the state of the checkbox
+
+      createAccount(secretSauce);
+    }
+  }, []);
 
   const promptLogin = () => {
     setPromptLogin((prevState) => !prevState);
@@ -190,9 +228,9 @@ const AppProvider = ({ children }: IProps) => {
             resp.response.map(createImages);
 
             setBalance(resp.response);
-          }
+          },
         );
-      }
+      },
     );
   };
 
@@ -239,21 +277,30 @@ const AppProvider = ({ children }: IProps) => {
     if (!rows) {
       await sql(
         `INSERT INTO cache (name, data) VALUES ('KEYUSAGE', '${JSON.stringify(
-          updatedData
-        )}')`
+          updatedData,
+        )}')`,
       );
     } else {
       await sql(
         `UPDATE cache SET data = '${JSON.stringify(
-          updatedData
-        )}' WHERE name = 'KEYUSAGE'`
+          updatedData,
+        )}' WHERE name = 'KEYUSAGE'`,
       );
     }
   };
 
+  const notify = (message: string) =>
+    toast(message, {
+      position: "bottom-center",
+      theme: "light",
+      bodyClassName: "font-bold text-center",
+      draggablePercent: 90,
+    });
+
   return (
     <appContext.Provider
       value={{
+        notify,
         _promptMegaMMR,
         promptMegaMMR,
 
