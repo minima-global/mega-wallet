@@ -60,7 +60,22 @@ const AppProvider = ({ children }: IProps) => {
   const getBalance = () => {
     if (!_address) return;
 
+    const now = Date.now();
+    const lastCalled = localStorage.getItem("getBalanceLastCalled");
+
+    // Check if _balance is defined, and apply the 60-second rule if it is
+    if (_balance) {
+      // If the last call was less than 60 seconds ago, don't call the method
+      if (lastCalled && now - Number(lastCalled) < 60000) {
+        return;
+      }
+    }
+
+    // Update the timestamp in localStorage
+    localStorage.setItem("getBalanceLastCalled", now.toString());
+
     setPromptFetchBalance(true);
+
     (window as any).MDS.cmd(
       `balance megammr:true address:${_address}`,
       function (resp) {

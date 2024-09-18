@@ -23,6 +23,7 @@ import isMobileDevice from "../../utils/isMobile";
 import VisibleIcon from "../UI/Icons/VisibleIcon";
 import HideIcon from "../UI/Icons/HideIcon";
 import MobileFooterNav from "../MobileFooterNav";
+import WarningIcon from "../UI/Icons/WarningIcon";
 
 const Dashboard = () => {
   const {
@@ -64,11 +65,7 @@ const Dashboard = () => {
                 Are you sure you want to log out?
               </h2>
             </div>
-            <div className="flex flex-col gap-4">
-              <p className="text-sm mt-4 text-neutral-700 dark:text-neutral-600 font-bold tracking-wide text-left">
-                If you haven't stored your secret code then this is your last
-                chance!
-              </p>
+            <div className="flex flex-col gap-4 my-4">
               <div className="flex-grow">
                 <div className={`${inputWrapperStyle}`}>
                   <span className="text-xs text-neutral-600 font-bold">
@@ -104,6 +101,26 @@ const Dashboard = () => {
                         </span>
                       )}
                     </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="my-4 mx-auto bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg shadow-inner dark:bg-yellow-900 dark:border-yellow-600">
+                <div className="flex items-center">
+                  <span className="h-6 w-6 text-yellow-600 dark:text-yellow-500 mr-3">
+                    <WarningIcon />
+                  </span>
+                  <div className="text-sm text-yellow-700 dark:text-yellow-200">
+                    <p className="font-bold tracking-wide flex flex-wrap items-center gap-1 justify-center text-center">
+                      Make sure you store a copy{" "}
+                      <span className="inline-flex items-center">
+                        <CopyIcon fill="currentColor" />
+                      </span>{" "}
+                      of your secret somewhere safe. Hyphens (-) are required.
+                    </p>
+                    <p className="mt-3 font-bold text-yellow-800 bg-yellow-200 dark:bg-yellow-700 dark:text-yellow-100 px-2 py-1 rounded text-center">
+                      You cannot recover it later
+                    </p>
                   </div>
                 </div>
               </div>

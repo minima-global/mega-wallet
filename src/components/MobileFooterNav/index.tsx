@@ -5,7 +5,7 @@ const NavButton = ({ name, icon, isActive, onClick }) => (
   <button
     className={`flex flex-col items-center justify-center py-2 px-4 transition-all duration-200 ${
       isActive
-        ? "text-teal-500"
+        ? "shadow-inner text-[#1b1b1b] dark:text-neutral-100"
         : "text-gray-600 hover:text-teal-500 dark:text-gray-400 dark:hover:text-teal-400"
     }`}
     disabled={isActive}

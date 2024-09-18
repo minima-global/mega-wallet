@@ -37,11 +37,11 @@ export const responseGridSystem =
   "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4";
 export const dismissableButtonStyle = `
   px-4 py-2 rounded-md font-bold tracking-wide transition-colors duration-200
-  bg-teal-500 hover:bg-teal-600 active:bg-teal-700
-  dark:bg-teal-600 dark:hover:bg-teal-700 dark:active:bg-teal-800
+  bg-neutral-500 hover:bg-neutral-600 active:bg-neutral-700
+  dark:bg-neutral-500 dark:hover:bg-neutral-600 dark:active:bg-neutral-700
   text-white dark:text-gray-100
-  focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50
-  dark:focus:ring-teal-400 dark:focus:ring-opacity-60
+  focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-opacity-50
+  dark:focus:ring-neutral-400 dark:focus:ring-opacity-60
 `;
 export const tokenStyle =
   "grid grid-cols-[auto_1fr] border dark:border-neutral-600 hover:border-neutral-500 items-center gap-2 bg-stone-50 dark:bg-[#1b1b1b] p-1 mb-2 rounded-lg";

@@ -32,15 +32,13 @@ const Details = ({ token, dismiss }) => {
   };
 
   const validateToken = (token: any): boolean => {
-    if (!token) return;
+    if (!token) return false;
 
     if (token.tokenid === "0x00") return true;
 
     (window as any).MDS.cmd(
       "tokenvalidate tokenid:" + token.tokenid,
       (resp) => {
-        console.log(resp);
-
         if (!resp.status) {
           return true;
         }
@@ -52,6 +50,8 @@ const Details = ({ token, dismiss }) => {
         }
       },
     );
+
+    return false;
   };
 
   // Filtered extra metadata

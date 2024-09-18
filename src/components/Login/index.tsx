@@ -17,6 +17,7 @@ import KeyIcon from "../UI/Icons/KeyIcon";
 import CopyIcon from "../UI/Icons/CopyIcon";
 import ModernCheckbox from "../UI/Toggle";
 import isMobileDevice from "../../utils/isMobile";
+import WarningIcon from "../UI/Icons/WarningIcon";
 
 const Login = () => {
   const {
@@ -171,7 +172,7 @@ const Login = () => {
 
         <div>
           {loginForm._seedPhrase.length === 0 && (
-            <p className="text-sm mt-4 text-neutral-700 font-bold tracking-wide flex flex-wrap items-center gap-1 justify-center mb-4">
+            <p className="text-sm mt-4 text-neutral-700 font-bold tracking-wide flex flex-wrap items-center gap-1 justify-center">
               <span>Login with your secret key or click generate</span>
               <span className="inline-block">
                 <KeyIcon fill="currentColor" />
@@ -179,24 +180,12 @@ const Login = () => {
               <span>to create a new one</span>
             </p>
           )}
-          {loginForm._seedPhrase.length > 0 && (
-            <div className="mb-4">
-              <p className="text-sm mt-4 text-neutral-700 dark:text-neutral-600 font-bold tracking-wide flex flex-wrap items-center gap-1 justify-center text-center">
-                Make sure you store a copy{" "}
-                <span className={inputIconStyle}>
-                  <CopyIcon fill="currentColor" size={16} />
-                </span>{" "}
-                of your secret somewhere safe. Hyphens (-) are required. <br />
-                <br />
-                <span className="font-bold text-neutral-700 bg-yellow-500 dark:bg-neutral-400 dark:font-semibold dark:shadow-inner px-2">
-                  You cannot recover it later
-                </span>
-              </p>
-            </div>
-          )}
         </div>
 
-        <form className="flex flex-col flex-grow gap-1" onSubmit={handleSubmit}>
+        <form
+          className="flex flex-col flex-grow gap-1 my-4"
+          onSubmit={handleSubmit}
+        >
           <div className="flex-grow">
             <div
               className={`${inputWrapperStyle} dark:!border-neutral-100 dark:!border`}
@@ -238,6 +227,27 @@ const Login = () => {
               </div>
             </div>
           </div>
+          {loginForm._seedPhrase.length > 0 && (
+            <div className="my-4 mx-auto bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg shadow-inner dark:bg-yellow-900 dark:border-yellow-600">
+              <div className="flex items-center">
+                <span className="h-6 w-6 text-yellow-600 dark:text-yellow-500 mr-3">
+                  <WarningIcon />
+                </span>
+                <div className="text-sm text-yellow-700 dark:text-yellow-200">
+                  <p className="font-bold tracking-wide flex flex-wrap items-center gap-1 justify-center text-center">
+                    Make sure you store a copy{" "}
+                    <span className="inline-flex items-center">
+                      <CopyIcon fill="currentColor" />
+                    </span>{" "}
+                    of your secret somewhere safe. Hyphens (-) are required.
+                  </p>
+                  <p className="mt-3 font-bold text-yellow-800 bg-yellow-200 dark:bg-yellow-700 dark:text-yellow-100 px-2 py-1 rounded text-center">
+                    You cannot recover it later
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
           <div className="mt-auto md:my-8">
             <div className="flex mb-4">
               <ModernCheckbox

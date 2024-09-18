@@ -110,7 +110,6 @@ const Send = () => {
             const rawTransaction = `sendfrom fromaddress:${_address} address:${address} amount:${amount} tokenid:${token.tokenid} script:"${_script}" privatekey:${_privateKey} keyuses:${keyuses}`;
 
             (window as any).MDS.cmd(rawTransaction, function (respo) {
-              console.log(respo);
               if (!respo.status) {
                 setLoading(false);
                 setSubmitting(false);

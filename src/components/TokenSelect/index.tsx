@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { appContext } from "../../AppContext";
-import { useSpring, animated, config } from "react-spring";
 
-import styles from "./TokenSelect.module.css";
 import Tokens from "../Tokens";
 import { useFormikContext } from "formik";
 import useFormatMinimaNumber from "../../utils/useMakeNumber";
@@ -88,22 +86,25 @@ const TokenSelect = ({ _balance }: IProps) => {
             </div>
             <div className="my-auto py-1">
               <p className="font-bold">MINIMA</p>
-              {/*
-              <span className="text-xs">
+
+              <p className="font-mono truncate text-xs">
                 {makeMinimaNumber(active.confirmed, 2000)}
                 {active.unconfirmed != "0"
                   ? "/" + makeMinimaNumber(active.unconfirmed, 2000)
                   : null}
-              </span>
-
-              */}
+              </p>
             </div>
             <CaretIcon />
           </div>
         )}
 
         {active && active.tokenid !== "0x00" && (
-          <div className="grid grid-cols-[auto_1fr] gap-2">
+          <div
+            className={`${selectableTokenWrapperStyle}`}
+            onClick={() => {
+              promptTokenSelectionDialog();
+            }}
+          >
             <div className="w-9 h-9 rounded-full overflow-hidden">
               <img
                 alt="minima-token"
@@ -116,21 +117,20 @@ const TokenSelect = ({ _balance }: IProps) => {
               />
             </div>
             <div className="my-auto py-1">
-              <p className="font-bold">
+              <p className="font-bold truncate max-w-[15ch]">
                 {"name" in active.token && typeof active.token.name === "string"
                   ? active.token.name
                   : "N/A"}
               </p>
-              {/*
-              <p className="font-mono truncate">
+
+              <p className="font-mono truncate text-xs">
                 {makeMinimaNumber(active.confirmed, 2000)}
                 {active.unconfirmed != "0"
                   ? "/" + makeMinimaNumber(active.unconfirmed, 2000)
                   : null}
               </p>
-
-              */}
             </div>
+            <CaretIcon />
           </div>
         )}
       </div>

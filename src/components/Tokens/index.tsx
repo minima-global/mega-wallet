@@ -55,8 +55,6 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
     (window as any).MDS.cmd(
       "tokenvalidate tokenid:" + token.tokenid,
       (resp) => {
-        console.log(resp);
-
         if (!resp.status) {
           return true;
         }
@@ -68,6 +66,8 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
         }
       },
     );
+
+    return false;
   };
 
   return (
