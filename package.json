@@ -14,6 +14,7 @@
     "zip": "npm run build && npm run postbuild && npm run package"
   },
   "dependencies": {
+    "@theme-toggles/react": "^4.1.0",
     "@vitejs/plugin-legacy": "^4.1.1",
     "@vitejs/plugin-react-swc": "^3.4.1",
     "autoprefixer": "^10.4.16",

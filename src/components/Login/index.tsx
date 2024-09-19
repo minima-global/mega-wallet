@@ -165,6 +165,10 @@ const Login = () => {
           <h1 className={dialogTitleStyle}>Wallet</h1>
         </div>
 
+        <div className="my-4">
+          <p className="text-sm">This wallet is...</p>
+        </div>
+
         <div>
           {loginForm._seedPhrase.length === 0 && (
             <p className="text-sm mt-4 text-neutral-700 font-bold tracking-wide flex flex-wrap items-center gap-1 justify-center">
@@ -223,7 +227,7 @@ const Login = () => {
             </div>
           </div>
           {loginForm._seedPhrase.length > 0 && (
-            <div className="my-4 mx-auto bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg shadow-inner dark:bg-yellow-900 dark:border-yellow-600">
+            <div className="my-4 mx-auto bg-yellow-100 border-l-4 border-yellow-400 p-4 rounded-r-lg shadow-inner dark:bg-neutral-900 dark:border-yellow-600">
               <div className="flex items-center">
                 <span className="h-6 w-6 text-yellow-600 dark:text-yellow-500 mr-3">
                   <WarningIcon />
@@ -236,7 +240,7 @@ const Login = () => {
                     </span>{" "}
                     of your secret somewhere safe. Hyphens (-) are required.
                   </p>
-                  <p className="mt-3 font-bold text-yellow-800 bg-yellow-200 dark:bg-yellow-700 dark:text-yellow-100 px-2 py-1 rounded text-center">
+                  <p className="max-w-max mx-auto mt-3 font-bold text-yellow-800 bg-yellow-200 dark:bg-yellow-700 dark:text-yellow-100 px-2 py-1 rounded text-center">
                     You cannot recover it later
                   </p>
                 </div>

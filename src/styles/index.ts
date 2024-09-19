@@ -14,10 +14,10 @@ export const wrappedInputStyle = `
 export const primaryFormButtonStyle = `
   w-full p-4 font-bold tracking-wide transition-all duration-200 rounded-md
   bg-[#FFA010] hover:bg-[#E5940E] active:bg-[#C47F0D]
-  dark:bg-neutral-600 dark:hover:bg-neutral-700 dark:active:bg-neutral-800
+
   text-white
   disabled:bg-[#FFD89E] disabled:text-neutral-200
-  dark:disabled:bg-neutral-700 dark:disabled:text-neutral-500
+
   focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-opacity-50
   dark:focus:ring-neutral-400 dark:focus:ring-opacity-60
   shadow-md hover:shadow-lg
@@ -27,7 +27,7 @@ export const inputWrapperStyle =
 export const selectableTokenWrapperStyle =
   "hover:cursor-pointer flex items-center gap-1 bg-neutral-50 border dark:border-none dark:bg-neutral-950 rounded-full px-2 hover:bg-neutral-150 dark:hover:bg-neutral-900 hover:outline hover:outline-neutral-900";
 export const searchInputStyle =
-  "p-3 px-4 dark:placeholder:text-neutral-500 rounded-full dark:bg-[#1B1B1B] border dark:border-neutral-600 w-full my-4 focus:outline-none focus:border-neutral-500 dark:text-neutral-200";
+  "p-3 px-4 bg-neutral-100 dark:placeholder:text-neutral-500 rounded-full dark:bg-[#1B1B1B] border dark:border-neutral-600 w-full my-4 focus:outline-none focus:border-neutral-500 dark:text-neutral-200";
 export const searchWrapperStyle = "flex bg-neutral-800 p-4 rounded-full gap-1";
 export const tokenWrapperStyle =
   "flex hover:bg-neutral-700 hover:cursor-pointer w-full py-2 px-3";

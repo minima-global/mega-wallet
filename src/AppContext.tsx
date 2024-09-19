@@ -16,6 +16,10 @@ interface KeyUsages {
 
 const AppProvider = ({ children }: IProps) => {
   const loaded = useRef(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    // Initialize state based on localStorage
+    return localStorage.getItem("dark-mode-pub") === "true";
+  });
   /** This is the main address we use after giving the secret key */
   const [_address, setAddress] = useState<null | string>(null);
   const [_balance, setBalance] = useState<null | object[]>(null);
@@ -57,6 +61,16 @@ const AppProvider = ({ children }: IProps) => {
     thousands: ",",
   });
 
+  useEffect(() => {
+    // Apply or remove the 'dark' class on the document element
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("dark-mode-pub", "true");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("dark-mode-pub", "false");
+    }
+  }, [isDarkMode]); // Re-run effect when isDarkMode changes
   const getBalance = () => {
     if (!_address) return;
 
@@ -345,6 +359,9 @@ const AppProvider = ({ children }: IProps) => {
         _balance,
         getBalance,
         _promptingFetchingBalance,
+
+        isDarkMode,
+        setIsDarkMode,
       }}
     >
       {children}
