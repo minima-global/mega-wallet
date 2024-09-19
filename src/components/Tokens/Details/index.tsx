@@ -125,13 +125,13 @@ const Details = ({ token, dismiss }) => {
 
               <div className="flex justify-between">
                 <span className="font-semibold text-neutral-900 dark:text-neutral-400">
-                  Owned
+                  Balance
                 </span>
                 <span className="dark:text-neutral-200">
                   {token &&
                     new Decimal(token.confirmed).gt(0) &&
-                    token.confirmed + " of " + token.total}
-                  {token && new Decimal(token.confirmed).isZero() && "-"}
+                    token.confirmed}
+                  {token && new Decimal(token.confirmed).isZero() && "0"}
                 </span>
               </div>
 
@@ -151,8 +151,8 @@ const Details = ({ token, dismiss }) => {
                 <span className="dark:text-neutral-200">{tokenCreator}</span>
               </div>
 
-              <div className="flex justify-between">
-                <span className="font-semibold text-neutral-900 dark:text-neutral-400">
+              <div className="flex">
+                <span className="whitespace-nowrap font-semibold text-neutral-900 dark:text-neutral-400 max-w-max">
                   Token ID
                 </span>
 

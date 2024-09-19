@@ -158,13 +158,8 @@ const Login = () => {
           <div className="w-8 h-8 overflow-hidden rounded-lg flex">
             <img
               alt="brand-icon"
-              src="./assets/icon.svg"
-              className="h-full w-full aspect-square block dark:hidden"
-            />
-            <img
-              alt="brand-icon"
               src="./assets/icon-white.svg"
-              className="h-full w-full aspect-square hidden dark:block opacity-30"
+              className="h-full w-full aspect-square block"
             />
           </div>
           <h1 className={dialogTitleStyle}>Wallet</h1>

@@ -142,7 +142,7 @@ const Send = () => {
             handleSubmit,
             isSubmitting,
           }) => (
-            <div className="min-h-[calc(100vh_-_200px)] flex flex-col md:block">
+            <div className="h-full flex flex-col md:block">
               <form
                 ref={myForm}
                 onSubmit={handleSubmit}

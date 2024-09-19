@@ -1,11 +1,22 @@
-export const wrappedInputStyle =
-  "bg-transparent focus:outline-none w-full truncate placeholder:text-neutral-400 placeholder:dark:text-neutral-500 text-neutral-950 dark:text-neutral-100";
+export const wrappedInputStyle = `
+  bg-transparent
+  focus:outline-none
+  w-full
+  truncate
+  placeholder:text-neutral-400
+  placeholder:dark:text-neutral-500
+  text-neutral-950
+  dark:text-neutral-100
+  overflow-hidden
+  text-ellipsis
+  whitespace-nowrap
+`;
 export const primaryFormButtonStyle = `
   w-full p-4 font-bold tracking-wide transition-all duration-200 rounded-md
-  bg-neutral-700 hover:bg-neutral-800 active:bg-neutral-900
+  bg-[#FFA010] hover:bg-[#E5940E] active:bg-[#C47F0D]
   dark:bg-neutral-600 dark:hover:bg-neutral-700 dark:active:bg-neutral-800
   text-white
-  disabled:bg-neutral-400 disabled:text-neutral-200
+  disabled:bg-[#FFD89E] disabled:text-neutral-200
   dark:disabled:bg-neutral-700 dark:disabled:text-neutral-500
   focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-opacity-50
   dark:focus:ring-neutral-400 dark:focus:ring-opacity-60
@@ -37,9 +48,10 @@ export const responseGridSystem =
   "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4";
 export const dismissableButtonStyle = `
   px-4 py-2 rounded-md font-bold tracking-wide transition-colors duration-200
-  bg-neutral-500 hover:bg-neutral-600 active:bg-neutral-700
-  dark:bg-neutral-500 dark:hover:bg-neutral-600 dark:active:bg-neutral-700
-  text-white dark:text-gray-100
+  border-2 border-neutral-500 hover:border-neutral-600 active:border-neutral-700
+  dark:border-neutral-400 dark:hover:border-neutral-300 dark:active:border-neutral-200
+  text-neutral-700 dark:text-gray-100
+  bg-transparent
   focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-opacity-50
   dark:focus:ring-neutral-400 dark:focus:ring-opacity-60
 `;
@@ -51,4 +63,4 @@ export const tokenAmountStyle =
   "font-bold truncate text-neutral-800 dark:text-neutral-300";
 export const inputIconStyle = "text-black dark:text-neutral-500";
 export const dialogTitleStyle =
-  "text-2xl tracking-wide my-auto font-bold text-black dark:text-neutral-500";
+  "text-2xl tracking-wide my-auto font-bold text-black dark:text-neutral-300";
