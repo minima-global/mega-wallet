@@ -242,15 +242,16 @@ const Send = () => {
                           required
                           {...getFieldProps("keyuses")}
                           placeholder="Amount of times "
-                          className={`${wrappedInputStyle} font-mono text-lg flex-grow ${touched.address && errors.address && "underline"}`}
+                          className={`${wrappedInputStyle} font-mono text-lg flex-grow ${touched.keyuses && errors.keyuses && "underline"}`}
                         />
                       </div>
-
-                      {touched.keyuses && errors.keyuses && (
-                        <span className="text-xs text-neutral-600 dark:text-neutral-100 rounded">
-                          {errors.keyuses}
-                        </span>
-                      )}
+                      {touched.keyuses &&
+                        errors.keyuses &&
+                        typeof errors.keyuses === "string" && (
+                          <span className="text-xs text-neutral-600 dark:text-neutral-100 rounded">
+                            {errors.keyuses}
+                          </span>
+                        )}
                     </div>
                   </div>
                 </div>

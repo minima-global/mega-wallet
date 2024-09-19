@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { appContext } from "../../AppContext";
 
 const Help = () => {
-  const { help, setHelp } = useContext(appContext);
+  const { setHelp } = useContext(appContext);
 
   // Handler for the switch change event
   const handleSwitchChange = () => {
