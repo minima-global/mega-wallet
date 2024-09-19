@@ -5,8 +5,8 @@ const NavButton = ({ name, icon, isActive, onClick }) => (
   <button
     className={`flex flex-col items-center justify-center py-2 px-4 transition-all duration-200 ${
       isActive
-        ? "shadow-inner text-[#1b1b1b] dark:text-neutral-100"
-        : "text-gray-600 hover:text-teal-500 dark:text-gray-400 dark:hover:text-teal-400"
+        ? "shadow-inner text-teal-500"
+        : "t text-gray-400 hover:text-teal-400"
     }`}
     disabled={isActive}
     onClick={onClick}
@@ -84,7 +84,7 @@ const MobileFooterNav = () => {
   ];
 
   return (
-    <footer className="w-full bg-white dark:bg-neutral-900 shadow-lg block md:hidden">
+    <footer className="w-full bg-black dark:bg-neutral-900 shadow-lg block md:hidden">
       <nav aria-label="Footer Navigation">
         <div className="grid grid-cols-3 px-4">
           {navItems.map((item) => (

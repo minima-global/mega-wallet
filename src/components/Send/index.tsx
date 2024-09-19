@@ -11,13 +11,14 @@ import {
   titleStyle,
   wrappedInputStyle,
 } from "../../styles";
+import { InfoIcon } from "lucide-react";
 
 const yupValidator = Yup.object().shape({
   token: Yup.object().required("Token field required"),
   amount: Yup.number()
-    .typeError("Amount must be a number") // Ensures input is a valid number
-    .positive("Amount must be greater than zero") // Ensure it's a positive number
-    .required("Amount field is required")
+    .typeError("Must be a number") // Ensures input is a valid number
+    .positive("Must be greater than zero") // Ensure it's a positive number
+    .required("Field is required")
     .test(
       "is-decimal",
       'Invalid number. Make sure to use only digits, "." for decimals and no separators for thousands (e.g., 1000.234)',
@@ -28,7 +29,14 @@ const yupValidator = Yup.object().shape({
     .matches(/0|M[xX][0-9a-zA-Z]+/, "Invalid address")
     .min(59, "Invalid address, too short")
     .max(66, "Invalid address, too long")
-    .required("Address field required")
+    .required("Field required")
+    .nullable(),
+  keyuses: Yup.number()
+    .typeError("Must be a number") // Ensures input is a valid number
+    .positive("Must be greater than zero") // Ensure it's a positive number
+    .required("Field is required")
+    .integer("Must be a whole number")
+    .max(250000)
     .nullable(),
 });
 
@@ -43,10 +51,12 @@ const Send = () => {
     _address,
     promptDialogWithMessage,
     promptDialogWithError,
+    updateKeyUsage,
   } = useContext(appContext);
 
   const myForm = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const springProps = useSpring({
     opacity: _currentNavigation === "send" ? 1 : 0,
@@ -120,7 +130,7 @@ const Send = () => {
 
               if (respo.status) {
                 // update keyUsages
-                // updateKeyUsage(_address, keyuses + 1);
+                updateKeyUsage(_address, keyuses + 1);
 
                 setLoading(false);
 
@@ -142,7 +152,7 @@ const Send = () => {
             handleSubmit,
             isSubmitting,
           }) => (
-            <div className="min-h-[calc(100vh_-_200px)] flex flex-col md:block">
+            <div className="h-full flex flex-col md:block">
               <form
                 ref={myForm}
                 onSubmit={handleSubmit}
@@ -195,6 +205,54 @@ const Send = () => {
                         {errors.address}
                       </span>
                     )}
+                  </div>
+
+                  <div className="relative">
+                    <div className={`${inputWrapperStyle}`}>
+                      <div className="flex items-center">
+                        <label className="text-xs text-neutral-400 dark:text-neutral-500">
+                          Enter key uses
+                        </label>
+                        <div className="relative inline-block">
+                          <button
+                            type="button"
+                            className="focus:outline-none p-0 px-1"
+                            onMouseEnter={() => setShowTooltip(true)}
+                            onMouseLeave={() => setShowTooltip(false)}
+                            onClick={() => setShowTooltip(!showTooltip)}
+                            aria-label="Help"
+                          >
+                            <InfoIcon className="w-4 h-4 text-neutral-400 dark:text-neutral-500" />
+                          </button>
+                          {showTooltip && (
+                            <div className="absolute z-10 w-64 p-2 mt-2 text-sm text-white bg-[#1b1b1b] dark:bg-neutral-950 rounded-lg shadow-lg -left-1/2 transform -translate-x-1/2">
+                              Specify the amount of times you've used your
+                              current wallet to sign a transaction. If you use
+                              the same number it will half your security.
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex">
+                        <input
+                          autoComplete="off"
+                          step={1}
+                          disabled={isSubmitting}
+                          type="number"
+                          required
+                          {...getFieldProps("keyuses")}
+                          placeholder="Amount of times "
+                          className={`${wrappedInputStyle} font-mono text-lg flex-grow ${touched.keyuses && errors.keyuses && "underline"}`}
+                        />
+                      </div>
+                      {touched.keyuses &&
+                        errors.keyuses &&
+                        typeof errors.keyuses === "string" && (
+                          <span className="text-xs text-neutral-600 dark:text-neutral-100 rounded">
+                            {errors.keyuses}
+                          </span>
+                        )}
+                    </div>
                   </div>
                 </div>
 

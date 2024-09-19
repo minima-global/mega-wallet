@@ -16,6 +16,24 @@ interface KeyUsages {
 
 const AppProvider = ({ children }: IProps) => {
   const loaded = useRef(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    // Initialize state based on localStorage
+    return localStorage.getItem("dark-mode-pub") === "true";
+  });
+
+  const [firstTime, setFirstTime] = useState(() => {
+    // Check if the "first-time" value exists in localStorage
+    const storedValue = localStorage.getItem("first-time");
+
+    // If it doesn't exist, treat it as the first time
+    if (storedValue === null) {
+      localStorage.setItem("first-time", "true"); // Set it to "true" in localStorage
+      return true; // Set state to true since it's the first time
+    }
+
+    // If it does exist, return the boolean value based on the stored string
+    return storedValue === "true";
+  });
   /** This is the main address we use after giving the secret key */
   const [_address, setAddress] = useState<null | string>(null);
   const [_balance, setBalance] = useState<null | object[]>(null);
@@ -57,6 +75,16 @@ const AppProvider = ({ children }: IProps) => {
     thousands: ",",
   });
 
+  useEffect(() => {
+    // Apply or remove the 'dark' class on the document element
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("dark-mode-pub", "true");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("dark-mode-pub", "false");
+    }
+  }, [isDarkMode]); // Re-run effect when isDarkMode changes
   const getBalance = () => {
     if (!_address) return;
 
@@ -300,6 +328,8 @@ const AppProvider = ({ children }: IProps) => {
   return (
     <appContext.Provider
       value={{
+        firstTime,
+        setFirstTime,
         notify,
         _promptMegaMMR,
         promptMegaMMR,
@@ -345,6 +375,9 @@ const AppProvider = ({ children }: IProps) => {
         _balance,
         getBalance,
         _promptingFetchingBalance,
+
+        isDarkMode,
+        setIsDarkMode,
       }}
     >
       {children}

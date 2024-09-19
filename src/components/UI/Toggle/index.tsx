@@ -26,7 +26,7 @@ export default function ModernCheckbox({
           transition-colors duration-200 ease-in-out
           ${
             checked
-              ? "bg-blue-500 border-blue-500"
+              ? "bg-black border-neutral-950"
               : "bg-white border-gray-300 group-hover:border-blue-500"
           }
         `}
@@ -41,7 +41,7 @@ export default function ModernCheckbox({
           />
         </div>
       </div>
-      <span className="text-sm font-medium text-gray-700 select-none">
+      <span className="text-base font-light tracking-wide text-gray-700 dark:text-neutral-300 select-none">
         {label}
       </span>
     </label>

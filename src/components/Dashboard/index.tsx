@@ -24,6 +24,7 @@ import VisibleIcon from "../UI/Icons/VisibleIcon";
 import HideIcon from "../UI/Icons/HideIcon";
 import MobileFooterNav from "../MobileFooterNav";
 import WarningIcon from "../UI/Icons/WarningIcon";
+import AppThemeSwitch from "../AppThemeSwitch";
 
 const Dashboard = () => {
   const {
@@ -32,23 +33,31 @@ const Dashboard = () => {
     _promptLogoutDialog,
     promptLogoutDialog,
     notify,
+    _keyUsages,
+    _address,
   } = useContext(appContext);
 
   const [visibility, toggleVisiblity] = useState(false);
 
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState<{ seed: boolean; keys: boolean }>({
+    seed: false,
+    keys: false,
+  });
   const handleToggleVisibility = () => {
     toggleVisiblity((prevState) => !prevState);
   };
 
-  const handleCopy = () => {
-    setCopied(true);
+  const handleCopy = async (value: string, key: string) => {
+    setCopied((prevState) => ({ ...prevState, [key]: true }));
     const isMobile = isMobileDevice();
 
     if (!isMobile) {
-      notify("Copied secret to clipboard");
+      notify(`Copied to clipboard`);
     }
-    utils.copyToClipboard(loginForm._seedPhrase);
+
+    utils.copyToClipboard(value);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    setCopied((prevState) => ({ ...prevState, [key]: false }));
   };
 
   return (
@@ -58,7 +67,7 @@ const Dashboard = () => {
         display={_promptLogoutDialog}
         dismiss={() => null}
       >
-        <div className="min-h-[calc(100vh_-_100px)] flex flex-col md:block">
+        <div className="min-h-[calc(100vh_-_100px)] flex flex-col md:block pb-8">
           <div className="flex-grow">
             <div className="grid grid-cols-[auto_1fr] gap-2 items-center">
               <h2 className={dialogTitleStyle}>
@@ -66,7 +75,7 @@ const Dashboard = () => {
               </h2>
             </div>
             <div className="flex flex-col gap-4 my-4">
-              <div className="flex-grow">
+              <div className="flex-grow space-y-2">
                 <div className={`${inputWrapperStyle}`}>
                   <span className="text-xs text-neutral-600 font-bold">
                     Your secret
@@ -94,8 +103,42 @@ const Dashboard = () => {
 
                       {loginForm._seedPhrase.length > 0 && (
                         <span
-                          onClick={handleCopy}
-                          className={`${inputIconStyle} ${copied && "text-teal-700 animate-pulse"}`}
+                          onClick={() =>
+                            handleCopy(loginForm._seedPhrase, "seed")
+                          }
+                          className={`${inputIconStyle} ${copied.seed && "text-teal-700 animate-pulse"}`}
+                        >
+                          <CopyIcon fill="currentColor" size={22} />
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className={`${inputWrapperStyle}`}>
+                  <span className="text-xs text-neutral-600 font-bold">
+                    Your key uses
+                  </span>
+                  <div className="flex">
+                    <input
+                      type="text"
+                      placeholder="Your key uses"
+                      name="keyusages"
+                      value={_keyUsages[_address] ? _keyUsages[_address] : 1}
+                      className={`${wrappedInputStyle} flex-grow`}
+                    />
+                    <div className="flex gap-2">
+                      {loginForm._seedPhrase.length > 0 && (
+                        <span
+                          onClick={() =>
+                            handleCopy(
+                              _keyUsages && _keyUsages[_address]
+                                ? _keyUsages[_address]
+                                : 1,
+                              "keys",
+                            )
+                          }
+                          className={`${inputIconStyle} ${copied.keys && "text-teal-700 animate-pulse"}`}
                         >
                           <CopyIcon fill="currentColor" size={22} />
                         </span>
@@ -105,7 +148,7 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className="my-4 mx-auto bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg shadow-inner dark:bg-yellow-900 dark:border-yellow-600">
+              <div className="my-4 mx-auto bg-yellow-100 border-l-4 border-yellow-400 p-4 rounded-r-lg shadow-inner dark:bg-neutral-900 dark:border-yellow-600">
                 <div className="flex items-center">
                   <span className="h-6 w-6 text-yellow-600 dark:text-yellow-500 mr-3">
                     <WarningIcon />
@@ -116,9 +159,13 @@ const Dashboard = () => {
                       <span className="inline-flex items-center">
                         <CopyIcon fill="currentColor" />
                       </span>{" "}
-                      of your secret somewhere safe. Hyphens (-) are required.
+                      of your secret somewhere safe. Hyphens (-) are required.{" "}
+                      <br />
+                      <br />
+                      Also if you will be logging in onto a new Public Wallet
+                      website then you may need to remember your key usages.
                     </p>
-                    <p className="mt-3 font-bold text-yellow-800 bg-yellow-200 dark:bg-yellow-700 dark:text-yellow-100 px-2 py-1 rounded text-center">
+                    <p className="max-w-max mx-auto mt-3 font-bold text-yellow-800 bg-yellow-200 dark:bg-yellow-700 dark:text-yellow-100 px-2 py-1 rounded text-center">
                       You cannot recover it later
                     </p>
                   </div>
@@ -147,15 +194,12 @@ const Dashboard = () => {
 
       <div className={styles["grid"]}>
         <header className="bg-[#1b1b1b]">
-          <img
-            alt="icon"
-            src="./assets/icon-white.svg"
-            className="opacity-60"
-          />
-          <div>
+          <img alt="icon" src="./assets/icon-white.svg" />
+          <div className="flex gap-2">
+            <AppThemeSwitch />
             <button
               onClick={promptLogoutDialog}
-              className="bg-neutral-800 font-bold text-xs hover:bg-neutral-900"
+              className="bg-neutral-100 hover:cursor-pointer hover:bg-neutral-50 dark:bg-neutral-800 dark:text-neutral-300 font-bold text-xs dark:hover:bg-[#2C2C2C]"
             >
               Logout
             </button>

@@ -18,8 +18,11 @@ interface IProps {
 const TokenSelect = ({ _balance }: IProps) => {
   const formik: any = useFormikContext();
   const { makeMinimaNumber } = useFormatMinimaNumber();
-  const { _promptTokenSelectionDialog, promptTokenSelectionDialog } =
-    useContext(appContext);
+  const {
+    _promptTokenSelectionDialog,
+    promptTokenSelectionDialog,
+    isDarkMode,
+  } = useContext(appContext);
 
   const [filter, setFilterText] = useState("");
 
@@ -85,16 +88,18 @@ const TokenSelect = ({ _balance }: IProps) => {
               />
             </div>
             <div className="my-auto py-1">
-              <p className="font-bold">MINIMA</p>
+              <p className="font-bold dark:text-neutral-100">MINIMA</p>
 
-              <p className="font-mono truncate text-xs">
+              <p className="font-mono truncate text-xs dark:text-neutral-200">
                 {makeMinimaNumber(active.confirmed, 2000)}
                 {active.unconfirmed != "0"
                   ? "/" + makeMinimaNumber(active.unconfirmed, 2000)
                   : null}
               </p>
             </div>
-            <CaretIcon />
+            <span className="">
+              <CaretIcon fill={isDarkMode ? "#FFF" : "#000"} />
+            </span>
           </div>
         )}
 
@@ -117,20 +122,22 @@ const TokenSelect = ({ _balance }: IProps) => {
               />
             </div>
             <div className="my-auto py-1">
-              <p className="font-bold truncate max-w-[15ch]">
+              <p className="font-bold truncate max-w-[15ch] dark:text-neutral-100">
                 {"name" in active.token && typeof active.token.name === "string"
                   ? active.token.name
                   : "N/A"}
               </p>
 
-              <p className="font-mono truncate text-xs">
+              <p className="font-mono truncate text-xs dark:text-neutral-200">
                 {makeMinimaNumber(active.confirmed, 2000)}
                 {active.unconfirmed != "0"
                   ? "/" + makeMinimaNumber(active.unconfirmed, 2000)
                   : null}
               </p>
             </div>
-            <CaretIcon />
+            <span>
+              <CaretIcon fill={isDarkMode ? "#FFF" : "#F2f2f2"} />
+            </span>
           </div>
         )}
       </div>

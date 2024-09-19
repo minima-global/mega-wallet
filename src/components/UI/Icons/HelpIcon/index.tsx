@@ -2,10 +2,10 @@ const HelpIcon = ({ fill }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className="icon icon-tabler icon-tabler-heart-filled"
-    width="24"
-    height="24"
+    width="16"
+    height="16"
     viewBox="0 0 24 24"
-    strokeWidth="2.5"
+    strokeWidth="1.5"
     fill="none"
     strokeLinecap="round"
     strokeLinejoin="round"

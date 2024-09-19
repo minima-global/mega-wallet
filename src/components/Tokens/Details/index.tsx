@@ -97,7 +97,7 @@ const Details = ({ token, dismiss }) => {
       <div>
         <div className="flex">
           <div className="flex-grow" />
-          <span onClick={dismiss}>
+          <span onClick={dismiss} className="dark:text-neutral-500">
             <CloseIcon fill="currentColor" />
           </span>
         </div>
@@ -110,7 +110,9 @@ const Details = ({ token, dismiss }) => {
           />
           <div className="w-full max-w-md space-y-4">
             <div className="flex gap-1 justify-center items-center">
-              <h2 className="text-2xl font-bold text-center">{tokenName}</h2>
+              <h2 className="text-2xl font-bold text-center dark:text-white">
+                {tokenName}
+              </h2>
               {!!validateToken(token) && (
                 <div className="!text-blue-500">
                   <CheckmarkIcon fill="currentColor" size={24} />
@@ -125,13 +127,13 @@ const Details = ({ token, dismiss }) => {
 
               <div className="flex justify-between">
                 <span className="font-semibold text-neutral-900 dark:text-neutral-400">
-                  Owned
+                  Balance
                 </span>
                 <span className="dark:text-neutral-200">
                   {token &&
                     new Decimal(token.confirmed).gt(0) &&
-                    token.confirmed + " of " + token.total}
-                  {token && new Decimal(token.confirmed).isZero() && "-"}
+                    token.confirmed}
+                  {token && new Decimal(token.confirmed).isZero() && "0"}
                 </span>
               </div>
 
@@ -151,8 +153,8 @@ const Details = ({ token, dismiss }) => {
                 <span className="dark:text-neutral-200">{tokenCreator}</span>
               </div>
 
-              <div className="flex justify-between">
-                <span className="font-semibold text-neutral-900 dark:text-neutral-400">
+              <div className="flex">
+                <span className="whitespace-nowrap font-semibold text-neutral-900 dark:text-neutral-400 max-w-max">
                   Token ID
                 </span>
 
