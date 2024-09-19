@@ -18,6 +18,7 @@ import CopyIcon from "../UI/Icons/CopyIcon";
 import ModernCheckbox from "../UI/Toggle";
 import isMobileDevice from "../../utils/isMobile";
 import WarningIcon from "../UI/Icons/WarningIcon";
+import HelpIcon from "../UI/Icons/HelpIcon";
 
 const Login = () => {
   const {
@@ -30,6 +31,7 @@ const Login = () => {
     createAccount,
     handleNavigation,
     notify,
+    setFirstTime,
   } = useContext(appContext);
 
   const [copied, setCopied] = useState(false);
@@ -153,8 +155,8 @@ const Login = () => {
 
   return (
     <AnimatedDialog up={2000} display={_promptLogin} dismiss={() => null}>
-      <div className="min-h-[calc(100vh_-_100px)] flex flex-col md:block">
-        <div className="flex gap-2 justify-center">
+      <div className="min-h-[calc(100vh_-_100px)] flex flex-col md:block pb-8">
+        <div className="flex gap-2 justify-start">
           <div className="w-8 h-8 overflow-hidden rounded-lg flex">
             <img
               alt="brand-icon"
@@ -162,11 +164,7 @@ const Login = () => {
               className="h-full w-full aspect-square block"
             />
           </div>
-          <h1 className={dialogTitleStyle}>Wallet</h1>
-        </div>
-
-        <div className="my-4">
-          <p className="text-sm dark:text-neutral-300">This wallet is...</p>
+          <h1 className={dialogTitleStyle}>Public Wallet</h1>
         </div>
 
         <div>
@@ -227,20 +225,21 @@ const Login = () => {
             </div>
           </div>
           {loginForm._seedPhrase.length > 0 && (
-            <div className="my-4 mx-auto bg-yellow-100 border-l-4 border-yellow-400 p-4 rounded-r-lg shadow-inner dark:bg-neutral-900 dark:border-yellow-600">
+            <div className="my-4  bg-yellow-100 border-l-4 border-yellow-400 p-4 rounded-r-lg shadow-inner dark:bg-neutral-900 dark:border-yellow-600">
               <div className="flex items-center">
-                <span className="h-6 w-6 text-yellow-600 dark:text-yellow-500 mr-3">
+                <span className="h-6 w-6 text-yellow-600 dark:text-yellow-500 mr-4">
                   <WarningIcon />
                 </span>
                 <div className="text-sm text-yellow-700 dark:text-yellow-200">
-                  <p className="font-bold tracking-wide flex flex-wrap items-center gap-1 justify-center text-center">
+                  <p className="font-bold tracking-wide flex flex-wrap items-center gap-1 justify-start text-center">
                     Make sure you store a copy{" "}
                     <span className="inline-flex items-center">
                       <CopyIcon fill="currentColor" />
                     </span>{" "}
-                    of your secret somewhere safe. Hyphens (-) are required.
+                    of your secret somewhere safe.
                   </p>
-                  <p className="max-w-max mx-auto mt-3 font-bold text-yellow-800 bg-yellow-200 dark:bg-yellow-700 dark:text-yellow-100 px-2 py-1 rounded text-center">
+                  <p className="text-xs"> Hyphens (-) are required.</p>
+                  <p className="max-w-max mr-auto mt-3 font-bold text-yellow-800 bg-yellow-200 dark:bg-yellow-700 dark:text-yellow-100 px-2 py-1 rounded text-center">
                     You cannot recover it later
                   </p>
                 </div>
@@ -248,12 +247,22 @@ const Login = () => {
             </div>
           )}
           <div className="mt-auto md:my-8">
-            <div className="flex mb-4">
-              <ModernCheckbox
-                label="Remember me?"
-                onChange={handleRememberMe}
-                checked={loginForm._rememberMe}
-              />
+            <div className="flex items-center mb-4">
+              <div className="flex-grow ">
+                <ModernCheckbox
+                  label="Remember me?"
+                  onChange={handleRememberMe}
+                  checked={loginForm._rememberMe}
+                />
+              </div>
+              <button
+                onClick={() => setFirstTime(true)}
+                type="button"
+                className="p-0 m-0 font-bold hover:opacity-90 flex text-sm gap-1 items-center"
+              >
+                Help
+                <HelpIcon fill="currentColor" />
+              </button>
             </div>
             <div className="mt-1">
               <button

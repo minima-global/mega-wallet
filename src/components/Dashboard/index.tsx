@@ -67,7 +67,7 @@ const Dashboard = () => {
         display={_promptLogoutDialog}
         dismiss={() => null}
       >
-        <div className="min-h-[calc(100vh_-_100px)] flex flex-col md:block">
+        <div className="min-h-[calc(100vh_-_100px)] flex flex-col md:block pb-8">
           <div className="flex-grow">
             <div className="grid grid-cols-[auto_1fr] gap-2 items-center">
               <h2 className={dialogTitleStyle}>

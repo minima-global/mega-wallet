@@ -1,9 +1,9 @@
 {
   "name": "publicWallet",
   "private": true,
-  "version": "1.5.2",
+  "version": "1.6.0",
   "type": "module",
-  "description": "This is a simple public wallet for all users",
+  "description": "This wallet enables you to send, receive, and store Minima, custom tokens, and NFTs without running a Minima node.",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

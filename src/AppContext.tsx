@@ -20,6 +20,20 @@ const AppProvider = ({ children }: IProps) => {
     // Initialize state based on localStorage
     return localStorage.getItem("dark-mode-pub") === "true";
   });
+
+  const [firstTime, setFirstTime] = useState(() => {
+    // Check if the "first-time" value exists in localStorage
+    const storedValue = localStorage.getItem("first-time");
+
+    // If it doesn't exist, treat it as the first time
+    if (storedValue === null) {
+      localStorage.setItem("first-time", "true"); // Set it to "true" in localStorage
+      return true; // Set state to true since it's the first time
+    }
+
+    // If it does exist, return the boolean value based on the stored string
+    return storedValue === "true";
+  });
   /** This is the main address we use after giving the secret key */
   const [_address, setAddress] = useState<null | string>(null);
   const [_balance, setBalance] = useState<null | object[]>(null);
@@ -314,6 +328,8 @@ const AppProvider = ({ children }: IProps) => {
   return (
     <appContext.Provider
       value={{
+        firstTime,
+        setFirstTime,
         notify,
         _promptMegaMMR,
         promptMegaMMR,
