@@ -15,7 +15,7 @@ const AppThemeSwitch = () => {
   return (
     <div
       onClick={handleSwitchChange}
-      className="bg-neutral-100 hover:cursor-pointer hover:bg-neutral-50 dark:bg-neutral-800 dark:text-neutral-300 dark:font-bold dark:hover:bg-[#2C2C2C] rounded-full flex items-center p-2 pr-3 shadow-lg"
+      className="bg-neutral-100 hover:cursor-pointer hover:bg-neutral-50 dark:bg-neutral-800 dark:text-neutral-300 dark:font-bold dark:hover:bg-[#2C2C2C] rounded-full flex items-center p-2 shadow-lg"
     >
       <Around
         placeholder="Theme"
@@ -24,7 +24,6 @@ const AppThemeSwitch = () => {
         className="focus:outline-none p-0"
         duration={750}
       />
-      <p className="text-xs ml-2">{isDarkMode ? "Dark" : "Light"}</p>
     </div>
   );
 };

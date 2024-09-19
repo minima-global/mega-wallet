@@ -26,7 +26,7 @@ export default function ModernCheckbox({
           transition-colors duration-200 ease-in-out
           ${
             checked
-              ? "bg-blue-500 border-blue-500"
+              ? "bg-black border-neutral-950"
               : "bg-white border-gray-300 group-hover:border-blue-500"
           }
         `}

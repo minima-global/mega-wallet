@@ -166,7 +166,7 @@ const Login = () => {
         </div>
 
         <div className="my-4">
-          <p className="text-sm">This wallet is...</p>
+          <p className="text-sm dark:text-neutral-300">This wallet is...</p>
         </div>
 
         <div>

@@ -199,7 +199,7 @@ const Dashboard = () => {
             <AppThemeSwitch />
             <button
               onClick={promptLogoutDialog}
-              className="bg-neutral-800 text-white dark:bg-neutral-800 dark:text-neutral-300 font-bold text-xs dark:hover:bg-[#2C2C2C]"
+              className="bg-neutral-100 hover:cursor-pointer hover:bg-neutral-50 dark:bg-neutral-800 dark:text-neutral-300 font-bold text-xs dark:hover:bg-[#2C2C2C]"
             >
               Logout
             </button>

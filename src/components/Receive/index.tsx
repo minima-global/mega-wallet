@@ -103,7 +103,7 @@ const Receive = () => {
                 className={`rounded-l-none text-sm rounded-md transition-all duration-200 ${
                   copied
                     ? "bg-teal-500 text-white dark:text-[#1b1b1b] dark:font-bold"
-                    : "bg-neutral-950 dark:bg-neutral-500 text-white dark:text-[#1b1b1b] dark:font-bold"
+                    : "bg-neutral-950 dark:bg-violet-500 dark text-white dark:text-[#1b1b1b] dark:font-bold"
                 }`}
               >
                 {copied ? (

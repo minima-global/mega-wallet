@@ -97,7 +97,7 @@ const Details = ({ token, dismiss }) => {
       <div>
         <div className="flex">
           <div className="flex-grow" />
-          <span onClick={dismiss}>
+          <span onClick={dismiss} className="dark:text-neutral-500">
             <CloseIcon fill="currentColor" />
           </span>
         </div>
@@ -110,7 +110,9 @@ const Details = ({ token, dismiss }) => {
           />
           <div className="w-full max-w-md space-y-4">
             <div className="flex gap-1 justify-center items-center">
-              <h2 className="text-2xl font-bold text-center">{tokenName}</h2>
+              <h2 className="text-2xl font-bold text-center dark:text-white">
+                {tokenName}
+              </h2>
               {!!validateToken(token) && (
                 <div className="!text-blue-500">
                   <CheckmarkIcon fill="currentColor" size={24} />
