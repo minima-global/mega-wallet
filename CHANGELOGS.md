@@ -3,11 +3,13 @@
 ##### [1.6.0] - 19 September 24
 
 - Help section
+- Tokens now render differently in token description
 - Key uses added back to form
 - Key usage storage on log out
 - Dark/Light mode switch
 - Copy changes
 - Design tweaks
+
 
 ##### [1.5.0] - 18 September 24
 
