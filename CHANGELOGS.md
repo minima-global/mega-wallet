@@ -1,5 +1,12 @@
 # Changelog
 
+##### [1.6.3] - 23 September 24
+
+- Copy updates
+- Update generate key ux
+- Navigate with secret param populates login form
+- Design tweaks
+
 ##### [1.6.0] - 19 September 24
 
 - Help section

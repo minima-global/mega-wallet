@@ -6,6 +6,7 @@ import * as utils from "../../utils";
 import AnimatedDialog from "../UI/AnimatedDialog";
 import {
   dialogTitleStyle,
+  dismissableButtonStyle,
   inputIconStyle,
   inputWrapperStyle,
   primaryFormButtonStyle,
@@ -19,6 +20,7 @@ import ModernCheckbox from "../UI/Toggle";
 import isMobileDevice from "../../utils/isMobile";
 import WarningIcon from "../UI/Icons/WarningIcon";
 import HelpIcon from "../UI/Icons/HelpIcon";
+import { useSearchParams } from "react-router-dom";
 
 const Login = () => {
   const {
@@ -34,6 +36,8 @@ const Login = () => {
     setFirstTime,
   } = useContext(appContext);
 
+  const [params] = useSearchParams();
+
   const [copied, setCopied] = useState(false);
 
   const [loading, setLoading] = useState(false);
@@ -42,6 +46,18 @@ const Login = () => {
   const handleToggleVisibility = () => {
     toggleVisiblity((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    const secret = params.get('secret');
+    if (secret) {
+      toggleVisiblity(true);
+      // Automatically populate the secret into the loginForm._seedPhrase
+      setLoginForm((prevData) => ({
+        ...prevData,
+        _seedPhrase: secret,
+      }));
+    }
+  }, [params]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -209,9 +225,9 @@ const Login = () => {
                     )}
                     {visibility && <HideIcon fill="currentColor" size={22} />}
                   </span>
-                  <span onClick={handleGenerate} className={inputIconStyle}>
+                  {/* <span onClick={handleGenerate} className={inputIconStyle}>
                     <KeyIcon fill="currentColor" size={22} />
-                  </span>
+                  </span> */}
                   {loginForm._seedPhrase.length > 0 && (
                     <span
                       onClick={handleCopy}
@@ -258,19 +274,28 @@ const Login = () => {
               <button
                 onClick={() => setFirstTime(true)}
                 type="button"
-                className="p-0 m-0 font-bold hover:opacity-90 flex text-sm gap-1 items-center"
+                className="p-0 m-0 dark:text-white font-bold  hover:opacity-90 flex text-sm gap-1 items-center"
               >
                 Help
                 <HelpIcon fill="currentColor" />
               </button>
             </div>
-            <div className="mt-1">
+            <div className="mt-1 gap-2 flex flex-col">
               <button
                 disabled={loading || loginForm._seedPhrase.length === 0}
                 type="submit"
                 className={primaryFormButtonStyle}
               >
                 Login
+              </button>
+             
+              <button
+                onClick={handleGenerate}
+                type="button"
+                disabled={loading}
+                className={`${dismissableButtonStyle} flex gap-1 items-center max-w-max mx-auto mt-2`}
+              >
+                Generate Key <KeyIcon fill="currentColor" />
               </button>
             </div>
           </div>
