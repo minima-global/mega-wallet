@@ -24,25 +24,18 @@ const Welcome = () => {
         <div className="my-4 space-y-4 text-black dark:text-neutral-300 tracking-wide">
           <p className=" font-bold text-left">Welcome to the Public Wallet!</p>
           <p>
-            This wallet enables you to send, receive, and store Minima, custom
-            tokens, and NFTs without running a Minima node.
+            This wallet allows you to send, receive, and store Minima, custom
+            tokens, and NFTs without needing to run a Minima node.
           </p>
           <p>
-            On first use, generate a secret key and keep it safe. After logging
-            out it won't be shown again and if lost, you will lose access to
-            your assets.
+            On your first use, you will generate a secret key. Keep this key
+            secure, as it will not be shown again after logging out. Losing this
+            key means losing access to your assets.
           </p>
+          <p>For future access, log in using this same secret key.</p>
           <p>
-            On subsequent uses, log in with the same secret to access your
-            wallet.
-          </p>
-          <p>
-            Anyone can host a public wallet, and you can use any public wallet,
-            but you must ensure you trust the node owner before logging in.
-          </p>
-          <p>
-            If in future you decide to start your own Minima node, simply
-            transfer your assets to your new node.
+            If you decide to run your own Minima node, simply transfer your
+            assets to your new node.
           </p>
 
           <div className="my-4 mx-auto bg-yellow-100 border-l-4 border-yellow-400 p-4 rounded-r-lg shadow-inner dark:bg-neutral-900 dark:border-yellow-600">
@@ -52,10 +45,9 @@ const Welcome = () => {
               </span>
               <div className="text-sm text-yellow-700 dark:text-yellow-200 space-y-2">
                 <p className="font-bold tracking-wide flex flex-wrap items-center gap-1 justify-center text-left">
-                  The node owner must run a mega MMR node for accurate balances.
-                </p>
-                <p className="font-bold tracking-wide flex flex-wrap items-center gap-1 justify-start text-left">
-                  Always trust the node owner.
+                  Public wallet providers do not store or record any private
+                  data, however, websites can be compromised or manipulated so
+                  please only use wallet providers you trust
                 </p>
               </div>
             </div>

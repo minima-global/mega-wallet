@@ -153,8 +153,8 @@ const Dashboard = () => {
                   <span className="h-6 w-6 text-yellow-600 dark:text-yellow-500 mr-3">
                     <WarningIcon />
                   </span>
-                  <div className="text-sm text-yellow-700 dark:text-yellow-200">
-                    <p className="font-bold tracking-wide flex flex-wrap items-center gap-1 justify-center text-center">
+                  <div className="ml-2 text-sm text-yellow-700 dark:text-yellow-200">
+                    <p className="font-bold tracking-wide flex flex-wrap items-center gap-1 justify-start text-left">
                       Make sure you store a copy{" "}
                       <span className="inline-flex items-center">
                         <CopyIcon fill="currentColor" />
@@ -165,7 +165,7 @@ const Dashboard = () => {
                       Also if you will be logging in onto a new Public Wallet
                       website then you may need to remember your key usages.
                     </p>
-                    <p className="max-w-max mx-auto mt-3 font-bold text-yellow-800 bg-yellow-200 dark:bg-yellow-700 dark:text-yellow-100 px-2 py-1 rounded text-center">
+                    <p className="max-w-max mr-auto mt-3 font-bold text-yellow-800 bg-yellow-200 dark:bg-yellow-700 dark:text-yellow-100 px-2 py-1 rounded text-center">
                       You cannot recover it later
                     </p>
                   </div>
@@ -173,7 +173,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="mt-auto md:mt-4 flex flex-col md:flex-row gap-4">
+          <div className="mt-auto md:mt-4 flex flex-col gap-4">
             <button
               onClick={promptLogoutDialog}
               className={dismissableButtonStyle}
@@ -210,7 +210,6 @@ const Dashboard = () => {
             <section />
             <DialogWithError />
             <DialogWithMessage />
-            {/* <Balance /> */}
             <DesktopNav />
             <Wallet />
             <Receive />
