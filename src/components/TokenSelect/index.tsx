@@ -115,7 +115,7 @@ const TokenSelect = ({ _balance }: IProps) => {
                 alt="minima-token"
                 src={
                   "url" in active.token && active.token.url.length
-                    ? active.token.url
+                    ? decodeURIComponent(active.token.url)
                     : `https://robohash.org/${active.tokenid}`
                 }
                 className="w-full h-full object-cover"

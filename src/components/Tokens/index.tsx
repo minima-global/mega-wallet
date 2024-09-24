@@ -137,7 +137,7 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                     alt="token-icon"
                     src={
                       "url" in token.token && token.token.url.length
-                        ? token.token.url
+                        ? decodeURIComponent(token.token.url)
                         : `https://robohash.org/${token.tokenid}`
                     }
                     className="w-full h-full"

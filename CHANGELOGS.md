@@ -1,5 +1,9 @@
 # Changelog
 
+##### [1.6.3] - 24 September 24
+
+- decode urls 
+
 ##### [1.6.3] - 23 September 24
 
 - Copy updates

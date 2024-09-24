@@ -269,16 +269,16 @@ const AppProvider = ({ children }: IProps) => {
       const hasImage = t.token && "url" in t.token && t.token.url.length > 0;
 
       if (hasImage) {
-        const tokenUrl = t.token.url;
+        const tokenUrl = decodeURIComponent(t.token.url);
         const compressedImage = tokenUrl.startsWith("<artimage>", 0);
         const ipfsImage = tokenUrl.startsWith("https://ipfs.io/ipns/", 0);
 
         if (compressedImage) {
-          t.token.url = utils.makeTokenImage(t.token.url, t.tokenid);
+          t.token.url = utils.makeTokenImage( decodeURIComponent(t.token.url), t.tokenid);
         }
 
         if (ipfsImage) {
-          t.token.url = await utils.fetchIPFSImageUri(t.token.url);
+          t.token.url = await utils.fetchIPFSImageUri(decodeURIComponent(t.token.url));
         }
       }
     }
