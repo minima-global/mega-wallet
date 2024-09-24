@@ -63,7 +63,7 @@ const Details = ({ token, dismiss }) => {
     token && token.tokenid === "0x00"
       ? "./assets/token.svg" // Use default image for token id "0x00"
       : token?.token?.url && token.token.url.length > 0
-        ? token.token.url // Use the token URL if it's available and not empty
+        ? decodeURIComponent(token.token.url) // Use the token URL if it's available and not empty
         : "./assets/default-token.svg"; // Fallback to a default image
   const tokenName =
     token && token.tokenid === "0x00"
