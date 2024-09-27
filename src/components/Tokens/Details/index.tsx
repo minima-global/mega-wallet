@@ -189,12 +189,12 @@ const Details = ({ token, dismiss }) => {
                 </h3>
                 <dl className="space-y-1">
                   {Object.entries(oToken.extraMetadata).map(([key, value]) => (
-                    <div key={key} className="flex justify-between">
+                    <div key={key} className="flex justify-between gap-4">
                       <span className="font-semibold text-neutral-900 dark:text-neutral-400">
                         {key.substring(0, 1).toUpperCase() +
                           key.substring(1, key.length)}
                       </span>
-                      <span className="dark:text-neutral-200 text-right">
+                      <span className="dark:text-neutral-200 text-right truncate">
                         {value.substring(0, 1).toUpperCase() +
                           value.substring(1, value.length)}
                       </span>

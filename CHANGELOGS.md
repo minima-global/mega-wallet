@@ -1,8 +1,10 @@
 # Changelog
 
-##### [1.6.3] - 24 September 24
+##### [1.7.1] - 27 September 24
 
-- decode urls 
+- design tweak
+- version number
+- remove search params
 
 ##### [1.6.3] - 23 September 24
 

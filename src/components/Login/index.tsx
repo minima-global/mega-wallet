@@ -20,7 +20,8 @@ import ModernCheckbox from "../UI/Toggle";
 import isMobileDevice from "../../utils/isMobile";
 import WarningIcon from "../UI/Icons/WarningIcon";
 import HelpIcon from "../UI/Icons/HelpIcon";
-import { useSearchParams } from "react-router-dom";
+
+import packageJson from "../../../package.json";
 
 const Login = () => {
   const {
@@ -36,7 +37,6 @@ const Login = () => {
     setFirstTime,
   } = useContext(appContext);
 
-  const [params] = useSearchParams();
 
   const [copied, setCopied] = useState(false);
 
@@ -46,18 +46,6 @@ const Login = () => {
   const handleToggleVisibility = () => {
     toggleVisiblity((prevState) => !prevState);
   };
-
-  useEffect(() => {
-    const secret = params.get('secret');
-    if (secret) {
-      toggleVisiblity(true);
-      // Automatically populate the secret into the loginForm._seedPhrase
-      setLoginForm((prevData) => ({
-        ...prevData,
-        _seedPhrase: secret,
-      }));
-    }
-  }, [params]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -180,7 +168,7 @@ const Login = () => {
               className="h-full w-full aspect-square block"
             />
           </div>
-          <h1 className={dialogTitleStyle}>Public Wallet</h1>
+          <h1 className={dialogTitleStyle}>Public Wallet <span className="text-xs text-neutral-500">{packageJson.version}</span></h1>
         </div>
 
         <div>
@@ -298,6 +286,8 @@ const Login = () => {
                 Generate Key <KeyIcon fill="currentColor" />
               </button>
             </div>
+
+
           </div>
         </form>
       </div>
