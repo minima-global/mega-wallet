@@ -22,26 +22,26 @@ export default function ModernCheckbox({
         />
         <div
           className={`
-          w-6 h-6 border-2 rounded-md
+          w-5 h-5 border-2 rounded
           transition-colors duration-200 ease-in-out
           ${
             checked
-              ? "bg-black border-neutral-950"
-              : "bg-white border-gray-300 group-hover:border-blue-500"
+              ? "border-lightOrange"
+              : "border-grey60 group-hover:border-blue-500"
           }
         `}
         >
           <Check
             className={`
-              w-4 h-4 text-white absolute
+              w-4 h-4 text-lightOrange absolute font-bold
               top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
-              transition-opacity duration-200 ease-in-out
+              transition-opacity duration-100 ease-in-out
               ${checked ? "opacity-100" : "opacity-0"}
             `}
           />
         </div>
       </div>
-      <span className="text-base font-light tracking-wide text-gray-700 dark:text-neutral-300 select-none">
+      <span className="text-sm font-light tracking-wide text-gray-700 dark:text-neutral-300 select-none pl-2">
         {label}
       </span>
     </label>

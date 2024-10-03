@@ -45,8 +45,8 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
     ).length === 0
   ) {
     return (
-      <div>
-        <p className="text-center text-sm text-neutral-400">No results found</p>
+      <div className="bg-darkContrast py-3 rounded-lg text-center">
+        <p className="text-sm text-neutral-400">No results found</p>
       </div>
     );
   }
@@ -104,7 +104,7 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                     className="w-full h-full"
                   />
                 </div>
-                <div className="overflow-hidden border-l border-l-neutral-600 px-2">
+                <div className="overflow-hidden px-3">
                   <div className="flex">
                     <h6 className={tokenNameStyle}>Minima</h6>
                     <div className="!text-blue-500 my-auto ml-1">
@@ -144,7 +144,7 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                   />
                 </div>
 
-                <div className="overflow-hidden border-l border-l-neutral-600 px-2">
+                <div className="overflow-hidden px-3">
                   <div className="flex">
                     <h6 className={tokenNameStyle}>
                       {"name" in token.token &&

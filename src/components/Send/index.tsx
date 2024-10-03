@@ -96,7 +96,7 @@ const Send = () => {
   }
 
   return (
-    <animated.div style={springProps}>
+    <div>
       <section>
         <div className="flex justify-between">
           <h3 className={titleStyle}>Transfer tokens</h3>
@@ -271,7 +271,7 @@ const Send = () => {
           )}
         </Formik>
       </section>
-    </animated.div>
+    </div>
   );
 };
 

@@ -10,18 +10,15 @@ const FetchBalanceButton = () => {
   };
 
   return (
-    <a
-      className={`text-black dark:text-neutral-300 ${
-        _promptingFetchingBalance ? "animate-pulse" : ""
-      } hover:cursor-pointer flex items-center gap-1 text-sm p-0 !hover:border-none !hover:outline-none hover:text-neutral-600`}
+    <div
+      className="h-[44px] w-[44px] rounded-full flex items-center justify-center bg-darkContrast active:scale-90 transition-all"
       onClick={!_promptingFetchingBalance ? handleFetchBalance : () => null}
     >
       <RefreshIcon
         fill="currentColor"
         extraClass={`${_promptingFetchingBalance && "animate-spin"}`}
       />
-      Refresh tokens
-    </a>
+    </div>
   );
 };
 

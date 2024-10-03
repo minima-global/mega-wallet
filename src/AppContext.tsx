@@ -16,6 +16,8 @@ interface KeyUsages {
 
 const AppProvider = ({ children }: IProps) => {
   const loaded = useRef(false);
+  const [topBlock, setTopBlock] = useState(null);
+
   const [isDarkMode, setIsDarkMode] = useState(() => {
     // Initialize state based on localStorage
     return localStorage.getItem("dark-mode-pub") === "true";
@@ -157,6 +159,14 @@ const AppProvider = ({ children }: IProps) => {
             createAccount(secretSauce);
           }
 
+          if (msg.event === "inited") {
+            (window as any).MDS.cmd("status", (res) => {
+              setTopBlock(res.response.chain.block);
+            });
+          } else if (msg.event === "NEWBLOCK") {
+            setTopBlock(msg.data.txpow.header.block);
+          }
+
           (async () => {
             await sql(
               `CREATE TABLE IF NOT EXISTS cache (name varchar(255), data longtext);`,
@@ -274,11 +284,16 @@ const AppProvider = ({ children }: IProps) => {
         const ipfsImage = tokenUrl.startsWith("https://ipfs.io/ipns/", 0);
 
         if (compressedImage) {
-          t.token.url = utils.makeTokenImage( decodeURIComponent(t.token.url), t.tokenid);
+          t.token.url = utils.makeTokenImage(
+            decodeURIComponent(t.token.url),
+            t.tokenid,
+          );
         }
 
         if (ipfsImage) {
-          t.token.url = await utils.fetchIPFSImageUri(decodeURIComponent(t.token.url));
+          t.token.url = await utils.fetchIPFSImageUri(
+            decodeURIComponent(t.token.url),
+          );
         }
       }
     }
@@ -319,8 +334,8 @@ const AppProvider = ({ children }: IProps) => {
 
   const notify = (message: string) =>
     toast(message, {
-      position: "bottom-center",
-      theme: "light",
+      theme: "dark",
+      position: "bottom-right",
       bodyClassName: "font-bold text-center",
       draggablePercent: 90,
     });
@@ -352,9 +367,7 @@ const AppProvider = ({ children }: IProps) => {
         _currentNavigation,
         handleNavigation,
 
-        promptLogout,
-        _promptLogoutDialog,
-        promptLogoutDialog,
+        resetAccount,
 
         loginForm,
         setLoginForm,
@@ -378,6 +391,8 @@ const AppProvider = ({ children }: IProps) => {
 
         isDarkMode,
         setIsDarkMode,
+
+        topBlock,
       }}
     >
       {children}

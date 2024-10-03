@@ -5,6 +5,39 @@
 @tailwind utilities;
 
 :root {
+    --background: 220 16% 4%;
+    --foreground: 240 9% 98%;
+
+    --border: 240, 6%, 59%;
+    --input: 240, 6%, 59%;
+    --ring: 240 4.9% 83.9%;
+
+    --orange: hsla(19, 100%, 51%, 1);
+    --light-orange: hsla(33, 100%, 57%, 1);
+    --lighter-orange: hsla(33, 100%, 78%, 1);
+    --dark-orange: hsla(20, 100%, 56%);
+
+    --blue: hsla(240, 100%, 65%);
+    --light-blue: hsla(239, 100%, 81%);
+
+    --grey: hsla(233, 5%, 34%);
+
+    --dark-contrast: hsla(216, 10%, 10%, 1);
+    --medium-dark-contrast: hsla(210, 7%, 17%, 1);
+    --light-dark-contrast: hsla(225, 7%, 23%, 1);
+    --core-dark-contrast: hsla(200, 6%, 29%, 1);
+
+    --white: hsla(0, 0%, 100%, 1);
+    --black: hsl(220, 16%, 4%);
+    --grey-10: hsl(240, 5%, 96%);
+    --grey-20: hsla(240, 5%, 92%, 1);
+    --grey-40: hsla(240, 6%, 84%, 1);
+    --grey-60: hsla(240, 4%, 48%, 1);
+    --grey-80: hsla(240, 5%, 67%, 1);
+    --grey-highlight: hsla(240, 12%, 22%, 1);
+
+    --main: hsla(47, 100%, 56%, 1);
+
     font-family:
         "Manrope",
         -apple-system,
@@ -23,10 +56,6 @@
     line-height: 1.5;
     font-weight: 500;
 
-    color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
-
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -34,15 +63,20 @@
     -webkit-text-size-adjust: 100%;
 }
 
-a {
-    font-weight: 500;
-    color: #646cff;
-    text-decoration: inherit;
+@layer base {
+    body {
+        @apply bg-background text-white;
+    }
 }
 
+html,
 body {
-    margin: 0;
-    padding: 0;
+    font-family: var(--font-manrope), sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    scroll-behavior: smooth;
+    background: var(--bg-background);
 }
 
 h1 {
@@ -90,4 +124,47 @@ input[type="search"]::-webkit-search-cancel-button {
 input[type="search"]::-webkit-search-decoration {
     -webkit-appearance: none;
     appearance: none;
+}
+
+.gradient-border {
+    --borderWidth: 3px;
+    position: relative;
+    border-radius: 16px;
+    padding: 4px 12px;
+}
+
+.gradient-border:after {
+    content: "";
+    position: absolute;
+    top: calc(-1 * var(--borderWidth));
+    left: calc(-1 * var(--borderWidth));
+    height: calc(100% + var(--borderWidth) * 2);
+    width: calc(100% + var(--borderWidth) * 2);
+    background: linear-gradient(
+        60deg,
+        #f79533,
+        #f37055,
+        #ef4e7b,
+        #a166ab,
+        #5073b8,
+        #1098ad,
+        #07b39b,
+        #6fba82
+    );
+    border-radius: 16px;
+    z-index: -1;
+    animation: animatedgradient 2.5s ease alternate infinite;
+    background-size: 300% 300%;
+}
+
+@keyframes animatedgradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }

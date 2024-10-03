@@ -76,64 +76,42 @@ const Receive = () => {
   }
 
   return (
-    <animated.div style={springProps}>
-      <div className="max-w-md mx-auto p-6 rounded-lg">
-        <div className="flex flex-col items-center space-y-6">
-          <div className="bg-white dark:bg-[#1b1b1b] p-4 rounded-lg shadow-inner shadow-neutral-200 dark:shadow-[#1b1b1b]">
-            <QRCode value={_address} size={200} />
-          </div>
-
-          <div className="w-full space-y-2">
-            <label htmlFor="address" className={titleStyle}>
-              Your Address
-            </label>
-            <div className="flex text-sm text-gray-900 bg-gray-100 border border-gray-300 rounded-md focus:border-transparent dark:bg-[#1b1b1b] dark:text-white dark:border-neutral-700 rounded-r-lg">
-              <input
-                ref={inputRef}
-                id="address"
-                readOnly
-                value={_address}
-                type="text"
-                className="w-full bg-transparent focus:outline-none px-3 truncate"
-                onDoubleClick={handleDoubleClick}
+    <div className="bg-darkContrast p-10">
+      <div className="w-full max-w-[450px] mx-auto">
+        <div className="bg-white w-fit mx-auto p-4">
+          <QRCode value={_address} size={200} />
+        </div>
+        <div className="mt-6 bg-mediumDarkContrast py-3 px-4 rounded text-sm break-all">
+          {_address}
+        </div>
+        <div className="mt-4">
+          <button
+            type="button"
+            onClick={handleCopy}
+            className={`w-full text-sm py-3 pb-3.5 flex items-center justify-center ${
+              copied
+                ? "bg-mediumDarkContrast dark:font-bold"
+                : "bg-mediumDarkContrast text-white dark:font-bold"
+            }`}
+          >
+            Copy
+            <svg
+              width="13"
+              height="16"
+              viewBox="0 0 13 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="fill-white ml-3"
+            >
+              <path
+                d="M4.04813 12.5834C3.67299 12.5834 3.3559 12.4538 3.09687 12.1948C2.83785 11.9358 2.70833 11.6187 2.70833 11.2436V1.75648C2.70833 1.38134 2.83785 1.06426 3.09687 0.805229C3.3559 0.546201 3.67299 0.416687 4.04813 0.416687H11.5352C11.9103 0.416687 12.2274 0.546201 12.4865 0.805229C12.7455 1.06426 12.875 1.38134 12.875 1.75648V11.2436C12.875 11.6187 12.7455 11.9358 12.4865 12.1948C12.2274 12.4538 11.9103 12.5834 11.5352 12.5834H4.04813ZM4.04813 11.5H11.5352C11.5994 11.5 11.6581 11.4733 11.7115 11.4198C11.7649 11.3665 11.7917 11.3077 11.7917 11.2436V1.75648C11.7917 1.69231 11.7649 1.63356 11.7115 1.58023C11.6581 1.52676 11.5994 1.50002 11.5352 1.50002H4.04813C3.98396 1.50002 3.92521 1.52676 3.87188 1.58023C3.8184 1.63356 3.79167 1.69231 3.79167 1.75648V11.2436C3.79167 11.3077 3.8184 11.3665 3.87188 11.4198C3.92521 11.4733 3.98396 11.5 4.04813 11.5ZM1.46479 15.1667C1.08965 15.1667 0.772569 15.0372 0.513542 14.7781C0.254514 14.5191 0.125 14.202 0.125 13.8269V3.25648H1.20833V13.8269C1.20833 13.8911 1.23507 13.9498 1.28854 14.0031C1.34188 14.0566 1.40062 14.0834 1.46479 14.0834H10.0352V15.1667H1.46479Z"
+                fill="currentColor"
               />
-              <button
-                type="button"
-                onClick={handleCopy}
-                className={`rounded-l-none text-sm rounded-md transition-all duration-200 ${
-                  copied
-                    ? "bg-teal-500 text-white dark:text-[#1b1b1b] dark:font-bold"
-                    : "bg-neutral-950 dark:bg-violet-500 dark text-white dark:text-[#1b1b1b] dark:font-bold"
-                }`}
-              >
-                {copied ? (
-                  <span className="flex items-center">
-                    Copied
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 ml-1"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </span>
-                ) : (
-                  "Copy"
-                )}
-              </button>
-            </div>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              Double-click to copy the entire address
-            </p>
-          </div>
+            </svg>
+          </button>
         </div>
       </div>
-    </animated.div>
+    </div>
   );
 };
 

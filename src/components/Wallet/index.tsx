@@ -34,21 +34,51 @@ const Wallet = () => {
   }
 
   return (
-    <animated.div style={springProps}>
-      <section>
-        <div className="flex">
-          <h6 className={titleStyle}>Your tokens</h6>
-          <FetchBalanceButton />
+    <div>
+      <div className="flex gap-2">
+        <div className="h-[44px] flex bg-darkContrast rounded-full flex-1">
+          <label
+            className="flex items-center justify-center pl-4"
+            htmlFor="search"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M18.3913 10.6957C18.3913 14.9458 14.9459 18.3913 10.6957 18.3913C6.44546 18.3913 3 14.9458 3 10.6957C3 6.44546 6.44546 3 10.6957 3C14.9459 3 18.3913 6.44546 18.3913 10.6957Z"
+                stroke="#464C4F"
+                stroke-width="2"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M16.2929 16.2929C16.6834 15.9024 17.3166 15.9024 17.7071 16.2929L21.7071 20.2929C22.0976 20.6834 22.0976 21.3166 21.7071 21.7071C21.3166 22.0976 20.6834 22.0976 20.2929 21.7071L16.2929 17.7071C15.9024 17.3166 15.9024 16.6834 16.2929 16.2929Z"
+                fill="#464C4F"
+              />
+            </svg>
+          </label>
+
+          <input
+            id="search"
+            onChange={handleFilterTextChange}
+            placeholder="Search tokens"
+            type="search"
+            className="w-full h-full appearance-none bg-transparent pl-3 pr-5"
+          />
         </div>
-        <input
-          onChange={handleFilterTextChange}
-          placeholder="Search tokens"
-          type="search"
-          className={searchInputStyle}
-        />
-        <Tokens filterText={filter} selectionMode={false} />
-      </section>
-    </animated.div>
+        <FetchBalanceButton />
+      </div>
+
+      <h6 className="text-xl my-4">Tokens</h6>
+      <Tokens filterText={filter} selectionMode={false} />
+    </div>
   );
 };
 export default Wallet;

@@ -12,22 +12,22 @@ export const wrappedInputStyle = `
   whitespace-nowrap
 `;
 export const primaryFormButtonStyle = `
-  w-full p-4 font-bold tracking-wide transition-all duration-200 rounded-md
+  w-full py-3.5 px-4 tracking-wide transition-all duration-200 rounded-md
   bg-[#FFA010] hover:bg-[#E5940E] active:bg-[#C47F0D]
 
-  text-white
-  disabled:bg-[#FFD89E] disabled:text-neutral-200
+  text-black
+  disabled:bg-opacity-20 disabled:cursor-not-allowed
 
   focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-opacity-50
   dark:focus:ring-neutral-400 dark:focus:ring-opacity-60
   shadow-md hover:shadow-lg
 `;
 export const inputWrapperStyle =
-  "flex flex-col border dark:border-none bg-neutral-100 dark:bg-[#1b1b1b] p-4 rounded-lg justify-center";
+  "flex flex-col border dark:border-none bg-neutral-100 dark:bg-[#1b1b1b] px-4 py-3.5 rounded-lg justify-center";
 export const selectableTokenWrapperStyle =
   "hover:cursor-pointer flex items-center gap-1 bg-neutral-50 border dark:border-none dark:bg-neutral-950 rounded-full px-2 hover:bg-neutral-150 dark:hover:bg-neutral-900 hover:outline hover:outline-neutral-900";
 export const searchInputStyle =
-  "p-3 px-4 bg-neutral-100 dark:placeholder:text-neutral-500 rounded-full dark:bg-[#1B1B1B] border dark:border-neutral-600 w-full my-4 focus:outline-none focus:border-neutral-500 dark:text-neutral-200";
+  "p-3 px-6 bg-neutral-100 dark:placeholder:text-neutral-500 rounded-full dark:bg-[#1B1B1B] w-full my-4 focus:outline-none focus:border-neutral-500 dark:text-neutral-200";
 export const searchWrapperStyle = "flex bg-neutral-800 p-4 rounded-full gap-1";
 export const tokenWrapperStyle =
   "flex hover:bg-neutral-700 hover:cursor-pointer w-full py-2 px-3";
@@ -56,7 +56,7 @@ export const dismissableButtonStyle = `
   dark:focus:ring-neutral-400 dark:focus:ring-opacity-60
 `;
 export const tokenStyle =
-  "grid grid-cols-[auto_1fr] border dark:border-neutral-600 hover:border-neutral-500 items-center gap-2 bg-stone-50 dark:bg-[#1b1b1b] p-1 mb-2 rounded-lg";
+  "grid grid-cols-[auto_1fr] items-center gap-2 bg-stone-50 dark:bg-darkContrast p-3 mb-2 rounded";
 export const tokenNameStyle =
   "font-bold truncate text-neutral-600 dark:text-neutral-400";
 export const tokenAmountStyle =
