@@ -1,6 +1,5 @@
 import Decimal from "decimal.js";
 import NFTDisplay from "../../NFTDisplay";
-import AnimatedDialog from "../../UI/AnimatedDialog";
 import CloseIcon from "../../UI/Icons/CloseIcon";
 import { wrappedInputStyle } from "../../../styles";
 import CheckmarkIcon from "../../UI/Icons/CheckmarkIcon";
@@ -92,121 +91,113 @@ const Details = ({ token, dismiss }) => {
         ? token.token.external_url
         : "";
 
+  const display = token;
+
   return (
-    <AnimatedDialog up={30} display={token !== null} dismiss={() => null}>
-      <div>
-        <div className="flex">
-          <div className="flex-grow" />
-          <span onClick={dismiss} className="dark:text-neutral-500">
+    <div
+      className={`absolute top-0 left-0 z-50 w-full overflow-x-hidden transition-all duration-0 ${display ? "visible scale-100 opacity-100" : "invisible select-none scale-90"}`}
+    >
+      <div className="left-0 top-0 min-h-screen w-full flex items-center">
+        <div
+          onClick={dismiss}
+          className="fixed z-30 top-0 left-0 bg-black opacity-70 w-screen h-screen"
+        />
+        <div className="relative lg:mt-10 bg-black rounded border border-darkContrast w-full max-w-[500px] mx-5 lg:mx-auto z-40 mb-10 p-6">
+          <div
+            onClick={dismiss}
+            className="absolute top-5 right-5 dark:text-neutral-500 hover:text-white cursor-pointer"
+          >
             <CloseIcon fill="currentColor" />
-          </span>
-        </div>
-        <div className="flex flex-col items-center space-y-6 p-4 justify-center">
-          <NFTDisplay
-            imageUrl={tokenImage}
-            name={tokenName}
-            description={tokenDescription}
-            isTokenValidated={!!validateToken(token)}
-          />
-          <div className="w-full max-w-md space-y-4">
-            <div className="flex gap-1 justify-center items-center">
-              <h2 className="text-2xl font-bold text-center dark:text-white">
-                {tokenName}
-              </h2>
-              {!!validateToken(token) && (
-                <div className="!text-blue-500">
-                  <CheckmarkIcon fill="currentColor" size={24} />
-                </div>
-              )}
-            </div>
+          </div>
+          <div className="flex flex-col items-center space-y-6 justify-center">
+            <NFTDisplay
+              imageUrl={tokenImage}
+              name={tokenName}
+              description={tokenDescription}
+              isTokenValidated={!!validateToken(token)}
+            />
 
-            <div className="bg-neutral-100 dark:bg-neutral-900 rounded-lg p-4 space-y-2 shadow-inner">
-              <p className="text-sm text-neutral-600 dark:text-neutral-500">
-                {tokenDescription}
-              </p>
-
-              <div className="flex justify-between">
-                <span className="font-semibold text-neutral-900 dark:text-neutral-400">
-                  Balance
-                </span>
-                <span className="dark:text-neutral-200">
-                  {token &&
-                    new Decimal(token.confirmed).gt(0) &&
-                    token.confirmed}
-                  {token && new Decimal(token.confirmed).isZero() && "0"}
-                </span>
-              </div>
-
-              <div className="flex justify-between">
-                <span className="font-semibold text-neutral-900 dark:text-neutral-400">
-                  Total Minted
-                </span>
-                <span className="dark:text-neutral-200">
-                  {token && token.total}
-                </span>
-              </div>
-
-              <div className="flex justify-between">
-                <span className="font-semibold text-neutral-900 dark:text-neutral-400">
-                  Creator
-                </span>
-                <span className="dark:text-neutral-200">{tokenCreator}</span>
-              </div>
-
-              <div className="flex">
-                <span className="whitespace-nowrap font-semibold text-neutral-900 dark:text-neutral-400 max-w-max">
-                  Token ID
-                </span>
-
-                <input
-                  readOnly
-                  className={`${wrappedInputStyle} dark:!text-neutral-200 truncate pl-4 text-right`}
-                  value={token && token.tokenid}
-                />
-              </div>
-
-              {!!tokenLink.length && (
-                <div className="flex justify-between">
-                  <span className="font-semibold text-neutral-900 dark:text-neutral-400">
-                    Website
-                  </span>
-                  <a
-                    href={tokenLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 hover:underline"
-                  >
-                    View
-                  </a>
-                </div>
-              )}
-            </div>
-
-            {Object.keys(oToken.extraMetadata).length > 0 && (
-              <div className="bg-neutral-100 dark:bg-neutral-900 rounded-lg p-4 space-y-2 shadow-inner">
-                <h3 className="text-lg font-semibold mb-2 text-neutral-900 dark:text-neutral-400">
-                  Extra Metadata
-                </h3>
-                <dl className="space-y-1">
-                  {Object.entries(oToken.extraMetadata).map(([key, value]) => (
-                    <div key={key} className="flex justify-between">
-                      <span className="font-semibold text-neutral-900 dark:text-neutral-400">
-                        {key.substring(0, 1).toUpperCase() +
-                          key.substring(1, key.length)}
-                      </span>
-                      <span className="dark:text-neutral-200 text-right">
-                        {value.substring(0, 1).toUpperCase() +
-                          value.substring(1, value.length)}
-                      </span>
+            <div className="w-full max-w-md space-y-4">
+              <div className="text-center">
+                <div className="flex gap-1 justify-center items-center mb-2">
+                  <h2 className="text-2xl font-bold text-center dark:text-white">
+                    {tokenName}
+                  </h2>
+                  {!!validateToken(token) && (
+                    <div className="!text-blue-500">
+                      <CheckmarkIcon fill="currentColor" size={24} />
                     </div>
-                  ))}
-                </dl>
+                  )}
+                </div>
+                <h5>{tokenDescription}</h5>
               </div>
-            )}
+              <div className="font-bold">Details</div>
+              <div className="bg-darkContrast p-4 rounded text-white text-sm flex flex-col gap-4">
+                <div>
+                  <p className="text-grey80 mb-1.5">Balance</p>
+                  <p>
+                    {token &&
+                      new Decimal(token.confirmed).gt(0) &&
+                      token.confirmed}
+                    {token && new Decimal(token.confirmed).isZero() && "0"}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-grey80 mb-1.5">Total Minted</p>
+                  <p>{token && token.total}</p>
+                </div>
+                <div>
+                  <p className="text-grey80 mb-1.5">Creator</p>
+                  <p>{tokenCreator}</p>
+                </div>
+                <div>
+                  <p className="text-grey80 mb-1.5">Token ID</p>
+                  <p className="break-all">{token && token.tokenid}</p>
+                </div>
+                {tokenLink.length > 0 && (
+                  <div>
+                    <p className="text-grey80 mb-1.5">Website</p>
+                    <p className="break-all">
+                      <a
+                        href={tokenLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 hover:underline"
+                      >
+                        {tokenLink || "N/A"}
+                      </a>
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {Object.keys(oToken.extraMetadata).length > 0 && (
+                <div>
+                  <div className="font-bold mt-2 mb-4">Other</div>
+                  <div className="bg-darkContrast p-4 rounded text-white text-sm flex flex-col gap-4">
+                    {Object.entries(oToken.extraMetadata).map(
+                      ([key, value]) => (
+                        <div key={key}>
+                          <p className="text-grey80 mb-1.5">
+                            {key.substring(0, 1).toUpperCase() +
+                              key.substring(1, key.length)}
+                          </p>
+                          <p className="break-all">
+                            {value.substring(0, 1).toUpperCase() +
+                              value.substring(1, value.length)}
+                          </p>
+                        </div>
+                      ),
+                    )}
+                  </div>
+                  <dl className="space-y-1"></dl>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </AnimatedDialog>
+    </div>
   );
 };
 

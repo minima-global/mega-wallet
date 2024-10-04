@@ -13,10 +13,11 @@ export const wrappedInputStyle = `
 `;
 export const primaryFormButtonStyle = `
   w-full py-3.5 px-4 tracking-wide rounded-md
-  bg-[#FFA010] hover:bg-[#E5940E] active:bg-[#C47F0D]
+  transition-colors
+  bg-lightOrange hover:bg-lighterOrange active:bg-lighterOrange
 
   text-black
-  disabled:bg-opacity-20 disabled:cursor-not-allowed
+  disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-lightOrange
 
   focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-opacity-50
   dark:focus:ring-neutral-400 dark:focus:ring-opacity-60
@@ -47,11 +48,12 @@ export const nftCardButtonStyle =
 export const responseGridSystem =
   "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4";
 export const dismissableButtonStyle = `
-  px-4 py-2 rounded-md font-bold tracking-wide transition-colors duration-200
+  px-4 py-2 rounded-md font-bold tracking-wide transition-colors duration-100
   border-2 border-neutral-500 hover:border-neutral-600 active:border-neutral-700
-  dark:border-neutral-400 dark:hover:border-neutral-300 dark:active:border-neutral-200
+  dark:border-neutral-400 dark:active:border-neutral-200
   text-neutral-700 dark:text-gray-100
   bg-transparent
+  hover:bg-white hover:text-black hover:border-white
   focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-opacity-50
   dark:focus:ring-neutral-400 dark:focus:ring-opacity-60
 `;

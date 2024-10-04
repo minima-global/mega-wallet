@@ -9,6 +9,7 @@ export default {
         lightOrange: "var(--light-orange)",
         lighterOrange: "var(--lighter-orange)",
         darkOrange: "var(--dark-orange)",
+        red: "var(--red)",
         blue: "var(--blue)",
         green: "var(--green)",
         grey: "var(--grey)",

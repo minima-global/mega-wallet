@@ -399,6 +399,9 @@ const AppProvider = ({ children }: IProps) => {
         setIsDarkMode,
 
         topBlock,
+
+        _promptLogoutDialog,
+        setPromptLogoutDialog,
       }}
     >
       {children}

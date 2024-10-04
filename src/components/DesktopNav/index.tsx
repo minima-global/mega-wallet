@@ -3,8 +3,10 @@ import { appContext } from "../../AppContext";
 
 const NavButton = ({ name, icon, activeIcon, isActive, onClick }) => (
   <button
-    className={`flex-1 w-full relative text-sm text-left flex rounded py-2.5 px-4 items-center justify-start gap-2 transition-all duration-200 ${
-      isActive ? "bg-lightOrange text-black" : "bg-mediumDarkContrast"
+    className={`pointer-cursor flex-1 w-full relative text-sm text-left flex rounded py-2.5 px-4 items-center justify-start gap-2 transition-all duration-200 ${
+      isActive
+        ? "bg-lightOrange hover:bg-lighterOrange text-black"
+        : "bg-mediumDarkContrast hover:bg-lightDarkContrast"
     }`}
     disabled={isActive}
     onClick={onClick}
@@ -65,7 +67,7 @@ const DesktopNav = () => {
           viewBox="0 0 12 11"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="stroke-lightOrange"
+          className="stroke-white"
         >
           <path
             d="M1.64116 10.7036L0.875122 9.93751L9.51304 1.29168H1.787V0.208344H11.3703V9.79168H10.287V2.06564L1.64116 10.7036Z"

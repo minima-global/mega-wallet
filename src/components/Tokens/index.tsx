@@ -94,15 +94,23 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                     ? () => selectToken(token)
                     : () => setViewToken(token)
                 }
-                className="bg-darkContrast relative w-full flex p-3 border border-lightDarkContrast rounded"
+                className="bg-darkContrast relative w-full flex items-center p-3 border border-lightDarkContrast rounded"
                 key={token.tokenid}
               >
-                <div className="w-12 h-12 overflow-hidden">
-                  <img
-                    alt="token-icon"
-                    src="./assets/token.svg"
-                    className="w-full h-full"
-                  />
+                <div className="w-[44px] h-[42px] overflow-hidden">
+                  <svg
+                    width="42"
+                    height="42"
+                    viewBox="0 0 42 42"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect width="42" height="42" rx="2" fill="white" />
+                    <path
+                      d="M29.4428 14.759L28.2053 20.2329L26.6226 13.6286L21.0773 11.3795L19.578 17.9957L18.2571 10.2371L12.7119 8L7 33.2512H13.0569L14.8062 25.4926L16.1271 33.2512H22.1959L23.6834 26.6349L25.266 33.2512H31.323L35 16.9962L29.4428 14.759Z"
+                      fill="black"
+                    />
+                  </svg>
                 </div>
                 <div className="overflow-hidden px-3">
                   <div className="flex">
@@ -144,7 +152,7 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                   />
                 </div>
 
-                <div className="overflow-hidden px-3">
+                <div className="overflow-hidden flex flex-col items-start justify-center px-3">
                   <div className="flex">
                     <h6 className={tokenNameStyle}>
                       {"name" in token.token &&
@@ -168,11 +176,17 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                     </p>
                   )}
                   {selectionMode && (
-                    <p className={tokenAmountStyle}>
-                      {token.token && "ticker" in token.token
-                        ? token.token.ticker
-                        : ""}
-                    </p>
+                    <>
+                      {token.token && token.token.ticker ? (
+                        <p className={tokenAmountStyle}>
+                          {token.token && "ticker" in token.token
+                            ? token.token.ticker
+                            : ""}
+                        </p>
+                      ) : (
+                        <p className="text-grey80">-</p>
+                      )}
+                    </>
                   )}
                 </div>
               </li>

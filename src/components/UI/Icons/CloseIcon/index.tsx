@@ -1,7 +1,6 @@
 const CloseIcon = ({ fill, size = 22 }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    className="icon icon-tabler icon-tabler-wallet fill-teal-600"
     width={size}
     height={size}
     viewBox="0 0 24 24"

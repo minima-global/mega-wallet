@@ -17,6 +17,7 @@
     --lighter-orange: hsla(33, 100%, 78%, 1);
     --dark-orange: hsla(20, 100%, 56%);
     --green: hsla(166, 73%, 60%, 1);
+    --red: hsla(349, 100%, 69%, 1);
 
     --blue: hsla(240, 100%, 65%);
     --light-blue: hsla(239, 100%, 81%);
@@ -71,7 +72,6 @@
 }
 
 body {
-    overflow-y: scroll;
 }
 
 html,

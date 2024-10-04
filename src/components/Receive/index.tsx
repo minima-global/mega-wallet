@@ -81,8 +81,8 @@ const Receive = () => {
           <button
             type="button"
             onClick={handleCopy}
-            className={`w-full text-sm transition-colors py-3 rounded pb-3.5 flex items-center justify-center text-black ${
-              copied ? "bg-green" : "bg-white"
+            className={`w-full text-sm py-3 rounded pb-3.5 flex items-center justify-center text-black active:scale-95 transition-all ${
+              copied ? "bg-green" : "bg-white hover:bg-grey40"
             }`}
           >
             Copy

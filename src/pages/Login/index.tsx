@@ -218,7 +218,7 @@ const Login = () => {
             <div
               role="button"
               onClick={handleCopy}
-              className={`flex select-none items-center active:scale-[95%] gap-3 text-sm bg-white text-black rounded-lg w-fit px-6 transition-all ${copied ? "bg-green" : "bg-white"}`}
+              className={`flex select-none items-center active:scale-[95%] gap-3 text-sm text-black rounded-lg w-fit px-6 transition-all ${copied ? "bg-green" : "bg-white hover:bg-grey40"}`}
             >
               Copy
               <svg

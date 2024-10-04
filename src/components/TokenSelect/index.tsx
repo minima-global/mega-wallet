@@ -181,9 +181,12 @@ const TokenSelect = ({ _balance }: IProps) => {
       <div
         className={`fixed top-0 left-0 z-50 transition-all duration-75 ${_promptTokenSelectionDialog ? "visible scale-100 opacity-100" : "invisible select-none scale-90"}`}
       >
-        <div className="fixed top-0 left-0 bg-black opacity-70 w-screen h-screen" />
-        <div className="relative z-50 h-screen w-screen flex items-center">
-          <div className="bg-black border border-darkContrast rounded overflow-auto mx-auto w-full max-w-[500px] mb-10 p-6 relative">
+        <div className="h-screen w-screen flex p-3 lg:p-0 lg:items-center">
+          <div
+            onClick={promptTokenSelectionDialog}
+            className="fixed z-30 top-0 left-0 bg-black opacity-70 w-screen h-screen"
+          />
+          <div className="relative bg-black rounded border border-darkContrast w-full max-w-[500px] min-h-[500px] mx-auto z-40 mb-10 p-6">
             <section>
               <div className="absolute top-5 right-5">
                 <svg
@@ -204,10 +207,10 @@ const TokenSelect = ({ _balance }: IProps) => {
                   <path d="M6 6l12 12" />
                 </svg>
               </div>
-              <h3 className="-mt-1 text-xl">Select a token</h3>
+              <h3 className="-mt-1 mb-1 text-xl">Select a token</h3>
               <div className="grid grid-cols-[1fr_auto] items-center"></div>
 
-              <div className="h-[44px] flex bg-darkContrast rounded-full flex-1 mt-5 mb-5">
+              <div className="h-[46px] flex border border-mediumDarkContrast bg-darkContrast rounded-full flex-1 mt-5 mb-7">
                 <label className="flex items-center justify-center pl-4">
                   <svg
                     width="24"
@@ -242,7 +245,7 @@ const TokenSelect = ({ _balance }: IProps) => {
                 />
               </div>
 
-              <div className="relative overflow-y-auto mb-1">
+              <div className="relative mb-1">
                 <Tokens
                   filterText={filter}
                   selectionMode

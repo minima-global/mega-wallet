@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { appContext } from "../../../AppContext.tsx";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Header = () => {
-  const { topBlock, setIsDarkMode } = useContext(appContext);
+  const { topBlock, setIsDarkMode, setPromptLogoutDialog } =
+    useContext(appContext);
   const [isAtTop, setIsAtTop] = useState(true);
   const location = useLocation();
 
@@ -90,11 +91,12 @@ const Header = () => {
                   >
                     {location.pathname === "/dashboard" && (
                       <li>
-                        <Link to="/logout">
-                          <button className="text-white rounded py-2 border border-white">
-                            Logout
-                          </button>
-                        </Link>
+                        <button
+                          className="text-white rounded py-2 transition-colors border border-white hover:bg-white hover:text-black"
+                          onClick={() => setPromptLogoutDialog(true)}
+                        >
+                          Logout
+                        </button>
                       </li>
                     )}
                     <li onClick={toggleDarkMode}>

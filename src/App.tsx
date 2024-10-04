@@ -38,7 +38,6 @@ function App() {
           <Route path="/info" element={<Welcome />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/logout" element={<Logout />} />
         </Routes>
       </Layout>
     </MemoryRouter>

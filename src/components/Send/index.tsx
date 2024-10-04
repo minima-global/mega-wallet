@@ -17,8 +17,7 @@ const yupValidator = Yup.object().shape({
       "is-decimal",
       'Invalid number. Make sure to use only digits, "." for decimals and no separators for thousands (e.g., 1000.234)',
       (value) => /^[^a-zA-Z\\;',"]+$/.test(value?.toString()), // Custom regex to match digits and decimals
-    )
-    .nullable(),
+    ),
   address: Yup.string()
     .matches(/0|M[xX][0-9a-zA-Z]+/, "Invalid address")
     .min(59, "Invalid address, too short")
@@ -158,7 +157,9 @@ const Send = () => {
                   <div className="flex flex-col gap-5">
                     <div>
                       <div className="text-grey40 mb-3">Amount</div>
-                      <div className="bg-darkContrast px-4 py-3.5 rounded">
+                      <div
+                        className={`bg-darkContrast px-4 py-3.5 rounded ${touched.address && errors.address ? "border border-red" : ""}`}
+                      >
                         <div className="flex">
                           <input
                             disabled={isSubmitting}
@@ -169,16 +170,17 @@ const Send = () => {
                           />
                         </div>
                       </div>
-
                       {touched.amount && errors.amount && (
-                        <span className="hidden text-xs text-neutral-600 dark:text-neutral-100 rounded">
-                          {errors.amount}
-                        </span>
+                        <div className="pt-3 text-red text-xs rounded">
+                          {errors.amount}.
+                        </div>
                       )}
                     </div>
                     <div>
                       <div className="text-grey40 mb-3">Recipient address</div>
-                      <div className="bg-darkContrast px-4 py-3.5 rounded">
+                      <div
+                        className={`bg-darkContrast px-4 py-3.5 rounded ${touched.address && errors.address ? "border border-red" : ""}`}
+                      >
                         <div className="flex">
                           <input
                             autoComplete="off"
@@ -187,15 +189,15 @@ const Send = () => {
                             required
                             {...getFieldProps("address")}
                             placeholder="Enter recipient address (Mx or 0x)"
-                            className="text-sm bg-transparent w-full placeholder-grey60 appearance-none outline-none"
+                            className={`text-sm bg-transparent w-full placeholder-grey60 appearance-none outline-none`}
                           />
                         </div>
-                        {touched.address && errors.address && (
-                          <span className="text-xs text-neutral-600 dark:text-neutral-100 rounded">
-                            {errors.address}
-                          </span>
-                        )}
                       </div>
+                      {touched.address && errors.address && (
+                        <div className="pt-3 text-red text-xs rounded">
+                          {errors.address}.
+                        </div>
+                      )}
                     </div>
                     <div className="relative">
                       <div className="text-grey40 mb-3">Key uses</div>
@@ -239,7 +241,8 @@ const Send = () => {
                             </button>
                             <button
                               type="button"
-                              className="active:scale-90 w-[22px] h-[22px] flex items-center justify-center p-0 bg-mediumDarkContrast border border-lightDarkContrast shadow-lg"
+                              disabled={getFieldProps("keyuses").value == "1"}
+                              className="disabled:cursor-not-allowed disabled:pointer-events-none disabled:opacity-30 active:scale-90 w-[22px] h-[22px] flex items-center justify-center p-0 bg-mediumDarkContrast border border-lightDarkContrast shadow-lg"
                               onClick={() =>
                                 setFieldValue(
                                   "keyuses",

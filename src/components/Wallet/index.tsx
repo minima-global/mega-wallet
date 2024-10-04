@@ -16,15 +16,6 @@ const Wallet = () => {
     }
   }, [_currentNavigation]);
 
-  const springProps = useSpring({
-    opacity: _currentNavigation === "balance" ? 1 : 0,
-    transform:
-      _currentNavigation === "balance"
-        ? "translateY(0%) scale(1)"
-        : "translateY(-50%) scale(1)",
-    config: config.gentle,
-  });
-
   const handleFilterTextChange = (evt) => {
     setFilterText(evt.target.value);
   };
