@@ -1,17 +1,11 @@
-import { useContext, useRef, useState } from "react";
-import { appContext } from "../../AppContext";
-import TokenSelect from "../TokenSelect";
-import { useSpring, animated, config } from "react-spring";
 import * as Yup from "yup";
 import { Formik } from "formik";
+import { useContext, useEffect, useRef, useState } from "react";
+
+import TokenSelect from "../TokenSelect";
+import { appContext } from "../../AppContext";
 import FetchBalanceButton from "../FetchBalanceButton";
-import {
-  inputWrapperStyle,
-  primaryFormButtonStyle,
-  titleStyle,
-  wrappedInputStyle,
-} from "../../styles";
-import { InfoIcon } from "lucide-react";
+import { primaryFormButtonStyle } from "../../styles";
 
 const yupValidator = Yup.object().shape({
   token: Yup.object().required("Token field required"),
@@ -29,8 +23,7 @@ const yupValidator = Yup.object().shape({
     .matches(/0|M[xX][0-9a-zA-Z]+/, "Invalid address")
     .min(59, "Invalid address, too short")
     .max(66, "Invalid address, too long")
-    .required("Field required")
-    .nullable(),
+    .required("Field required"),
   keyuses: Yup.number()
     .typeError("Must be a number") // Ensures input is a valid number
     .positive("Must be greater than zero") // Ensure it's a positive number
@@ -56,18 +49,15 @@ const Send = () => {
 
   const myForm = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
-  const [showTooltip, setShowTooltip] = useState(false);
+  const ready = useRef(false);
 
-  const springProps = useSpring({
-    opacity: _currentNavigation === "send" ? 1 : 0,
-    transform:
-      _currentNavigation === "send"
-        ? "translateY(0%) scale(1)"
-        : "translateY(-50%) scale(1)",
-    config: config.gentle,
-  });
+  useEffect(() => {
+    setTimeout(() => {
+      ready.current = true;
+    }, 1000);
+  }, []);
 
-  if (_currentNavigation !== "send" || _promptLogin) {
+  if (_currentNavigation !== "send") {
     return null;
   }
 
@@ -98,8 +88,8 @@ const Send = () => {
   return (
     <div>
       <section>
-        <div className="flex justify-between">
-          <h3 className={titleStyle}>Transfer tokens</h3>
+        <div className="flex items-center justify-between">
+          <h6 className="text-2xl my-4">Tokens</h6>
           <FetchBalanceButton />
         </div>
         <Formik
@@ -142,10 +132,12 @@ const Send = () => {
               }
             });
           }}
+          validateOnMount={true}
           validationSchema={yupValidator}
         >
           {({
             getFieldProps,
+            setFieldValue,
             errors,
             touched,
             isValid,
@@ -159,106 +151,145 @@ const Send = () => {
                 className="gap-4 my-4 flex flex-col flex-grow"
               >
                 <div className="flex-grow space-y-4">
-                  <div className={`${inputWrapperStyle}`}>
-                    <label className="text-xs text-neutral-400 dark:text-neutral-500">
-                      Enter amount
-                    </label>
-                    <div className="flex">
-                      <input
-                        disabled={isSubmitting}
-                        type="number"
-                        step="any"
-                        required
-                        {...getFieldProps("amount")}
-                        placeholder="Your amount"
-                        className={`${wrappedInputStyle} font-mono text-lg flex-grow ${touched.amount && errors.amount && "underline"} `}
-                      />
-
-                      <TokenSelect _balance={_balance} />
-                    </div>
-
-                    {touched.amount && errors.amount && (
-                      <span className="text-xs text-neutral-600 dark:text-neutral-100 rounded">
-                        {errors.amount}
-                      </span>
-                    )}
+                  <div className="mb-8">
+                    <TokenSelect _balance={_balance} />
                   </div>
 
-                  <div className={`${inputWrapperStyle}`}>
-                    <label className="text-xs text-neutral-400 dark:text-neutral-500">
-                      Enter recipient address
-                    </label>
-                    <div className="flex">
-                      <input
-                        autoComplete="off"
-                        disabled={isSubmitting}
-                        type="text"
-                        required
-                        {...getFieldProps("address")}
-                        placeholder="Mx/0x"
-                        className={`${wrappedInputStyle} font-mono text-lg flex-grow ${touched.address && errors.address && "underline"}`}
-                      />
-                    </div>
-
-                    {touched.address && errors.address && (
-                      <span className="text-xs text-neutral-600 dark:text-neutral-100 rounded">
-                        {errors.address}
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="relative">
-                    <div className={`${inputWrapperStyle}`}>
-                      <div className="flex items-center">
-                        <label className="text-xs text-neutral-400 dark:text-neutral-500">
-                          Enter key uses
-                        </label>
-                        <div className="relative inline-block">
-                          <button
-                            type="button"
-                            className="focus:outline-none p-0 px-1"
-                            onMouseEnter={() => setShowTooltip(true)}
-                            onMouseLeave={() => setShowTooltip(false)}
-                            onClick={() => setShowTooltip(!showTooltip)}
-                            aria-label="Help"
-                          >
-                            <InfoIcon className="w-4 h-4 text-neutral-400 dark:text-neutral-500" />
-                          </button>
-                          {showTooltip && (
-                            <div className="absolute z-10 w-64 p-2 mt-2 text-sm text-white bg-[#1b1b1b] dark:bg-neutral-950 rounded-lg shadow-lg -left-1/2 transform -translate-x-1/2">
-                              Specify the amount of times you've used your
-                              current wallet to sign a transaction. If you use
-                              the same number it will half your security.
-                            </div>
-                          )}
+                  <div className="flex flex-col gap-5">
+                    <div>
+                      <div className="text-grey40 mb-3">Amount</div>
+                      <div className="bg-darkContrast px-4 py-3.5 rounded">
+                        <div className="flex">
+                          <input
+                            disabled={isSubmitting}
+                            required
+                            {...getFieldProps("amount")}
+                            placeholder="Enter amount"
+                            className="text-sm bg-transparent w-full placeholder-grey60 appearance-none outline-none"
+                          />
                         </div>
                       </div>
-                      <div className="flex">
-                        <input
-                          autoComplete="off"
-                          step={1}
-                          disabled={isSubmitting}
-                          type="number"
-                          required
-                          {...getFieldProps("keyuses")}
-                          placeholder="Amount of times "
-                          className={`${wrappedInputStyle} font-mono text-lg flex-grow ${touched.keyuses && errors.keyuses && "underline"}`}
-                        />
-                      </div>
-                      {touched.keyuses &&
-                        errors.keyuses &&
-                        typeof errors.keyuses === "string" && (
+
+                      {touched.amount && errors.amount && (
+                        <span className="hidden text-xs text-neutral-600 dark:text-neutral-100 rounded">
+                          {errors.amount}
+                        </span>
+                      )}
+                    </div>
+                    <div>
+                      <div className="text-grey40 mb-3">Recipient address</div>
+                      <div className="bg-darkContrast px-4 py-3.5 rounded">
+                        <div className="flex">
+                          <input
+                            autoComplete="off"
+                            disabled={isSubmitting}
+                            type="text"
+                            required
+                            {...getFieldProps("address")}
+                            placeholder="Enter recipient address (Mx or 0x)"
+                            className="text-sm bg-transparent w-full placeholder-grey60 appearance-none outline-none"
+                          />
+                        </div>
+                        {touched.address && errors.address && (
                           <span className="text-xs text-neutral-600 dark:text-neutral-100 rounded">
-                            {errors.keyuses}
+                            {errors.address}
                           </span>
                         )}
+                      </div>
                     </div>
+                    <div className="relative">
+                      <div className="text-grey40 mb-3">Key uses</div>
+                      <div className="bg-darkContrast px-4 py-3.5 rounded">
+                        <div className="flex relative">
+                          <input
+                            autoComplete="off"
+                            disabled={isSubmitting}
+                            required
+                            {...getFieldProps("keyuses")}
+                            placeholder="Amount of times "
+                            className="text-sm bg-transparent w-full placeholder-grey60 appearance-none outline-none"
+                          />
+                          <div className="flex gap-1">
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setFieldValue(
+                                  "keyuses",
+                                  String(
+                                    Number(getFieldProps("keyuses").value) + 1,
+                                  ),
+                                )
+                              }
+                              className="active:scale-90 w-[22px] h-[22px] flex items-center justify-center p-0 bg-mediumDarkContrast border border-lightDarkContrast shadow-lg"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                className="stroke-white w-[12px]"
+                              >
+                                <polyline points="18 15 12 9 6 15"></polyline>
+                              </svg>
+                            </button>
+                            <button
+                              type="button"
+                              className="active:scale-90 w-[22px] h-[22px] flex items-center justify-center p-0 bg-mediumDarkContrast border border-lightDarkContrast shadow-lg"
+                              onClick={() =>
+                                setFieldValue(
+                                  "keyuses",
+                                  getFieldProps("keyuses").value > 1
+                                    ? String(
+                                        Number(getFieldProps("keyuses").value) -
+                                          1,
+                                      )
+                                    : 1,
+                                )
+                              }
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                className="stroke-white w-[12px]"
+                              >
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                        {touched.keyuses &&
+                          errors.keyuses &&
+                          typeof errors.keyuses === "string" && (
+                            <span className="text-xs text-neutral-600 dark:text-neutral-100 rounded">
+                              {errors.keyuses}
+                            </span>
+                          )}
+                      </div>
+                    </div>
+                    <p className="text-sm text-grey60">
+                      You must change your key uses number on every transaction.
+                      This will increment automatically when you use the same
+                      computer, but you must set it yourself if you change
+                      machines.
+                    </p>
                   </div>
                 </div>
 
                 <div className="mt-auto">
                   <button
-                    disabled={loading || !isValid}
+                    disabled={ready.current === true && (loading || !isValid)}
                     type="submit"
                     className={`${primaryFormButtonStyle} my-8`}
                   >

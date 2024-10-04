@@ -40,14 +40,7 @@ const Receive = () => {
     utils.copyToClipboard(_address);
   };
 
-  const handleDoubleClick = () => {
-    handleCopy();
-    if (inputRef.current) {
-      inputRef.current.select();
-    }
-  };
-
-  if (_currentNavigation !== "receive" || _promptLogin) {
+  if (_currentNavigation !== "receive") {
     return null;
   }
 
@@ -76,7 +69,7 @@ const Receive = () => {
   }
 
   return (
-    <div className="bg-darkContrast p-10">
+    <div className="mt-5 bg-darkContrast p-10">
       <div className="w-full max-w-[450px] mx-auto">
         <div className="bg-white w-fit mx-auto p-4">
           <QRCode value={_address} size={200} />
@@ -88,10 +81,8 @@ const Receive = () => {
           <button
             type="button"
             onClick={handleCopy}
-            className={`w-full text-sm py-3 pb-3.5 flex items-center justify-center ${
-              copied
-                ? "bg-mediumDarkContrast dark:font-bold"
-                : "bg-mediumDarkContrast text-white dark:font-bold"
+            className={`w-full text-sm transition-colors py-3 rounded pb-3.5 flex items-center justify-center text-black ${
+              copied ? "bg-green" : "bg-white"
             }`}
           >
             Copy

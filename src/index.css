@@ -16,6 +16,7 @@
     --light-orange: hsla(33, 100%, 57%, 1);
     --lighter-orange: hsla(33, 100%, 78%, 1);
     --dark-orange: hsla(20, 100%, 56%);
+    --green: hsla(166, 73%, 60%, 1);
 
     --blue: hsla(240, 100%, 65%);
     --light-blue: hsla(239, 100%, 81%);
@@ -67,6 +68,10 @@
     body {
         @apply bg-background text-white;
     }
+}
+
+body {
+    overflow-y: scroll;
 }
 
 html,

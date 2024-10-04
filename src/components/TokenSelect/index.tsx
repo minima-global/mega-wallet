@@ -18,11 +18,8 @@ interface IProps {
 const TokenSelect = ({ _balance }: IProps) => {
   const formik: any = useFormikContext();
   const { makeMinimaNumber } = useFormatMinimaNumber();
-  const {
-    _promptTokenSelectionDialog,
-    promptTokenSelectionDialog,
-    isDarkMode,
-  } = useContext(appContext);
+  const { _promptTokenSelectionDialog, promptTokenSelectionDialog } =
+    useContext(appContext);
 
   const [filter, setFilterText] = useState("");
 
@@ -34,7 +31,16 @@ const TokenSelect = ({ _balance }: IProps) => {
     if (_balance && !formik.values.token) {
       formik.setFieldValue("token", _balance[0]);
     }
-  }, [_balance]);
+  }, [_balance, formik]);
+
+  // do not let body scroll if modal is open
+  useEffect(() => {
+    if (_promptTokenSelectionDialog) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [_promptTokenSelectionDialog]);
 
   if (!_balance) {
     return (
@@ -76,41 +82,60 @@ const TokenSelect = ({ _balance }: IProps) => {
       >
         {active && active.tokenid === "0x00" && (
           <div
-            className={`${selectableTokenWrapperStyle}`}
+            className="bg-darkContrast relative w-full flex p-3 border border-lightDarkContrast rounded"
             onClick={() => {
               promptTokenSelectionDialog();
             }}
           >
-            <div className="w-9 h-9 rounded-full overflow-hidden">
-              <img
-                src="./assets/token.svg"
-                className="w-full h-full object-cover"
-              />
+            <div className="w-[42px] h-[42px] overflow-hidden">
+              <svg
+                width="42"
+                height="42"
+                viewBox="0 0 42 42"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect width="42" height="42" rx="2" fill="white" />
+                <path
+                  d="M29.4428 14.759L28.2053 20.2329L26.6226 13.6286L21.0773 11.3795L19.578 17.9957L18.2571 10.2371L12.7119 8L7 33.2512H13.0569L14.8062 25.4926L16.1271 33.2512H22.1959L23.6834 26.6349L25.266 33.2512H31.323L35 16.9962L29.4428 14.759Z"
+                  fill="black"
+                />
+              </svg>
             </div>
-            <div className="my-auto py-1">
-              <p className="font-bold dark:text-neutral-100">MINIMA</p>
-
-              <p className="font-mono truncate text-xs dark:text-neutral-200">
+            <div className="my-auto px-4">
+              <p className="font-bold dark:text-neutral-100 -mt-0.5">Minima</p>
+              <p className="text-sm truncate dark:text-neutral-200">
                 {makeMinimaNumber(active.confirmed, 2000)}
                 {active.unconfirmed != "0"
                   ? "/" + makeMinimaNumber(active.unconfirmed, 2000)
                   : null}
               </p>
             </div>
-            <span className="">
-              <CaretIcon fill={isDarkMode ? "#FFF" : "#000"} />
+            <span className="absolute top-0 right-6 h-full flex items-center">
+              <svg
+                width="8"
+                height="4"
+                viewBox="0 0 8 4"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4.00001 3.71113L0.496887 0.208008H7.50314L4.00001 3.71113Z"
+                  fill="#E9E9EB"
+                />
+              </svg>
             </span>
           </div>
         )}
 
         {active && active.tokenid !== "0x00" && (
           <div
-            className={`${selectableTokenWrapperStyle}`}
+            className="bg-darkContrast relative w-full flex p-3 border border-lightDarkContrast rounded"
             onClick={() => {
               promptTokenSelectionDialog();
             }}
           >
-            <div className="w-9 h-9 rounded-full overflow-hidden">
+            <div className="w-[42px] h-[42px] overflow-hidden">
               <img
                 alt="minima-token"
                 src={
@@ -121,7 +146,7 @@ const TokenSelect = ({ _balance }: IProps) => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="my-auto py-1">
+            <div className="my-auto px-4">
               <p className="font-bold truncate max-w-[15ch] dark:text-neutral-100">
                 {"name" in active.token && typeof active.token.name === "string"
                   ? active.token.name
@@ -135,34 +160,40 @@ const TokenSelect = ({ _balance }: IProps) => {
                   : null}
               </p>
             </div>
-            <span>
-              <CaretIcon fill={isDarkMode ? "#FFF" : "#F2f2f2"} />
+            <span className="absolute top-0 right-6 h-full flex items-center">
+              <svg
+                width="8"
+                height="4"
+                viewBox="0 0 8 4"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4.00001 3.71113L0.496887 0.208008H7.50314L4.00001 3.71113Z"
+                  fill="#E9E9EB"
+                />
+              </svg>
             </span>
           </div>
         )}
       </div>
 
-      <AnimatedSelect
-        display={_promptTokenSelectionDialog}
-        dismiss={() => null}
+      <div
+        className={`fixed top-0 left-0 z-50 transition-all duration-75 ${_promptTokenSelectionDialog ? "visible scale-100 opacity-100" : "invisible select-none scale-90"}`}
       >
-        <div className="relative left-0 right-0 bottom-0 top-0 bg-transparent">
-          <div
-            className={`overflow-auto mx-auto md:w-full p-4 rounded ${
-              _balance.length < 5 ? "h-[50vh]" : "h-auto max-h-[50vh]"
-            }`}
-          >
+        <div className="fixed top-0 left-0 bg-black opacity-70 w-screen h-screen" />
+        <div className="relative z-50 h-screen w-screen flex items-center">
+          <div className="bg-black border border-darkContrast rounded overflow-auto mx-auto w-full max-w-[500px] mb-10 p-6 relative">
             <section>
-              <div className="grid grid-cols-[1fr_auto] items-center">
-                <h3 className={titleStyle}>Select a token</h3>
+              <div className="absolute top-5 right-5">
                 <svg
-                  className="text-gray-500 hover:scale-105 hover:text-gray-600 hover:cursor-pointer hover:outline-offset-2"
+                  className="stroke-white text-gray-500 hover:scale-105 hover:text-gray-600 hover:cursor-pointer hover:outline-offset-2"
                   onClick={promptTokenSelectionDialog}
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
                   height="24"
                   viewBox="0 0 24 24"
-                  strokeWidth="2"
+                  strokeWidth="3"
                   stroke="currentColor"
                   fill="none"
                   strokeLinecap="round"
@@ -173,15 +204,45 @@ const TokenSelect = ({ _balance }: IProps) => {
                   <path d="M6 6l12 12" />
                 </svg>
               </div>
-              <input
-                value={filter}
-                onChange={handleFilterTextChange}
-                placeholder="Search tokens"
-                type="search"
-                className={searchInputStyle}
-              />
+              <h3 className="-mt-1 text-xl">Select a token</h3>
+              <div className="grid grid-cols-[1fr_auto] items-center"></div>
 
-              <div className="relative overflow-y-auto h-[260px]">
+              <div className="h-[44px] flex bg-darkContrast rounded-full flex-1 mt-5 mb-5">
+                <label className="flex items-center justify-center pl-4">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M18.3913 10.6957C18.3913 14.9458 14.9459 18.3913 10.6957 18.3913C6.44546 18.3913 3 14.9458 3 10.6957C3 6.44546 6.44546 3 10.6957 3C14.9459 3 18.3913 6.44546 18.3913 10.6957Z"
+                      stroke="#464C4F"
+                      stroke-width="2"
+                      stroke-miterlimit="10"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M16.2929 16.2929C16.6834 15.9024 17.3166 15.9024 17.7071 16.2929L21.7071 20.2929C22.0976 20.6834 22.0976 21.3166 21.7071 21.7071C21.3166 22.0976 20.6834 22.0976 20.2929 21.7071L16.2929 17.7071C15.9024 17.3166 15.9024 16.6834 16.2929 16.2929Z"
+                      fill="#464C4F"
+                    ></path>
+                  </svg>
+                </label>
+                <input
+                  id="search"
+                  value={filter}
+                  onChange={handleFilterTextChange}
+                  placeholder="Search tokens"
+                  type="search"
+                  className="w-full h-full appearance-none bg-transparent pl-3 pr-5"
+                />
+              </div>
+
+              <div className="relative overflow-y-auto mb-1">
                 <Tokens
                   filterText={filter}
                   selectionMode
@@ -191,7 +252,7 @@ const TokenSelect = ({ _balance }: IProps) => {
             </section>
           </div>
         </div>
-      </AnimatedSelect>
+      </div>
     </>
   );
 };

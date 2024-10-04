@@ -29,14 +29,14 @@ const Wallet = () => {
     setFilterText(evt.target.value);
   };
 
-  if (_currentNavigation !== "balance" || _promptLogin) {
+  if (_currentNavigation !== "balance") {
     return null;
   }
 
   return (
     <div>
       <div className="flex gap-2">
-        <div className="h-[44px] flex bg-darkContrast rounded-full flex-1">
+        <div className="h-[44px] flex bg-darkContrast border border-mediumDarkContrast rounded-full flex-1">
           <label
             className="flex items-center justify-center pl-4"
             htmlFor="search"

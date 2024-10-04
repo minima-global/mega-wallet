@@ -12,7 +12,7 @@ export const wrappedInputStyle = `
   whitespace-nowrap
 `;
 export const primaryFormButtonStyle = `
-  w-full py-3.5 px-4 tracking-wide transition-all duration-200 rounded-md
+  w-full py-3.5 px-4 tracking-wide rounded-md
   bg-[#FFA010] hover:bg-[#E5940E] active:bg-[#C47F0D]
 
   text-black

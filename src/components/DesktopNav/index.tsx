@@ -4,7 +4,7 @@ import { appContext } from "../../AppContext";
 const NavButton = ({ name, icon, activeIcon, isActive, onClick }) => (
   <button
     className={`flex-1 w-full relative text-sm text-left flex rounded py-2.5 px-4 items-center justify-start gap-2 transition-all duration-200 ${
-      isActive ? "bg-lightOrange text-black" : "bg-black"
+      isActive ? "bg-lightOrange text-black" : "bg-mediumDarkContrast"
     }`}
     disabled={isActive}
     onClick={onClick}
@@ -126,7 +126,7 @@ const DesktopNav = () => {
 
   return (
     <nav
-      className="w-full justify-center hidden md:flex pb-5"
+      className="w-full justify-center flex pb-5"
       aria-label="Main Navigation"
     >
       <ul className="flex w-full gap-3">

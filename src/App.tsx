@@ -14,8 +14,12 @@ function ForceInfo({ children }: React.PropsWithChildren) {
 
   useEffect(() => {
     if (onlyOnce.current === false) {
+      const userVisitedAppForFirstTime = localStorage.getItem("first-time");
       onlyOnce.current = true;
-      navigate("/info");
+
+      if (userVisitedAppForFirstTime === "true") {
+        navigate("/info");
+      }
     }
   }, [navigate]);
 
@@ -30,6 +34,7 @@ function App() {
           <Route path="*" element={<ForceInfo />} />
         </Routes>
         <Routes>
+          <Route path="/" element={<Login />} />
           <Route path="/info" element={<Welcome />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />

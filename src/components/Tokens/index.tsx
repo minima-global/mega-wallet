@@ -73,7 +73,7 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
   return (
     <>
       <Details token={viewToken} dismiss={() => setViewToken(null)} />
-      <ul>
+      <ul className="flex flex-col gap-3">
         {_balance
           .filter(
             (t) =>
@@ -94,10 +94,10 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                     ? () => selectToken(token)
                     : () => setViewToken(token)
                 }
-                className={`${tokenStyle} ${selectionMode ? "" : ""}`}
+                className="bg-darkContrast relative w-full flex p-3 border border-lightDarkContrast rounded"
                 key={token.tokenid}
               >
-                <div className="aspect-square w-12 h-12 overflow-hidden">
+                <div className="w-12 h-12 overflow-hidden">
                   <img
                     alt="token-icon"
                     src="./assets/token.svg"
@@ -129,7 +129,7 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                     ? () => selectToken(token)
                     : () => setViewToken(token)
                 }
-                className={`${tokenStyle} ${selectionMode ? "" : ""}`}
+                className="bg-darkContrast relative w-full flex p-3 border border-lightDarkContrast rounded"
                 key={token.tokenid}
               >
                 <div className="aspect-square w-12 h-12 overflow-hidden">

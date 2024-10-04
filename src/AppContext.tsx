@@ -97,6 +97,12 @@ const AppProvider = ({ children }: IProps) => {
     if (_balance) {
       // If the last call was less than 60 seconds ago, don't call the method
       if (lastCalled && now - Number(lastCalled) < 60000) {
+        setPromptFetchBalance(true);
+
+        setTimeout(() => {
+          setPromptFetchBalance(false);
+        }, 2500);
+
         return;
       }
     }

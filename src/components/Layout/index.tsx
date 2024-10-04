@@ -1,6 +1,4 @@
-import Footer from "./Footer";
 import Header from "./Header";
-import Socials from "./Socials";
 
 const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
@@ -9,8 +7,6 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
       <main className="pt-10 lg:pt-8">
         <div className="container mx-auto">{children}</div>
       </main>
-      <Socials />
-      <Footer />
     </div>
   );
 };
