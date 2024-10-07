@@ -102,14 +102,14 @@ const Details = ({ token, dismiss }) => {
     >
       <div className="left-0 top-0 min-h-screen w-full flex items-center">
         <Backdrop onClick={dismiss} />
-        <div className="relative lg:mt-10 bg-white dark:bg-black rounded border border-darkContrast w-full max-w-[648px] mx-5 lg:mx-auto z-40 mb-10 p-6">
+        <div className="relative mt-6 lg:mt-10 bg-white dark:bg-black rounded border dark:border-darkContrast w-full max-w-[648px] mx-5 lg:mx-auto z-40 mb-10 p-6">
           <div
             onClick={dismiss}
-            className="absolute top-5 right-5 text-black hover:text-grey dark:text-neutral-500 hover:text-white cursor-pointer"
+            className="absolute top-5 right-5 text-black hover:text-grey dark:text-neutral-500 cursor-pointer"
           >
             <CloseIcon fill="currentColor" />
           </div>
-          <div className="flex flex-col items-center space-y-6 justify-center">
+          <div className="mt-8 lg:mt-6 flex flex-col items-center space-y-6 justify-center">
             <NFTDisplay
               imageUrl={tokenImage}
               name={tokenName}
@@ -129,7 +129,7 @@ const Details = ({ token, dismiss }) => {
                     </div>
                   )}
                 </div>
-                <h5>{tokenDescription}</h5>
+                <p className="pb-2">{tokenDescription}</p>
               </div>
               <div className="font-bold">Details</div>
               <div className="bg-grey10 dark:bg-darkContrast p-4 rounded text-black dark:text-white text-sm flex flex-col gap-4">
@@ -217,7 +217,7 @@ const Details = ({ token, dismiss }) => {
                     </div>
                   </div>
                   <div
-                    className={`bg-darkContrast rounded text-white text-sm flex flex-col gap-4 ${showOther ? "scale-100 h-full p-4" : "scale-0 h-0 p-0"}`}
+                    className={`bg-grey10 dark:bg-darkContrast rounded text-black dark:text-white text-sm flex flex-col gap-4 ${showOther ? "scale-100 h-full p-4" : "scale-0 h-0 p-0"}`}
                   >
                     {Object.entries(oToken.extraMetadata).map(
                       ([key, value]) => (

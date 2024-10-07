@@ -14,9 +14,10 @@ export const wrappedInputStyle = `
 export const primaryFormButtonStyle = `
   w-full py-3.5 px-4 tracking-wide rounded-md
   transition-colors
+  text-sm lg:text-base
   bg-lightOrange hover:bg-lighterOrange active:bg-lighterOrange
 
-  text-white dark:text-black
+  text-black
   disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-lightOrange
 
   focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-opacity-50

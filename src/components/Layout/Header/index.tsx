@@ -85,12 +85,12 @@ const Header = () => {
               <div className="col-span-6 flex items-center justify-end">
                 <nav className="cursor-pointer lg:block">
                   <ul
-                    className={`${isAtTop ? "gap-7" : "gap-5"} flex items-center text-sm transition-all`}
+                    className={`${isAtTop ? "gap-4 lg:gap-6" : "gap-5"} flex items-center text-sm transition-all`}
                   >
                     {location.pathname === "/dashboard" && (
                       <li>
                         <button
-                          className="text-black dark:text-white rounded py-1.5 lg:py-2 transition-colors border border-black  dark:border-white hover:bg-white hover:text-black"
+                          className="text-xs lg:text-sm font-bold text-black dark:text-white rounded py-1.5 lg:py-2 transition-colors border border-black dark:border-white hover:bg-white hover:text-black"
                           onClick={() => setPromptLogoutDialog(true)}
                         >
                           Logout

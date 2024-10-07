@@ -1,7 +1,7 @@
 const InfoBox: React.FC<React.PropsWithChildren> = ({ children }) => (
   <div className="mx-auto dark:text-main bg-yellow dark:bg-lightDarkContrast border-l-4 border-main px-5 py-3 rounded-[4px]">
     <div className="flex items-center justify-center">
-      <span className="pr-5">
+      <span className="pr-5 hidden lg:block">
         <svg
           width="22"
           height="18"
@@ -15,7 +15,7 @@ const InfoBox: React.FC<React.PropsWithChildren> = ({ children }) => (
           />
         </svg>
       </span>
-      <p className="text-sm">{children}</p>
+      <p className="text-xs lg:text-sm">{children}</p>
     </div>
   </div>
 );

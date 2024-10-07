@@ -351,7 +351,7 @@ const AppProvider = ({ children }: IProps) => {
     toast(message, {
       theme: "dark",
       position: "bottom-right",
-      bodyClassName: "font-bold text-center",
+      bodyClassName: "text-xs lg:text-sm font-bold text-center",
       draggablePercent: 90,
     });
 

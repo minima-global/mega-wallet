@@ -104,16 +104,18 @@ const Logout = () => {
     <div
       className={`fixed z-50 top-0 left-0 ${_promptLogoutDialog ? "block" : "hidden"}`}
     >
-      <div className="h-screen w-screen flex p-3 lg:p-0 lg:items-center">
+      <div className="lg:h-screen w-screen flex p-3 lg:p-0 lg:items-center">
         <Backdrop onClick={dismiss} />
-        <div className="relative z-50 bg-grey10 dark:bg-mediumDarkContrast rounded border border-darkContrast w-full max-w-[640px] min-h-[500px] mx-auto mb-10 p-6">
-          <h1 className="pt-0.5 text-3xl mb-5">Log out of this session</h1>
+        <div className="relative z-50 bg-grey10 dark:bg-mediumDarkContrast rounded border dark:border-darkContrast w-full max-w-[640px] min-h-[500px] mx-auto mb-10 p-4 lg:p-6">
+          <h1 className="pt-0.5 text-2xl lg:text-3xl mb-5">
+            Log out of this session
+          </h1>
           <div className="w-full h-[2px] bg-grey40 dark:bg-grey my-6" />
           <p className="dark:text-grey40 text-sm mb-6 mt-4 flex items-center gap-2">
             If you haven't stored your secret code then this is your last
             chance!
           </p>
-          <div className="flex gap-3">
+          <div className="flex flex-col lg:flex-row gap-3">
             <div className={`${inputWrapperStyle} flex-1`}>
               <div className="flex">
                 <input
@@ -141,7 +143,7 @@ const Logout = () => {
               <div
                 role="button"
                 onClick={handleOnCopy}
-                className={`flex select-none items-center active:scale-[95%] gap-3 text-sm bg-opacity-30 rounded-lg w-fit px-6 text-black transition-all ${copied ? "bg-green" : "bg-white hover:bg-grey40"}`}
+                className={`w-full lg:w-fit py-3 flex select-none justify-center items-center active:scale-[95%] gap-3 text-sm bg-opacity-30 rounded-lg px-6 text-black transition-all ${copied ? "bg-green" : "bg-white hover:bg-grey40"}`}
               >
                 Copy
                 <svg
@@ -170,7 +172,7 @@ const Logout = () => {
 
           <div>
             <h5 className="mb-3">Key uses</h5>
-            <div className="flex gap-3">
+            <div className="flex flex-col lg:flex-row gap-3">
               <div className={`${inputWrapperStyle} flex-1`}>
                 <div className="flex">
                   <input
@@ -185,7 +187,7 @@ const Logout = () => {
               <div
                 role="button"
                 onClick={handleCopyKeyUses}
-                className={`flex select-none items-center active:scale-[95%] gap-3 text-sm bg-opacity-30 rounded-lg w-fit px-6 text-black transition-all ${copiedKeyUses ? "bg-green" : "bg-white hover:bg-grey40"}`}
+                className={`w-full lg:w-fit py-3 flex select-none justify-center items-center active:scale-[95%] gap-3 text-sm bg-opacity-30 rounded-lg px-6 text-black transition-all ${copied ? "bg-green" : "bg-white hover:bg-grey40"}`}
               >
                 Copy
                 <svg

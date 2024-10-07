@@ -8,8 +8,8 @@ import Logout from "../Logout";
 
 const Dashboard = () => {
   return (
-    <div className="lg:mt-[80px] lg:max-w-[600px] w-full mx-auto p-6 lg:p-0 rounded-lg">
-      <h1 className="pt-0.5 text-3xl mb-6 text-black dark:text-white">
+    <div className="lg:mt-[60px] lg:max-w-[600px] w-full mx-auto p-4 lg:p-6 lg:p-0 rounded-lg">
+      <h1 className="pt-0.5 text-2xl lg:text-3xl mb-6 text-black dark:text-white">
         Minima Public Wallet
       </h1>
       <DesktopNav />

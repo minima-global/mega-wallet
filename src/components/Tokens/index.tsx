@@ -88,7 +88,7 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                     ? () => selectToken(token)
                     : () => setViewToken(token)
                 }
-                className="bg-grey10 dark:bg-darkContrast relative w-full flex items-center p-3 rounded"
+                className="cursor-pointer bg-grey10 dark:bg-darkContrast relative w-full flex items-center p-3 rounded"
                 key={token.tokenid}
               >
                 <div className="w-[48px] h-[48px] border border-grey80 rounded overflow-hidden">
@@ -131,7 +131,7 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                     ? () => selectToken(token)
                     : () => setViewToken(token)
                 }
-                className="bg-darkContrast relative w-full flex p-3 rounded"
+                className="cursor-pointer bg-grey10 dark:bg-darkContrast relative w-full flex p-3 rounded"
                 key={token.tokenid}
               >
                 <div className="aspect-square w-12 h-12 overflow-hidden">

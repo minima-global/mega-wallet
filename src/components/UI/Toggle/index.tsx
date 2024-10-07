@@ -41,7 +41,7 @@ export default function ModernCheckbox({
           />
         </div>
       </div>
-      <span className="text-sm font-light tracking-wide text-gray-700 dark:text-neutral-300 select-none pl-2">
+      <span className="text-sm text-black dark:text-grey40 dark:text-neutral-300 select-none pl-2">
         {label}
       </span>
     </label>

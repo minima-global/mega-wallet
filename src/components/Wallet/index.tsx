@@ -24,7 +24,7 @@ const Wallet = () => {
     <div
       className={`transition-opacity duration-200 ${_currentNavigation === page ? "opacity-100 w-full" : "opacity-0 w-full h-0 scale-0 pointer-events-none"}`}
     >
-      <h6 className="text-2xl mt-3">Tokens</h6>
+      <h6 className="text-2xl mt-1 lg:mt-3">Tokens</h6>
 
       <div className="my-6 flex gap-4">
         <div className="h-[44px] flex bg-grey10 dark:bg-darkContrast border border-grey40 dark:border-mediumDarkContrast rounded-full flex-1">

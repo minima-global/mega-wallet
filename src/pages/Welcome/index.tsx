@@ -12,7 +12,7 @@ const Welcome = () => {
 
   return (
     <div className="p-2">
-      <div className="mt-[100px] mb-[160px] w-full lg:max-w-[650px] lg:mx-auto bg-grey10 dark:bg-mediumDarkContrast p-5 lg:p-6 rounded-lg">
+      <div className="lg:mt-[100px] mb-[160px] w-full lg:max-w-[650px] lg:mx-auto bg-grey10 dark:bg-mediumDarkContrast p-4 lg:p-6 rounded-lg">
         <div className="flex flex-col">
           <h1 className="pt-0.5 text-3xl">Minima Public Wallet</h1>
           <div className="w-full h-[2px] bg-grey40 dark:bg-grey my-6" />

@@ -18,7 +18,7 @@ export default function NFTDisplay({
 
   if (imageData) {
     return (
-      <div className="mt-6 flex items-center">
+      <div className="flex items-center">
         <div className="relative w-[64px] h-[64px] group">
           <div className="relative w-full h-full bg-white rounded overflow-hidden shadow-lg transition-all duration-300 ease-in-out transform group-hover:scale-110">
             <img
@@ -32,19 +32,13 @@ export default function NFTDisplay({
               </div>
             )}
           </div>
-          <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-6 bg-white rounded-md px-2 py-1 shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-            <p className="text-xs font-medium text-gray-900">{name}</p>
-            <p className="text-xs text-gray-500 truncate max-w-[120px]">
-              {description}
-            </p>
-          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="relative w-[240px] h-[240px] group">
+    <div className="relative w-[120px] h-[120px] lg:w-[240px] lg:h-[240px] group">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg opacity-75"></div>
       <div className="relative w-full h-full bg-white rounded-lg overflow-hidden shadow-xl">
         <img src={imageUrl} alt={name} className="w-full h-full" />

@@ -28,7 +28,6 @@ const Login = () => {
     createAccount,
     handleNavigation,
     notify,
-    setFirstTime,
   } = useContext(appContext);
 
   const navigate = useNavigate();
@@ -184,15 +183,20 @@ const Login = () => {
   }
 
   return (
-    <div className="mt-[120px] mb-[200px] lg:w-[600px] mx-4 lg:mx-auto bg-grey10 dark:bg-mediumDarkContrast p-6 rounded-lg text-black dark:text-white">
-      <h1 className="pt-0.5 text-3xl mb-3">Minima Public Wallet</h1>
-      <p className="dark:text-grey40 text-sm mb-6 flex items-center gap-2">
-        Login with your secret phrase or <KeyIcon fill="currentColor" />{" "}
+    <div className="lg:mt-[120px] mb-[200px] lg:w-[600px] m-2 lg:mx-auto bg-grey10 dark:bg-mediumDarkContrast p-4 lg:p-6 rounded-lg text-black dark:text-white">
+      <h1 className="pt-0.5 text-2xl lg:text-3xl mb-3">Minima Public Wallet</h1>
+      <p className="block lg:flex text-sm dark:text-grey40 mb-6 gap-2">
+        Login with your secret phrase or{" "}
+        <span className="hidden lg:inline-flex">
+          <KeyIcon fill="currentColor" />
+        </span>
         generate a new one.
       </p>
-      <div className="w-full h-[1px] bg-grey my-6" />
+      <div className="w-full h-[2px] bg-grey40 dark:bg-grey my-6" />
       <form className="" onSubmit={handleSubmit}>
-        <div className={`flex ${generated ? "gap-3" : "gap-0"}`}>
+        <div
+          className={`flex flex-col lg:flex-row ${generated ? "gap-3" : "gap-0"}`}
+        >
           <div
             className={`${inputWrapperStyle} flex-1 transition-all dark:!border-neutral-100 dark:!border`}
           >
@@ -219,7 +223,7 @@ const Login = () => {
           <div
             role="button"
             onClick={handleCopy}
-            className={`flex select-none items-center active:scale-[95%] gap-3 text-sm text-black rounded-lg transition-all ${copied ? "bg-green" : "bg-white hover:bg-grey40"} w-fit origin-right ${generated ? "scale-100 px-6" : "scale-0 w-[0] px-0"}`}
+            className={`flex justify-center select-none items-center active:scale-[99%] gap-3 text-sm text-black rounded-lg transition-colors ${copied ? "bg-green" : "bg-white hover:bg-grey40"} origin-center lg:origin-right ${generated ? "scale-100 px-6 py-3 w-full lg:w-fit" : "scale-0 h-[0] w-[0] p-0 m-0"}`}
           >
             Copy
             <svg
@@ -285,7 +289,7 @@ const Login = () => {
             onClick={handleGenerate}
             type="button"
             disabled={loading}
-            className={`text-white dark:text-white bg-black w-full flex gap-2 items-center justify-center py-3.5`}
+            className={`text-white text-sm lg:text-base dark:text-white bg-black w-full flex gap-2 items-center justify-center py-3.5`}
           >
             Generate secret phrase <KeyIcon fill="currentColor" />
           </button>

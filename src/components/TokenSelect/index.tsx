@@ -74,7 +74,7 @@ const TokenSelect = ({ _balance }: IProps) => {
       >
         <div className="h-screen w-screen flex p-3 lg:p-0 lg:items-center">
           <Backdrop onClick={promptTokenSelectionDialog} />
-          <div className="relative bg-white dark:bg-black rounded border border-darkContrast w-full max-w-[648px] min-h-[500px] mx-auto z-40 mb-10 p-6">
+          <div className="relative bg-white dark:bg-black rounded border dark:border-darkContrast w-full max-w-[648px] min-h-[500px] mx-auto z-40 mb-10 p-6">
             <section>
               <div className="absolute top-5 right-5">
                 <svg
