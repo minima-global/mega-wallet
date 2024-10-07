@@ -8,9 +8,10 @@ import Logout from "../Logout";
 
 const Dashboard = () => {
   return (
-    <div className="lg:mt-[80px] mb-[200px] lg:max-w-[600px] w-full mx-auto p-6 lg:p-0 rounded-lg">
-      <h1 className="pt-0.5 text-3xl mb-5">Minima Public Wallet</h1>
-      <div className="w-full h-[2px] bg-grey my-6" />
+    <div className="lg:mt-[80px] lg:max-w-[600px] w-full mx-auto p-6 lg:p-0 rounded-lg">
+      <h1 className="pt-0.5 text-3xl mb-6 text-black dark:text-white">
+        Minima Public Wallet
+      </h1>
       <DesktopNav />
       <section>
         <DialogWithError />

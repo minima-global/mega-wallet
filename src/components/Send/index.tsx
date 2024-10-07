@@ -37,7 +37,6 @@ const Send = () => {
     _keyUsages,
     _privateKey,
     _script,
-    _promptLogin,
     _currentNavigation,
     _balance,
     _address,
@@ -56,39 +55,19 @@ const Send = () => {
     }, 1000);
   }, []);
 
-  if (_currentNavigation !== "send") {
+  if (!_balance) {
     return null;
   }
 
-  if (!_balance) {
-    return (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="animate-spin mx-auto"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        strokeWidth="2"
-        stroke="currentColor"
-        fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path d="M10 20.777a8.942 8.942 0 0 1 -2.48 -.969" />
-        <path d="M14 3.223a9.003 9.003 0 0 1 0 17.554" />
-        <path d="M4.579 17.093a8.961 8.961 0 0 1 -1.227 -2.592" />
-        <path d="M3.124 10.5c.16 -.95 .468 -1.85 .9 -2.675l.169 -.305" />
-        <path d="M6.907 4.579a8.954 8.954 0 0 1 3.093 -1.356" />
-      </svg>
-    );
-  }
+  const page = "send";
 
   return (
-    <div>
+    <div
+      className={`transition-opacity duration-200 ${_currentNavigation === page ? "opacity-100 w-full" : "opacity-0 w-full h-0 scale-0 pointer-events-none"}`}
+    >
       <section>
         <div className="flex items-center justify-between">
-          <h6 className="text-2xl my-4">Tokens</h6>
+          <h6 className="text-2xl mb-4">Tokens</h6>
           <FetchBalanceButton />
         </div>
         <Formik
@@ -156,9 +135,9 @@ const Send = () => {
 
                   <div className="flex flex-col gap-5">
                     <div>
-                      <div className="text-grey40 mb-3">Amount</div>
+                      <div className="dark:text-grey40 mb-3">Amount</div>
                       <div
-                        className={`bg-darkContrast px-4 py-3.5 rounded ${touched.address && errors.address ? "border border-red" : ""}`}
+                        className={`bg-grey10 dark:bg-darkContrast px-4 py-3.5 rounded ${touched.amount && errors.amount ? "border border-red" : ""}`}
                       >
                         <div className="flex">
                           <input
@@ -177,9 +156,11 @@ const Send = () => {
                       )}
                     </div>
                     <div>
-                      <div className="text-grey40 mb-3">Recipient address</div>
+                      <div className="darkLtext-grey40 mb-3">
+                        Recipient address
+                      </div>
                       <div
-                        className={`bg-darkContrast px-4 py-3.5 rounded ${touched.address && errors.address ? "border border-red" : ""}`}
+                        className={`bg-grey10 dark:bg-darkContrast px-4 py-3.5 rounded ${touched.address && errors.address ? "border border-red" : ""}`}
                       >
                         <div className="flex">
                           <input
@@ -200,8 +181,8 @@ const Send = () => {
                       )}
                     </div>
                     <div className="relative">
-                      <div className="text-grey40 mb-3">Key uses</div>
-                      <div className="bg-darkContrast px-4 py-3.5 rounded">
+                      <div className="dark:text-grey40 mb-3">Key uses</div>
+                      <div className="bg-grey10 dark:bg-darkContrast px-4 py-3.5 rounded">
                         <div className="flex relative">
                           <input
                             autoComplete="off"
@@ -214,35 +195,8 @@ const Send = () => {
                           <div className="flex gap-1">
                             <button
                               type="button"
-                              onClick={() =>
-                                setFieldValue(
-                                  "keyuses",
-                                  String(
-                                    Number(getFieldProps("keyuses").value) + 1,
-                                  ),
-                                )
-                              }
-                              className="active:scale-90 w-[22px] h-[22px] flex items-center justify-center p-0 bg-mediumDarkContrast border border-lightDarkContrast shadow-lg"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                className="stroke-white w-[12px]"
-                              >
-                                <polyline points="18 15 12 9 6 15"></polyline>
-                              </svg>
-                            </button>
-                            <button
-                              type="button"
                               disabled={getFieldProps("keyuses").value == "1"}
-                              className="disabled:cursor-not-allowed disabled:pointer-events-none disabled:opacity-30 active:scale-90 w-[22px] h-[22px] flex items-center justify-center p-0 bg-mediumDarkContrast border border-lightDarkContrast shadow-lg"
+                              className="disabled:cursor-not-allowed disabled:pointer-events-none disabled:opacity-30 active:scale-90 w-[22px] h-[22px] flex items-center justify-center p-0 bg-white dark:bg-mediumDarkContrast border border-grey40 dark:border-lightDarkContrast"
                               onClick={() =>
                                 setFieldValue(
                                   "keyuses",
@@ -262,12 +216,39 @@ const Send = () => {
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                className="stroke-white w-[12px]"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="stroke-black dark:stroke-white w-[12px]"
                               >
                                 <polyline points="6 9 12 15 18 9"></polyline>
+                              </svg>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setFieldValue(
+                                  "keyuses",
+                                  String(
+                                    Number(getFieldProps("keyuses").value) + 1,
+                                  ),
+                                )
+                              }
+                              className="disabled:cursor-not-allowed disabled:pointer-events-none disabled:opacity-30 active:scale-90 w-[22px] h-[22px] flex items-center justify-center p-0 bg-white dark:bg-mediumDarkContrast border border-grey40 dark:border-lightDarkContrast"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="stroke-black dark:stroke-white w-[12px]"
+                              >
+                                <polyline points="18 15 12 9 6 15"></polyline>
                               </svg>
                             </button>
                           </div>

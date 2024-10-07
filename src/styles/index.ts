@@ -16,15 +16,14 @@ export const primaryFormButtonStyle = `
   transition-colors
   bg-lightOrange hover:bg-lighterOrange active:bg-lighterOrange
 
-  text-black
+  text-white dark:text-black
   disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-lightOrange
 
   focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-opacity-50
   dark:focus:ring-neutral-400 dark:focus:ring-opacity-60
-  shadow-md hover:shadow-lg
 `;
 export const inputWrapperStyle =
-  "flex flex-col border dark:border-none bg-neutral-100 dark:bg-[#1b1b1b] px-4 py-3.5 rounded-lg justify-center";
+  "flex flex-col border-none bg-grey20 dark:bg-darkContrast px-4 py-3.5 rounded-lg justify-center";
 export const selectableTokenWrapperStyle =
   "hover:cursor-pointer flex items-center gap-1 bg-neutral-50 border dark:border-none dark:bg-neutral-950 rounded-full px-2 hover:bg-neutral-150 dark:hover:bg-neutral-900 hover:outline hover:outline-neutral-900";
 export const searchInputStyle =
@@ -60,9 +59,9 @@ export const dismissableButtonStyle = `
 export const tokenStyle =
   "grid grid-cols-[auto_1fr] items-center gap-2 bg-stone-50 dark:bg-darkContrast p-3 mb-2 rounded";
 export const tokenNameStyle =
-  "font-bold truncate text-neutral-600 dark:text-neutral-400";
+  "font-bold truncate text-black dark:text-neutral-400";
 export const tokenAmountStyle =
-  "font-bold truncate text-neutral-800 dark:text-neutral-300";
-export const inputIconStyle = "text-black dark:text-neutral-500";
+  "font-bold truncate text-grey dark:text-neutral-300";
+export const inputIconStyle = "text-grey dark:text-neutral-500 cursor-pointer";
 export const dialogTitleStyle =
   "text-2xl tracking-wide my-auto font-bold text-black dark:text-neutral-300";

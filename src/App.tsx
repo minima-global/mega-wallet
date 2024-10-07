@@ -5,7 +5,6 @@ import Welcome from "./pages/Welcome";
 import Dashboard from "./pages/Dashboard";
 import { MemoryRouter, Routes, Route, useNavigate } from "react-router-dom";
 import {} from "lucide-react";
-import Logout from "./pages/Logout";
 import { useEffect, useRef } from "react";
 
 function ForceInfo({ children }: React.PropsWithChildren) {

@@ -38,8 +38,6 @@ const Header = () => {
     setIsDarkMode(document.body.classList.contains("dark"));
   };
 
-  console.log(topBlock);
-
   return (
     <>
       <header className="sticky top-0 z-50 h-[64px]">
@@ -92,7 +90,7 @@ const Header = () => {
                     {location.pathname === "/dashboard" && (
                       <li>
                         <button
-                          className="text-white rounded py-2 transition-colors border border-white hover:bg-white hover:text-black"
+                          className="text-black dark:text-white rounded py-1.5 lg:py-2 transition-colors border border-black  dark:border-white hover:bg-white hover:text-black"
                           onClick={() => setPromptLogoutDialog(true)}
                         >
                           Logout

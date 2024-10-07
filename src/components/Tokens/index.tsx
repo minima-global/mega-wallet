@@ -22,13 +22,7 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
   }, []);
 
   if (!_balance) {
-    return (
-      <div>
-        <p className="text-center text-sm text-neutral-400">
-          Balance not available
-        </p>
-      </div>
-    );
+    return null;
   }
 
   if (
@@ -73,7 +67,7 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
   return (
     <>
       <Details token={viewToken} dismiss={() => setViewToken(null)} />
-      <ul className="flex flex-col gap-3">
+      <ul className="flex flex-col gap-1.5">
         {_balance
           .filter(
             (t) =>
@@ -94,25 +88,25 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                     ? () => selectToken(token)
                     : () => setViewToken(token)
                 }
-                className="bg-darkContrast relative w-full flex items-center p-3 border border-lightDarkContrast rounded"
+                className="bg-grey10 dark:bg-darkContrast relative w-full flex items-center p-3 rounded"
                 key={token.tokenid}
               >
-                <div className="w-[44px] h-[42px] overflow-hidden">
+                <div className="w-[48px] h-[48px] border border-grey80 rounded overflow-hidden">
                   <svg
-                    width="42"
-                    height="42"
-                    viewBox="0 0 42 42"
+                    width="48"
+                    height="48"
+                    viewBox="0 0 48 48"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <rect width="42" height="42" rx="2" fill="white" />
+                    <rect width="48" height="48" fill="white" />
                     <path
-                      d="M29.4428 14.759L28.2053 20.2329L26.6226 13.6286L21.0773 11.3795L19.578 17.9957L18.2571 10.2371L12.7119 8L7 33.2512H13.0569L14.8062 25.4926L16.1271 33.2512H22.1959L23.6834 26.6349L25.266 33.2512H31.323L35 16.9962L29.4428 14.759Z"
+                      d="M32.4428 16.759L31.2053 22.2329L29.6226 15.6286L24.0773 13.3795L22.578 19.9957L21.2571 12.2371L15.7119 10L10 35.2512H16.0569L17.8062 27.4926L19.1271 35.2512H25.1959L26.6834 28.6349L28.266 35.2512H34.323L38 18.9962L32.4428 16.759Z"
                       fill="black"
                     />
                   </svg>
                 </div>
-                <div className="overflow-hidden px-3">
+                <div className="overflow-hidden px-4">
                   <div className="flex">
                     <h6 className={tokenNameStyle}>Minima</h6>
                     <div className="!text-blue-500 my-auto ml-1">
@@ -137,7 +131,7 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                     ? () => selectToken(token)
                     : () => setViewToken(token)
                 }
-                className="bg-darkContrast relative w-full flex p-3 border border-lightDarkContrast rounded"
+                className="bg-darkContrast relative w-full flex p-3 rounded"
                 key={token.tokenid}
               >
                 <div className="aspect-square w-12 h-12 overflow-hidden">
@@ -148,11 +142,11 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                         ? decodeURIComponent(token.token.url)
                         : `https://robohash.org/${token.tokenid}`
                     }
-                    className="w-full h-full"
+                    className="border-grey80 border rounded w-full h-full"
                   />
                 </div>
 
-                <div className="overflow-hidden flex flex-col items-start justify-center px-3">
+                <div className="overflow-hidden flex flex-col items-start justify-center px-4">
                   <div className="flex">
                     <h6 className={tokenNameStyle}>
                       {"name" in token.token &&

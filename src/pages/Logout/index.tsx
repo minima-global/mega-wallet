@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { appContext } from "../../AppContext";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import VisibleIcon from "../../components/UI/Icons/VisibleIcon";
 import HideIcon from "../../components/UI/Icons/HideIcon";
 import InfoBox from "../../components/UI/InfoBox";
@@ -12,6 +12,7 @@ import {
   primaryFormButtonStyle,
   wrappedInputStyle,
 } from "../../styles";
+import Backdrop from "../../components/Backdrop";
 
 const Logout = () => {
   const {
@@ -104,14 +105,11 @@ const Logout = () => {
       className={`fixed z-50 top-0 left-0 ${_promptLogoutDialog ? "block" : "hidden"}`}
     >
       <div className="h-screen w-screen flex p-3 lg:p-0 lg:items-center">
-        <div
-          onClick={dismiss}
-          className="fixed z-40 top-0 left-0 bg-black opacity-70 w-screen h-screen"
-        />
-        <div className="relative z-50 bg-mediumDarkContrast rounded border border-darkContrast w-full max-w-[640px] min-h-[500px] mx-auto mb-10 p-6">
+        <Backdrop onClick={dismiss} />
+        <div className="relative z-50 bg-grey10 dark:bg-mediumDarkContrast rounded border border-darkContrast w-full max-w-[640px] min-h-[500px] mx-auto mb-10 p-6">
           <h1 className="pt-0.5 text-3xl mb-5">Log out of this session</h1>
-          <div className="w-full h-[2px] bg-grey my-6" />
-          <p className="text-grey40 text-sm mb-6 mt-4 flex items-center gap-2">
+          <div className="w-full h-[2px] bg-grey40 dark:bg-grey my-6" />
+          <p className="dark:text-grey40 text-sm mb-6 mt-4 flex items-center gap-2">
             If you haven't stored your secret code then this is your last
             chance!
           </p>
@@ -119,6 +117,7 @@ const Logout = () => {
             <div className={`${inputWrapperStyle} flex-1`}>
               <div className="flex">
                 <input
+                  readOnly={true}
                   type={`${visibility ? "text" : "password"}`}
                   placeholder="Your secret phrase"
                   name="_seedPhrase"
@@ -175,6 +174,7 @@ const Logout = () => {
               <div className={`${inputWrapperStyle} flex-1`}>
                 <div className="flex">
                   <input
+                    readOnly={true}
                     placeholder="Your secret phrase"
                     name="_seedPhrase"
                     value={_keyUsages[_address] ? _keyUsages[_address] : 1}
@@ -218,7 +218,7 @@ const Logout = () => {
             </button>
             <button
               onClick={dismiss}
-              className="w-full bg-black py-3.5 transition-all hover:bg-darkContrast"
+              className="w-full text-white bg-black py-3.5 transition-all hover:bg-darkContrast"
             >
               Cancel
             </button>

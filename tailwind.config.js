@@ -6,6 +6,7 @@ export default {
       colors: {
         main: "var(--main)",
         orange: "var(--orange)",
+        yellow: "var(--yellow)",
         lightOrange: "var(--light-orange)",
         lighterOrange: "var(--lighter-orange)",
         darkOrange: "var(--dark-orange)",

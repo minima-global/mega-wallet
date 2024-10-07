@@ -1,14 +1,9 @@
 export function copyToClipboard(text) {
   // Check for Clipboard API support
   if (navigator.clipboard) {
-    navigator.clipboard
-      .writeText(text)
-      .then(() => {
-        // console.log("Text successfully copied to clipboard");
-      })
-      .catch((err) => {
-        console.error("Unable to copy text to clipboard", err);
-      });
+    navigator.clipboard.writeText(text).catch((err) => {
+      console.error("Unable to copy text to clipboard", err);
+    });
   } else {
     // Fallback for browsers that don't support Clipboard API
     const textarea = document.createElement("textarea");
@@ -21,7 +16,6 @@ export function copyToClipboard(text) {
 
     try {
       document.execCommand("copy");
-      // console.log("Text successfully copied to clipboard");
     } catch (err) {
       console.error("Unable to copy text to clipboard", err);
     } finally {

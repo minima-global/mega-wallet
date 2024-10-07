@@ -17,7 +17,7 @@ const DialogWithError = () => {
       <div className="left-0 top-0 min-h-screen w-full flex items-center">
         <div
           onClick={dismiss}
-          className="fixed z-30 top-0 left-0 bg-black opacity-70 w-screen h-screen"
+          className="fixed z-30 top-0 left-0 bg-black backdrop-blur-lg opacity-80 w-screen h-screen"
         />
         <div className="relative lg:mt-10 bg-black rounded border border-darkContrast w-full max-w-[500px] mx-5 lg:mx-auto z-40 mb-10 p-6">
           <div
@@ -26,13 +26,16 @@ const DialogWithError = () => {
           >
             <CloseIcon fill="currentColor" />
           </div>
-          <h3 className="font-bold text-lg mb-4">Error</h3>
+          <h3 className="font-bold text-lg mb-3">Error</h3>
           <div className="flex flex-col flex-grow overflow-auto">
-            <p className="break-all text-neutral-700 dark:text-neutral-300 mb-7">
+            <p className="break-all text-neutral-700 dark:text-neutral-300 mb-8">
               {_promptDialogWithError}
             </p>
             <div className="flex-grow" />
-            <button onClick={dismiss} className={dismissableButtonStyle}>
+            <button
+              onClick={dismiss}
+              className="bg-lightOrange px-3 py-3 rounded text-black hover:bg-lighterOrange"
+            >
               Back
             </button>
           </div>

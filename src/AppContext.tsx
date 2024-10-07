@@ -23,6 +23,15 @@ const AppProvider = ({ children }: IProps) => {
     return localStorage.getItem("dark-mode-pub") === "true";
   });
 
+  useEffect(() => {
+    const darkMode = localStorage.getItem("darkMode");
+
+    if (darkMode && darkMode === "false") {
+      document.body.classList.remove("dark");
+      document.body.classList.remove("bg-background");
+    }
+  }, []);
+
   const [firstTime, setFirstTime] = useState(() => {
     // Check if the "first-time" value exists in localStorage
     const storedValue = localStorage.getItem("first-time");
