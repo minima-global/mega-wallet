@@ -72,9 +72,9 @@ const TokenSelect = ({ _balance }: IProps) => {
       <div
         className={`fixed top-0 left-0 z-50 transition-all duration-75 ${_promptTokenSelectionDialog ? "visible opacity-100" : "invisible select-none"}`}
       >
-        <div className="h-screen w-screen flex p-3 lg:p-0 lg:items-center">
+        <div className="lg:h-screen w-screen flex p-3 lg:p-0 items-start mt-6 lg:mt-10">
           <Backdrop onClick={promptTokenSelectionDialog} />
-          <div className="relative bg-white dark:bg-black rounded border dark:border-darkContrast w-full max-w-[648px] min-h-[500px] mx-auto z-40 mb-10 p-6">
+          <div className="relative bg-white dark:bg-black rounded border dark:border-darkContrast w-full max-w-[648px] mx-auto z-40 mb-10 p-6">
             <section>
               <div className="absolute top-5 right-5">
                 <svg
@@ -188,10 +188,11 @@ const TokenSelect = ({ _balance }: IProps) => {
                 viewBox="0 0 8 4"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="fill-black dark:text-grey"
               >
                 <path
                   d="M4.00001 3.71113L0.496887 0.208008H7.50314L4.00001 3.71113Z"
-                  fill="#E9E9EB"
+                  fill="currentColor"
                 />
               </svg>
             </span>
@@ -200,7 +201,7 @@ const TokenSelect = ({ _balance }: IProps) => {
 
         {active && active.tokenid !== "0x00" && (
           <div
-            className="bg-darkContrast relative w-full flex p-3 border border-lightDarkContrast rounded"
+            className="bg-grey10 dark:bg-darkContrast relative w-full flex p-3 border border-grey40 dark:border-lightDarkContrast rounded"
             onClick={() => {
               promptTokenSelectionDialog();
             }}
@@ -237,10 +238,11 @@ const TokenSelect = ({ _balance }: IProps) => {
                 viewBox="0 0 8 4"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="fill-black dark:text-grey"
               >
                 <path
                   d="M4.00001 3.71113L0.496887 0.208008H7.50314L4.00001 3.71113Z"
-                  fill="#E9E9EB"
+                  fill="currentColor"
                 />
               </svg>
             </span>

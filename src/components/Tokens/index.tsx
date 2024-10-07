@@ -91,7 +91,7 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                 className="cursor-pointer bg-grey10 dark:bg-darkContrast relative w-full flex items-center p-3 rounded"
                 key={token.tokenid}
               >
-                <div className="w-[48px] h-[48px] border border-grey80 rounded overflow-hidden">
+                <div className="w-[48px] h-[48px] border border-darkConstrast dark:border-grey80 rounded overflow-hidden">
                   <svg
                     width="48"
                     height="48"
@@ -142,7 +142,7 @@ const Tokens = ({ selectToken, selectionMode = false, filterText }: IProps) => {
                         ? decodeURIComponent(token.token.url)
                         : `https://robohash.org/${token.tokenid}`
                     }
-                    className="border-grey80 border rounded w-full h-full"
+                    className="border-grey80 dark:border-mediumDarkContrast border rounded w-full h-full"
                   />
                 </div>
 

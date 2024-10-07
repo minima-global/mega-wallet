@@ -1,5 +1,9 @@
 # Changelog
 
+##### [2.0.0] - 07 October 24
+
+- The Minima public wallet UI has been re-hauled
+
 ##### [1.6.3] - 24 September 24
 
 - decode urls 

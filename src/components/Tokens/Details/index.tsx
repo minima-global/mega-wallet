@@ -100,142 +100,148 @@ const Details = ({ token, dismiss }) => {
     <div
       className={`absolute top-0 left-0 z-50 w-full overflow-x-hidden transition-all duration-0 ${display ? "visible scale-100 opacity-100" : "invisible h-0 select-none scale-90"}`}
     >
-      <div className="left-0 top-0 min-h-screen w-full flex items-center">
+      <div className="left-0 top-0 lg:h-screen w-full flex lg:items-start">
         <Backdrop onClick={dismiss} />
-        <div className="relative mt-6 lg:mt-10 bg-white dark:bg-black rounded border dark:border-darkContrast w-full max-w-[648px] mx-5 lg:mx-auto z-40 mb-10 p-6">
-          <div
-            onClick={dismiss}
-            className="absolute top-5 right-5 text-black hover:text-grey dark:text-neutral-500 cursor-pointer"
-          >
-            <CloseIcon fill="currentColor" />
-          </div>
-          <div className="mt-8 lg:mt-6 flex flex-col items-center space-y-6 justify-center">
-            <NFTDisplay
-              imageUrl={tokenImage}
-              name={tokenName}
-              description={tokenDescription}
-              isTokenValidated={!!validateToken(token)}
-            />
+        <div className="mx-auto mb-4 max-w-[648px] w-full">
+          <div className="relative mt-6 lg:mt-10 bg-white dark:bg-black rounded border dark:border-darkContrast mx-5 lg:mx-auto z-40 mb-10 p-6">
+            <div
+              onClick={dismiss}
+              className="absolute top-5 right-5 text-black hover:text-grey dark:text-neutral-500 cursor-pointer"
+            >
+              <CloseIcon fill="currentColor" />
+            </div>
+            <div className="mt-8 lg:mt-6 flex flex-col items-center space-y-6 justify-center">
+              <NFTDisplay
+                imageUrl={tokenImage}
+                name={tokenName}
+                description={tokenDescription}
+                isTokenValidated={!!validateToken(token)}
+              />
 
-            <div className="w-full max-w-md space-y-4">
-              <div className="text-center">
-                <div className="flex gap-1 justify-center items-center mb-2">
-                  <h2 className="text-2xl font-bold text-center dark:text-white">
-                    {tokenName}
-                  </h2>
-                  {!!validateToken(token) && (
-                    <div className="!text-blue-500">
-                      <CheckmarkIcon fill="currentColor" size={24} />
+              <div className="w-full max-w-md space-y-4">
+                <div className="text-center">
+                  <div className="flex gap-1 justify-center items-center mb-2">
+                    <h2 className="text-2xl font-bold text-center dark:text-white">
+                      {tokenName}
+                    </h2>
+                    {!!validateToken(token) && (
+                      <div className="!text-blue-500">
+                        <CheckmarkIcon fill="currentColor" size={24} />
+                      </div>
+                    )}
+                  </div>
+                  <p className="pb-2">{tokenDescription}</p>
+                </div>
+                <div className="font-bold">Details</div>
+                <div className="bg-grey10 dark:bg-darkContrast p-4 rounded text-black dark:text-white text-sm flex flex-col gap-4">
+                  <div>
+                    <p className="text-grey dark:text-grey80 mb-1.5">Balance</p>
+                    <p>
+                      {token &&
+                        new Decimal(token.confirmed).gt(0) &&
+                        token.confirmed}
+                      {token && new Decimal(token.confirmed).isZero() && "0"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-grey dark:text-grey80 mb-1.5">
+                      Total Minted
+                    </p>
+                    <p>{token && token.total}</p>
+                  </div>
+                  <div>
+                    <p className="text-grey dark:text-grey80 mb-1.5">Creator</p>
+                    <p>{tokenCreator}</p>
+                  </div>
+                  <div>
+                    <p className="text-grey dark:text-grey80 mb-1.5">
+                      Token ID
+                    </p>
+                    <p className="break-all">{token && token.tokenid}</p>
+                  </div>
+                  {tokenLink.length > 0 && (
+                    <div>
+                      <p className="text-grey dark:text-grey80 mb-1.5">
+                        Website
+                      </p>
+                      <p className="break-all">
+                        <a
+                          href={tokenLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-500 hover:underline"
+                        >
+                          {tokenLink || "N/A"}
+                        </a>
+                      </p>
                     </div>
                   )}
                 </div>
-                <p className="pb-2">{tokenDescription}</p>
-              </div>
-              <div className="font-bold">Details</div>
-              <div className="bg-grey10 dark:bg-darkContrast p-4 rounded text-black dark:text-white text-sm flex flex-col gap-4">
-                <div>
-                  <p className="text-grey dark:text-grey80 mb-1.5">Balance</p>
-                  <p>
-                    {token &&
-                      new Decimal(token.confirmed).gt(0) &&
-                      token.confirmed}
-                    {token && new Decimal(token.confirmed).isZero() && "0"}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-grey dark:text-grey80 mb-1.5">
-                    Total Minted
-                  </p>
-                  <p>{token && token.total}</p>
-                </div>
-                <div>
-                  <p className="text-grey dark:text-grey80 mb-1.5">Creator</p>
-                  <p>{tokenCreator}</p>
-                </div>
-                <div>
-                  <p className="text-grey dark:text-grey80 mb-1.5">Token ID</p>
-                  <p className="break-all">{token && token.tokenid}</p>
-                </div>
-                {tokenLink.length > 0 && (
+
+                {Object.keys(oToken.extraMetadata).length > 0 && (
                   <div>
-                    <p className="text-grey dark:text-grey80 mb-1.5">Website</p>
-                    <p className="break-all">
-                      <a
-                        href={tokenLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-500 hover:underline"
-                      >
-                        {tokenLink || "N/A"}
-                      </a>
-                    </p>
+                    <div
+                      className="font-bold mt-2 mb-4 cursor-pointer"
+                      onClick={() => setShowOther((prevState) => !prevState)}
+                    >
+                      <div className="grid grid-cols-2">
+                        <div className="col-span-1">Other</div>
+                        <div className="col-span-1 flex items-center justify-end">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className={`w-5 h-5 ${!showOther ? "block" : "hidden"}`}
+                          >
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="16"></line>
+                            <line x1="8" y1="12" x2="16" y2="12"></line>
+                          </svg>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className={`w-5 h-5 ${showOther ? "block" : "hidden"}`}
+                          >
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="8" y1="12" x2="16" y2="12"></line>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className={`bg-grey10 dark:bg-darkContrast rounded text-black dark:text-white text-sm flex flex-col gap-4 ${showOther ? "scale-100 h-full p-4" : "scale-0 h-0 p-0"}`}
+                    >
+                      {Object.entries(oToken.extraMetadata).map(
+                        ([key, value]) => (
+                          <div key={key}>
+                            <p className="text-grey dark:text-grey80 mb-1.5">
+                              {key.substring(0, 1).toUpperCase() +
+                                key.substring(1, key.length)}
+                            </p>
+                            <p className="break-all">
+                              {value.substring(0, 1).toUpperCase() +
+                                value.substring(1, value.length)}
+                            </p>
+                          </div>
+                        ),
+                      )}
+                    </div>
                   </div>
                 )}
               </div>
-
-              {Object.keys(oToken.extraMetadata).length > 0 && (
-                <div>
-                  <div
-                    className="font-bold mt-2 mb-4 cursor-pointer"
-                    onClick={() => setShowOther((prevState) => !prevState)}
-                  >
-                    <div className="grid grid-cols-2">
-                      <div className="col-span-1">Other</div>
-                      <div className="col-span-1 flex items-center justify-end">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className={`w-5 h-5 ${!showOther ? "block" : "hidden"}`}
-                        >
-                          <circle cx="12" cy="12" r="10"></circle>
-                          <line x1="12" y1="8" x2="12" y2="16"></line>
-                          <line x1="8" y1="12" x2="16" y2="12"></line>
-                        </svg>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className={`w-5 h-5 ${showOther ? "block" : "hidden"}`}
-                        >
-                          <circle cx="12" cy="12" r="10"></circle>
-                          <line x1="8" y1="12" x2="16" y2="12"></line>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    className={`bg-grey10 dark:bg-darkContrast rounded text-black dark:text-white text-sm flex flex-col gap-4 ${showOther ? "scale-100 h-full p-4" : "scale-0 h-0 p-0"}`}
-                  >
-                    {Object.entries(oToken.extraMetadata).map(
-                      ([key, value]) => (
-                        <div key={key}>
-                          <p className="text-grey dark:text-grey80 mb-1.5">
-                            {key.substring(0, 1).toUpperCase() +
-                              key.substring(1, key.length)}
-                          </p>
-                          <p className="break-all">
-                            {value.substring(0, 1).toUpperCase() +
-                              value.substring(1, value.length)}
-                          </p>
-                        </div>
-                      ),
-                    )}
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>

@@ -281,9 +281,9 @@ const Login = () => {
             Login
           </button>
           <div className="flex items-center gap-6 py-2 text-sm">
-            <div className="h-[1px] w-full bg-grey"></div>
+            <div className="h-[1px] w-full bg-grey40 dark:bg-grey"></div>
             <div>OR</div>
-            <div className="h-[1px] w-full bg-grey"></div>
+            <div className="h-[1px] w-full bg-grey40 dark:bg-grey"></div>
           </div>
           <button
             onClick={handleGenerate}
