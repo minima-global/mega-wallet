@@ -3,7 +3,7 @@ import { appContext } from "../../AppContext";
 
 import * as utils from "../../utils";
 import useFormatMinimaNumber from "../../utils/useMakeNumber";
-import { tokenAmountStyle, tokenNameStyle, tokenStyle } from "../../styles";
+import { tokenAmountStyle, tokenNameStyle } from "../../styles";
 import Details from "./Details";
 import CheckmarkIcon from "../UI/Icons/CheckmarkIcon";
 

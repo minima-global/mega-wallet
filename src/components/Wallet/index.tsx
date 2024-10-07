@@ -4,7 +4,7 @@ import Tokens from "../Tokens";
 import FetchBalanceButton from "../FetchBalanceButton";
 
 const Wallet = () => {
-  const { _currentNavigation, _promptLogin } = useContext(appContext);
+  const { _currentNavigation } = useContext(appContext);
 
   const [filter, setFilterText] = useState("");
 

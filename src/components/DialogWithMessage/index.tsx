@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { appContext } from "../../AppContext";
-import { dismissableButtonStyle, primaryFormButtonStyle } from "../../styles";
+import { dismissableButtonStyle } from "../../styles";
 import CloseIcon from "../UI/Icons/CloseIcon";
 
 const DialogWithMessage = () => {

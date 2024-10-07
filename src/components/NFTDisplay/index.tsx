@@ -10,7 +10,6 @@ interface NFTDisplayProps {
 export default function NFTDisplay({
   imageUrl,
   name,
-  description,
   isTokenValidated,
 }: NFTDisplayProps) {
   const imageData =

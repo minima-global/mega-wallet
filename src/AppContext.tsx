@@ -244,16 +244,6 @@ const AppProvider = ({ children }: IProps) => {
     setCurrentNavigation(page);
   };
 
-  const promptLogoutDialog = () => {
-    setPromptLogoutDialog((prevState) => !prevState);
-  };
-
-  const promptLogout = () => {
-    setPromptLogoutDialog(false);
-    setPromptLogin(true);
-    resetAccount();
-  };
-
   const resetAccount = () => {
     setAddress(null);
     setBalance(null);

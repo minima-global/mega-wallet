@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { appContext } from "../../AppContext";
 import QRCode from "react-qr-code";
 import * as utils from "../../utils";
