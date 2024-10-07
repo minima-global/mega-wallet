@@ -291,7 +291,7 @@ const Login = () => {
             disabled={loading}
             className={`text-white text-sm lg:text-base dark:text-white bg-black w-full flex gap-2 items-center justify-center py-3.5`}
           >
-            Generate secret phrase <KeyIcon fill="currentColor" />
+            {generated ? "Regenerate" : "Generate"} secret phrase <KeyIcon fill="currentColor" />
           </button>
         </div>
       </form>
