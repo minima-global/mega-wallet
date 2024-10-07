@@ -289,7 +289,7 @@ const Login = () => {
             onClick={handleGenerate}
             type="button"
             disabled={loading}
-            className={`text-white text-sm lg:text-base dark:text-white bg-black w-full flex gap-2 items-center justify-center py-3.5`}
+            className="text-white text-sm lg:text-base dark:text-white bg-black hover:bg-darkContrast w-full flex gap-2 items-center justify-center py-3.5"
           >
             {generated ? "Regenerate" : "Generate"} secret phrase <KeyIcon fill="currentColor" />
           </button>
