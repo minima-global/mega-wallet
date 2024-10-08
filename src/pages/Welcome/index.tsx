@@ -38,13 +38,6 @@ const Welcome = () => {
             </p>
           </div>
 
-          <div className="mt-8 mb-4 lg:mb-0">
-            <InfoBox>
-              The node owner must run a mega MMR node for accurate balances.
-              Always trust the node owner.
-            </InfoBox>
-          </div>
-
           <div className="mt-auto md:mt-8">
             <div className="mt-1">
               <button

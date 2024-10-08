@@ -207,9 +207,7 @@ const Logout = () => {
             </div>
             <div className="mt-4 mb-6">
               <InfoBox>
-                Also if you will be logging in onto a new Public Wallet website
-                then you may need to remember your key usages.{" "}
-                <strong>You cannot recover it later.</strong>
+                We recommend taking a note of your key uses. This should be increased each time you use the public wallet.
               </InfoBox>
             </div>
           </div>

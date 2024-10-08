@@ -68,10 +68,6 @@
     -webkit-text-size-adjust: 100%;
 }
 
-body {
-    overflow-y: scroll;
-}
-
 html,
 body {
     font-family: var(--font-manrope), sans-serif;
@@ -95,13 +91,6 @@ button {
     font-family: inherit;
     cursor: pointer;
     transition: border-color 0.25s;
-}
-
-@media (prefers-color-scheme: light) {
-    :root {
-        color: #213547;
-        background-color: #e5e5e5;
-    }
 }
 
 select {

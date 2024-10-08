@@ -1,5 +1,14 @@
 # Changelog
 
+##### [2.0.2] - 08 October 24
+
+- Scrollbar does not always appear if unnecessary
+- Minor text edit changes
+
+##### [2.0.1] - 08 October 24
+
+- Background colour changes
+
 ##### [2.0.0] - 07 October 24
 
 - The UI has been refreshed
