@@ -187,7 +187,7 @@ const Logout = () => {
               <div
                 role="button"
                 onClick={handleCopyKeyUses}
-                className={`w-full lg:w-fit py-3 flex select-none justify-center items-center active:scale-[95%] gap-3 text-sm bg-opacity-30 rounded-lg px-6 text-black transition-all ${copied ? "bg-green" : "bg-white hover:bg-grey40"}`}
+                className={`w-full lg:w-fit py-3 flex select-none justify-center items-center active:scale-[95%] gap-3 text-sm bg-opacity-30 rounded-lg px-6 text-black transition-all ${copiedKeyUses ? "bg-green" : "bg-white hover:bg-grey40"}`}
               >
                 Copy
                 <svg
