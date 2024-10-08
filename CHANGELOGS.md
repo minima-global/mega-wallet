@@ -2,7 +2,7 @@
 
 ##### [2.0.0] - 07 October 24
 
-- The Minima public wallet UI has been re-hauled
+- The UI has been refreshed
 
 ##### [1.6.3] - 24 September 24
 

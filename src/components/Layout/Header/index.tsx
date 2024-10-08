@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { appContext } from "../../../AppContext.tsx";
 import { useLocation } from "react-router-dom";
+import useAndroidTitleBar from "./useAndroidShowTitleBar.tsx";
 
 const Header = () => {
+  const openTitleBar = useAndroidTitleBar();
   const { topBlock, setIsDarkMode, setPromptLogoutDialog } =
     useContext(appContext);
   const [isAtTop, setIsAtTop] = useState(true);
@@ -38,13 +40,23 @@ const Header = () => {
     setIsDarkMode(document.body.classList.contains("dark"));
   };
 
+  const handleLogout = (evt) => {
+    evt.stopPropagation();
+    setPromptLogoutDialog(true)
+  }
+
+  const handleTheme = (evt) => {
+    evt.stopPropagation();
+    toggleDarkMode();
+  }
+
   return (
     <>
       <header className="sticky top-0 z-50 h-[64px]">
         <div
           className={`${isAtTop ? "h-[84px]" : "h-[40px]"} border-[hsla(0, 0%, 100%, 1)] flex h-[64px] items-center border-b bg-white px-5 transition-all dark:border-lightDarkContrast dark:bg-black`}
         >
-          <div className="container relative z-50 mx-auto">
+          <div className="container relative z-50 mx-auto" onClick={openTitleBar}>
             <div className="grid w-full grid-cols-12">
               <div className="col-span-6 flex items-center">
                 <div className="flex items-center gap-5 text-xs">
@@ -91,13 +103,13 @@ const Header = () => {
                       <li>
                         <button
                           className="text-xs lg:text-sm font-bold text-black dark:text-white rounded py-1.5 lg:py-2 transition-colors border border-black dark:border-white hover:bg-white hover:text-black"
-                          onClick={() => setPromptLogoutDialog(true)}
+                          onClick={handleLogout}
                         >
                           Logout
                         </button>
                       </li>
                     )}
-                    <li onClick={toggleDarkMode}>
+                    <li onClick={handleTheme}>
                       <div
                         className={`${!isAtTop ? "scale-[0.8]" : ""} relative flex h-[44px] w-[44px] scale-100 items-center justify-center rounded-full border border-grey80 bg-white from-[#17191C] to-[#37393F] transition-all duration-75 hover:bg-grey10 active:scale-75 dark:border-mediumDarkContrast dark:bg-darkContrast dark:hover:bg-transparent dark:hover:bg-gradient-to-t`}
                       >
