@@ -1,5 +1,4 @@
 import { primaryFormButtonStyle } from "../../styles";
-import InfoBox from "../../components/UI/InfoBox/index.tsx";
 import { useNavigate } from "react-router-dom";
 
 const Welcome = () => {
