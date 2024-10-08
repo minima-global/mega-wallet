@@ -23,14 +23,10 @@ const Header = () => {
   }, []);
 
   const toggleDarkMode = () => {
-    document.body.classList.remove("bg-background");
-
     if (document.body.classList.contains("dark")) {
       document.body.classList.remove("dark");
-      document.body.classList.add("bg-white");
     } else {
       document.body.classList.add("dark");
-      document.body.classList.add("dark:bg-background");
     }
 
     localStorage.setItem(

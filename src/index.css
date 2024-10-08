@@ -68,12 +68,6 @@
     -webkit-text-size-adjust: 100%;
 }
 
-@layer base {
-    body {
-        @apply bg-background text-white;
-    }
-}
-
 body {
     overflow-y: scroll;
 }
@@ -85,7 +79,6 @@ body {
     font-weight: 500;
     font-style: normal;
     scroll-behavior: smooth;
-    background: var(--bg-background);
 }
 
 h1 {
