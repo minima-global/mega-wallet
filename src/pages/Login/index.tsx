@@ -276,7 +276,7 @@ const Login = () => {
             {/* Action buttons */}
             <div className="mt-1 gap-2 flex flex-col">
               <button
-                  disabled={loading || loginForm._seedPhrase.length === 0 || !/[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}/gi.test(loginForm._seedPhrase)}
+                  disabled={loading || loginForm._seedPhrase.length === 0 || !/^[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}$/gmi.test(loginForm._seedPhrase)}
                   type="submit"
                   className={primaryFormButtonStyle}
               >
