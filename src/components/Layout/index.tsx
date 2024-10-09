@@ -2,10 +2,10 @@ import Header from "./Header";
 
 const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
-    <div>
+    <div className="flex flex-col h-screen">
       <Header />
-      <main className="pt-6 lg:pt-8">
-        <div className="container mx-auto">{children}</div>
+      <main className="pt-0 lg:pt-5 flex-1">
+        {children}
       </main>
     </div>
   );

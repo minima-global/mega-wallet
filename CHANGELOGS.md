@@ -1,5 +1,9 @@
 # Changelog
 
+##### [2.0.3] - 09 October 24
+
+- Minor user interface changes
+
 ##### [2.0.2] - 08 October 24
 
 - Scrollbar does not always appear if unnecessary

@@ -5,7 +5,7 @@ const FetchBalanceButton = () => {
   const { _promptingFetchingBalance, getBalance } = useContext(appContext);
 
   const handleFetchBalance = () => {
-    getBalance();
+    getBalance(true);
   };
 
   return (

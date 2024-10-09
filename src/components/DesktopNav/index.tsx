@@ -3,9 +3,9 @@ import { appContext } from "../../AppContext";
 
 const NavButton = ({ name, icon, activeIcon, isActive, onClick }) => (
   <button
-    className={`pointer-cursor flex-1 w-full relative text-sm text-left flex rounded py-2.5 px-4 items-center justify-start gap-2 transition-all duration-200 ${
+    className={`pointer-cursor flex-1 w-full relative text-xs lg:text-sm text-left flex rounded py-2.5 px-4 items-center justify-start gap-2 transition-all duration-200 ${
       isActive
-        ? "text-black bg-lightOrange hover:bg-lighterOrange"
+        ? "text-black bg-lightOrange"
         : "bg-grey20 hover:bg-grey40 dark:bg-mediumDarkContrast dark:hover:bg-lightDarkContrast"
     }`}
     disabled={isActive}

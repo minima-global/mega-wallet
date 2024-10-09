@@ -37,7 +37,7 @@ const Receive = () => {
     <div
       className={`transition-opacity duration-200 ${_currentNavigation === page ? "opacity-100 w-full" : "opacity-0 w-full h-0 scale-0 pointer-events-none"}`}
     >
-      <div className="mt-0 lg:mt-5 bg-grey10 dark:bg-darkContrast p-5 lg:p-10">
+      <div className="mt-0 lg:mt-2 bg-grey10 dark:bg-darkContrast p-5 lg:p-10">
         <div className="w-full max-w-[450px] mx-auto">
           <div className="bg-white w-fit mx-auto p-4">
             <QRCode value={_address} size={200} />

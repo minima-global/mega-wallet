@@ -96,7 +96,7 @@ const AppProvider = ({ children }: IProps) => {
       localStorage.setItem("dark-mode-pub", "false");
     }
   }, [isDarkMode]); // Re-run effect when isDarkMode changes
-  const getBalance = () => {
+  const getBalance = (clicked = false) => {
     if (!_address) return;
 
     const now = Date.now();
@@ -106,11 +106,13 @@ const AppProvider = ({ children }: IProps) => {
     if (_balance) {
       // If the last call was less than 60 seconds ago, don't call the method
       if (lastCalled && now - Number(lastCalled) < 60000) {
-        setPromptFetchBalance(true);
+        if (clicked) {
+          setPromptFetchBalance(true);
 
-        setTimeout(() => {
-          setPromptFetchBalance(false);
-        }, 2500);
+          setTimeout(() => {
+            setPromptFetchBalance(false);
+          }, 2500);
+        }
 
         return;
       }
