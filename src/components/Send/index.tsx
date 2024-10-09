@@ -67,7 +67,7 @@ const Send = () => {
     >
       <section>
         <div className="flex items-center justify-between">
-          <h6 className="text-2xl mb-4">Tokens</h6>
+          <h6 className="text-xl lg:text-2xl mb-1 lg:mb-4">Tokens</h6>
           <FetchBalanceButton />
         </div>
         <Formik
@@ -262,7 +262,7 @@ const Send = () => {
                           )}
                       </div>
                     </div>
-                    <p className="text-sm text-grey60">
+                    <p className="text-xs lg:text-sm text-grey60">
                       You must change your key uses number on every transaction.
                       This will increment automatically when you use the same
                       computer, but you must set it yourself if you change
@@ -275,7 +275,7 @@ const Send = () => {
                   <button
                     disabled={ready.current === true && (loading || !isValid)}
                     type="submit"
-                    className={`${primaryFormButtonStyle} my-8`}
+                    className={`${primaryFormButtonStyle} mt-2 lg:my-8`}
                   >
                     {loading && "Sending..."}
                     {!loading && "Send"}

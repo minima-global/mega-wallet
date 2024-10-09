@@ -38,6 +38,7 @@ const Header = () => {
 
   const handleLogout = (evt) => {
     evt.stopPropagation();
+    window.scrollTo(0, 0);
     setPromptLogoutDialog(true)
   }
 
@@ -50,7 +51,7 @@ const Header = () => {
     <>
       <header className="sticky top-0 z-50 h-[64px]">
         <div
-          className={`${isAtTop ? "h-[64px] lg:h-[84px]" : "h-[40px]"} border-[hsla(0, 0%, 100%, 1)] flex items-center border-b bg-white px-5 transition-all dark:border-lightDarkContrast dark:bg-black`}
+          className={`${isAtTop ? "h-[64px] lg:h-[84px]" : "h-[60px]"} border-[hsla(0, 0%, 100%, 1)] flex items-center border-b bg-white px-5 transition-all dark:border-lightDarkContrast dark:bg-black`}
         >
           <div className="container relative z-50 mx-auto" onClick={openTitleBar}>
             <div className="grid w-full grid-cols-12">
@@ -62,7 +63,7 @@ const Header = () => {
                     viewBox="0 0 42 39"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`${isAtTop ? "w-[32px] lg:w-[42px]" : "w-[24px] lg:w-[34px]"} fill-black transition-all dark:fill-white`}
+                    className={`${isAtTop ? "w-[32px] lg:w-[42px]" : "w-[28px] lg:w-[34px]"} fill-black transition-all dark:fill-white`}
                   >
                     <path
                       d="M13.1247 12.7367L24.6192 17.3141L31.658 14.5108L34.1184 3.78496L24.6192 7.56748L6.56361 0.377441L0 28.9856L10.342 24.8667L13.1247 12.7367Z"
@@ -75,7 +76,7 @@ const Header = () => {
                   </svg>
                   <div className="mt-1">
                     <span className="flex">
-                      <div className="gradient-border flex items-center bg-white text-xs lg:text-xs text-black dark:bg-black dark:text-white">
+                      <div className="gradient-border flex items-center bg-white -mt-0.5 lg:mt-0 text-[11px] lg:text-xs text-black dark:bg-black dark:text-white">
                         Block{" "}
                         {!topBlock && (
                           <div className="skele skele--light ml-2 h-[14px] w-[43px]" />

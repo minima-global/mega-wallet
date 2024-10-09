@@ -2,13 +2,13 @@ export const wrappedInputStyle = `
   bg-transparent
   focus:outline-none
   w-full
-  truncate
+  pr-4
+  text-sm lg:text-base
   placeholder:text-neutral-400
   placeholder:dark:text-neutral-500
   text-neutral-950
   dark:text-neutral-100
   overflow-hidden
-  text-ellipsis
   whitespace-nowrap
 `;
 export const primaryFormButtonStyle = `

@@ -183,18 +183,18 @@ const Login = () => {
   }
 
   return (
-      <div className="h-fit lg:h-full m-0 flex lg:items-center justify-center">
+      <div className="h-fit md:h-full m-0 flex md:items-center justify-center">
         <div
-            className="mb-[80px] lg:w-[600px] m-2 lg:mx-auto bg-grey10 dark:bg-mediumDarkContrast p-4 lg:p-6 rounded-lg text-black dark:text-white">
+            className="md:mb-[80px] md:w-[600px] m-3 md:mx-auto bg-grey10 dark:bg-mediumDarkContrast p-4 lg:p-6 rounded-lg text-black dark:text-white">
           <h1 className="pt-0.5 text-2xl lg:text-3xl mb-3">Minima Public Wallet</h1>
-          <p className="block lg:flex text-sm dark:text-grey40 mb-6 gap-2">
+          <p className="block lg:flex text-sm dark:text-grey40 gap-2">
             Login with your secret phrase or{" "}
             <span className="hidden lg:inline-flex">
-          <KeyIcon fill="currentColor"/>
-        </span>
+              <KeyIcon fill="currentColor"/>
+            </span>
             generate a new one.
           </p>
-          <div className="w-full h-[2px] bg-grey40 dark:bg-grey my-6"/>
+          <div className="w-full h-[2px] bg-grey40 dark:bg-grey my-5 lg:my-6"/>
           <form className="" onSubmit={handleSubmit}>
             <div
                 className={`flex flex-col lg:flex-row ${generated ? "gap-3" : "gap-0"}`}

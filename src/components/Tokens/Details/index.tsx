@@ -103,7 +103,7 @@ const Details = ({ token, dismiss }) => {
       <div className="left-0 top-0 lg:h-screen w-full flex lg:items-start">
         <Backdrop onClick={dismiss} />
         <div className="mx-auto mb-4 max-w-[648px] w-full">
-          <div className="relative mt-6 lg:mt-10 bg-white dark:bg-black rounded border dark:border-darkContrast mx-5 lg:mx-auto z-40 mb-10 p-6">
+          <div className="relative mt-6 lg:mt-10 bg-white dark:bg-black rounded border dark:border-darkContrast mx-5 lg:mx-auto z-40 mb-2 lg:mb-10 p-6">
             <div
               onClick={dismiss}
               className="absolute top-5 right-5 text-black hover:text-grey dark:text-neutral-500 cursor-pointer"

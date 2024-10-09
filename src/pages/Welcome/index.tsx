@@ -10,13 +10,13 @@ const Welcome = () => {
   };
 
   return (
-    <div className="p-2">
+    <div className="p-3">
       <div className="lg:mt-[100px] mb-[160px] w-full lg:max-w-[650px] lg:mx-auto bg-grey10 dark:bg-mediumDarkContrast p-4 lg:p-6 rounded-lg">
         <div className="flex flex-col">
-          <h1 className="pt-0.5 text-3xl">Minima Public Wallet</h1>
-          <div className="w-full h-[2px] bg-grey40 dark:bg-grey my-6" />
-          <div className="flex flex-col gap-4 text-sm tracking-[0.2px] dark:text-grey40">
-            <p className="text-lg lg:text-2xl mb-1.5">
+          <h1 className="pt-0.5 text-2xl lg:text-3xl">Minima Public Wallet</h1>
+          <div className="w-full h-[2px] bg-grey40 dark:bg-grey my-5 lg:my-5" />
+          <div className="flex flex-col gap-4 text-xs lg:text-sm tracking-[0.2px] dark:text-grey40 mb-4">
+            <p className="text-lg lg:text-xl lg:mb-1.5">
               This wallet allows you to send, receive, and store Minima, custom
               tokens, and NFTs without needing to run a Minima node.
             </p>
@@ -37,7 +37,7 @@ const Welcome = () => {
             </p>
           </div>
 
-          <div className="mt-auto md:mt-8">
+          <div className="mt-auto md:mt-4">
             <div className="mt-1">
               <button
                 type="button"
