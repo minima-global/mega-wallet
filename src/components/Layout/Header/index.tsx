@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { appContext } from "../../../AppContext.tsx";
 import { useLocation } from "react-router-dom";
 import useAndroidTitleBar from "./useAndroidShowTitleBar.tsx";
@@ -7,20 +7,7 @@ const Header = () => {
   const openTitleBar = useAndroidTitleBar();
   const { topBlock, setIsDarkMode, setPromptLogoutDialog } =
     useContext(appContext);
-  const [isAtTop, setIsAtTop] = useState(true);
   const location = useLocation();
-
-  useEffect(() => {
-    const onScroll = () => {
-      setIsAtTop(window.scrollY <= 30);
-    };
-
-    window.addEventListener("scroll", onScroll);
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
 
   const toggleDarkMode = () => {
     if (document.body.classList.contains("dark")) {
@@ -39,21 +26,24 @@ const Header = () => {
   const handleLogout = (evt) => {
     evt.stopPropagation();
     window.scrollTo(0, 0);
-    setPromptLogoutDialog(true)
-  }
+    setPromptLogoutDialog(true);
+  };
 
   const handleTheme = (evt) => {
     evt.stopPropagation();
     toggleDarkMode();
-  }
+  };
 
   return (
     <>
-      <header className="sticky top-0 z-50 h-[64px]">
+      <header className="h-[64px]">
         <div
-          className={`${isAtTop ? "h-[64px] lg:h-[84px]" : "h-[60px]"} border-[hsla(0, 0%, 100%, 1)] flex items-center border-b bg-white px-5 transition-all dark:border-lightDarkContrast dark:bg-black`}
+          className={`h-[64px] lg:h-[84px] border-[hsla(0, 0%, 100%, 1)] flex items-center border-b bg-white px-5 transition-all dark:border-lightDarkContrast dark:bg-black`}
         >
-          <div className="container relative z-50 mx-auto" onClick={openTitleBar}>
+          <div
+            className="container relative z-50 mx-auto"
+            onClick={openTitleBar}
+          >
             <div className="grid w-full grid-cols-12">
               <div className="col-span-6 flex items-center">
                 <div className="flex items-center gap-5 text-xs">
@@ -63,7 +53,7 @@ const Header = () => {
                     viewBox="0 0 42 39"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`${isAtTop ? "w-[32px] lg:w-[42px]" : "w-[28px] lg:w-[34px]"} fill-black transition-all dark:fill-white`}
+                    className={`w-[32px] lg:w-[42px] fill-black transition-all dark:fill-white`}
                   >
                     <path
                       d="M13.1247 12.7367L24.6192 17.3141L31.658 14.5108L34.1184 3.78496L24.6192 7.56748L6.56361 0.377441L0 28.9856L10.342 24.8667L13.1247 12.7367Z"
@@ -94,7 +84,7 @@ const Header = () => {
               <div className="col-span-6 flex items-center justify-end">
                 <nav className="cursor-pointer lg:block">
                   <ul
-                    className={`${isAtTop ? "gap-4 lg:gap-6" : "gap-5"} flex items-center text-sm transition-all`}
+                    className={`gap-4 lg:gap-6 flex items-center text-sm transition-all`}
                   >
                     {location.pathname === "/dashboard" && (
                       <li>
@@ -108,7 +98,7 @@ const Header = () => {
                     )}
                     <li onClick={handleTheme}>
                       <div
-                        className={`${!isAtTop ? "scale-[0.8]" : ""} relative flex h-[32px] w-[32px] lg:h-[44px] lg:w-[44px] scale-100 items-center justify-center rounded-full border border-grey80 bg-white from-[#17191C] to-[#37393F] transition-all duration-75 hover:bg-grey10 active:scale-75 dark:border-mediumDarkContrast dark:bg-darkContrast dark:hover:bg-transparent dark:hover:bg-gradient-to-t`}
+                        className={`relative flex h-[32px] w-[32px] lg:h-[44px] lg:w-[44px] scale-100 items-center justify-center rounded-full border border-grey80 bg-white from-[#17191C] to-[#37393F] transition-all duration-75 hover:bg-grey10 active:scale-75 dark:border-mediumDarkContrast dark:bg-darkContrast dark:hover:bg-transparent dark:hover:bg-gradient-to-t`}
                       >
                         <svg
                           width="22"
