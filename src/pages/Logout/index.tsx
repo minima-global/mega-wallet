@@ -29,6 +29,14 @@ const Logout = () => {
   const [copied, setCopied] = useState(false);
   const [copiedKeyUses, setCopiedKeyUses] = useState(false);
 
+  useEffect(() => {
+    if (_promptLogoutDialog) {
+      document.body.classList.add("overflow-y-hidden");
+    } else {
+      document.body.classList.remove("overflow-y-hidden");
+    }
+  }, [_promptLogoutDialog]);
+
   const handleOnCopy = () => {
     setCopied(true);
     copyToClipboard(loginForm._seedPhrase);
@@ -91,11 +99,11 @@ const Logout = () => {
 
   return (
     <div
-      className={`absolute z-50 top-0 left-0 ${_promptLogoutDialog ? "block" : "hidden"}`}
+      className={`absolute z-50 top-0 left-0 w-full ${_promptLogoutDialog ? "block" : "hidden"}`}
     >
-      <div className="lg:h-screen w-screen flex p-3 lg:p-0 lg:items-center">
+      <div className="h-screen w-full flex p-3 lg:p-0 items-center pb-14 lg:pb-12">
         <Backdrop onClick={dismiss} />
-        <div className="relative z-50 bg-grey10 dark:bg-mediumDarkContrast rounded border dark:border-darkContrast w-full max-w-[640px] min-h-[500px] mx-auto lg:mb-10 p-4 lg:p-6">
+        <div className="relative z-50 bg-grey10 dark:bg-mediumDarkContrast rounded w-full max-w-[640px] min-h-[500px] mx-auto lg:mb-14 p-4 lg:p-6">
           <h1 className="pt-0.5 text-xl lg:text-2xl mb-5">
             Log out of this session
           </h1>

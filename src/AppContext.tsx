@@ -51,6 +51,7 @@ const AppProvider = ({ children }: IProps) => {
   const [_privateKey, setPrivateKey] = useState<null | string>(null);
   const [_keyUsages, setKeyUsages] = useState<KeyUsages[]>([]);
   const [_script, setScript] = useState<null | string>(null);
+  const [_isPublic, setIsPublic] = useState<boolean>(false);
 
   const [_promptMegaMMR, setPromptMegaMMR] = useState<null | boolean>(null);
   const [_currentNavigation, setCurrentNavigation] = useState("balance");
@@ -149,6 +150,13 @@ const AppProvider = ({ children }: IProps) => {
 
       (window as any).MDS.init((msg) => {
         if (msg.event === "inited") {
+          (window as any).MDS.cmd(
+            `checkmode`,
+            function (resp) {
+              setIsPublic(resp.response.mode === "public");
+            },
+          );
+
           (window as any).MDS.cmd("megammr", (resp) => {
             if (!resp.response.enabled) {
               setPromptMegaMMR(true);
@@ -403,6 +411,8 @@ const AppProvider = ({ children }: IProps) => {
 
         _promptLogoutDialog,
         setPromptLogoutDialog,
+
+        _isPublic,
       }}
     >
       {children}

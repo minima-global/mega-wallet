@@ -8,6 +8,7 @@ const Header = () => {
   const { topBlock, setIsDarkMode, setPromptLogoutDialog } =
     useContext(appContext);
   const location = useLocation();
+  const { _isPublic } = useContext(appContext);
 
   const toggleDarkMode = () => {
     if (document.body.classList.contains("dark")) {
@@ -36,16 +37,16 @@ const Header = () => {
 
   return (
     <>
-      <header className="h-[64px]">
+      <header className="h-[64px] lg:h-[84px]">
         <div
-          className={`h-[64px] lg:h-[84px] border-[hsla(0, 0%, 100%, 1)] flex items-center border-b bg-white px-5 transition-all dark:border-lightDarkContrast dark:bg-black`}
+          className={`h-full  border-[hsla(0, 0%, 100%, 1)] flex items-center border-b bg-white px-5 transition-all dark:border-lightDarkContrast dark:bg-black`}
         >
           <div
             className="container relative z-50 mx-auto"
             onClick={openTitleBar}
           >
             <div className="grid w-full grid-cols-12">
-              <div className="col-span-6 flex items-center">
+              <div className="col-span-4 flex items-center">
                 <div className="flex items-center gap-5 text-xs">
                   <svg
                     width="42"
@@ -67,12 +68,12 @@ const Header = () => {
                   <div className="mt-1">
                     <span className="flex">
                       <div className="gradient-border flex items-center bg-white -mt-0.5 lg:mt-0 text-[11px] lg:text-xs text-black dark:bg-black dark:text-white">
-                        Block{" "}
+                        <span className="hidden md:block">Block</span>
                         {!topBlock && (
                           <div className="skele skele--light ml-2 h-[14px] w-[43px]" />
                         )}
                         {topBlock && (
-                          <span className="ml-1 font-bold text-orange dark:text-lightOrange">
+                          <span className="md:ml-1 font-bold text-orange dark:text-lightOrange">
                             {topBlock}
                           </span>
                         )}
@@ -81,22 +82,29 @@ const Header = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-span-6 flex items-center justify-end">
+              <div className="col-span-8 flex items-center justify-end">
                 <nav className="cursor-pointer lg:block">
                   <ul
-                    className={`gap-4 lg:gap-6 flex items-center text-sm transition-all`}
+                    className={`gap-3 lg:gap-4 flex items-center text-sm transition-all`}
                   >
+                    {_isPublic && (
+                     <a target="_blank" href="https://docs.minima.global/docs/runanode/get_started/">
+                        <button className="text-xs lg:text-sm font-bold text-black dark:text-white rounded py-1.5 lg:py-2 px-2 lg:px-3 transition-colors border border-black dark:border-white hover:bg-white hover:text-black">
+                          Run a node
+                        </button>
+                      </a>
+                    )}
                     {location.pathname === "/dashboard" && (
                       <li>
                         <button
-                          className="text-xs lg:text-sm font-bold text-black dark:text-white rounded py-1.5 lg:py-2 transition-colors border border-black dark:border-white hover:bg-white hover:text-black"
+                          className="text-xs lg:text-sm font-bold text-black dark:text-white rounded py-1.5 lg:py-2 px-2 lg:px-3 transition-colors border border-black dark:border-white hover:bg-white hover:text-black"
                           onClick={handleLogout}
                         >
                           Logout
                         </button>
                       </li>
                     )}
-                    <li onClick={handleTheme}>
+                    <li className="hidden iphone:block" onClick={handleTheme}>
                       <div
                         className={`relative flex h-[32px] w-[32px] lg:h-[44px] lg:w-[44px] scale-100 items-center justify-center rounded-full border border-grey80 bg-white from-[#17191C] to-[#37393F] transition-all duration-75 hover:bg-grey10 active:scale-75 dark:border-mediumDarkContrast dark:bg-darkContrast dark:hover:bg-transparent dark:hover:bg-gradient-to-t`}
                       >

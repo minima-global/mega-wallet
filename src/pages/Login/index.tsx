@@ -178,8 +178,8 @@ const Login = () => {
   }
 
   return (
-    <div className="h-fit lg:h-full m-0 flex md:items-center justify-center">
-      <div className="lg:mb-[80px] w-full lg:w-[600px] m-3 lg:mx-auto bg-grey10 dark:bg-mediumDarkContrast p-4 lg:p-6 rounded-lg text-black dark:text-white">
+    <div className="w-full flex items-center justify-center pb-24 lg:pb-14">
+      <div className="w-full lg:w-[600px] m-4 lg:mx-auto bg-grey10 dark:bg-mediumDarkContrast p-4 lg:p-6 rounded-lg text-black dark:text-white">
         <h1 className="pt-0.5 text-2xl lg:text-3xl mb-3">
           Minima Public Wallet
         </h1>

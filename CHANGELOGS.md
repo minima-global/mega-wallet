@@ -1,5 +1,11 @@
 # Changelog
 
+##### [2.0.5] - 08 November 24
+
+- Added run a node button when running in public mode
+- Added footer when running in public mode
+- Added disclaimer
+
 ##### [2.0.3] - 09 October 24
 
 - Minor user interface changes

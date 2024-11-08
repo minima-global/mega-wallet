@@ -3,6 +3,9 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      screens: {
+        'iphone': '390px',
+      },
       colors: {
         main: "var(--main)",
         orange: "var(--orange)",
