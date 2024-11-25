@@ -150,12 +150,9 @@ const AppProvider = ({ children }: IProps) => {
 
       (window as any).MDS.init((msg) => {
         if (msg.event === "inited") {
-          (window as any).MDS.cmd(
-            `checkmode`,
-            function (resp) {
-              setIsPublic(resp.response.mode === "public");
-            },
-          );
+          (window as any).MDS.cmd(`checkmode`, function (resp) {
+            setIsPublic(resp.response.public);
+          });
 
           (window as any).MDS.cmd("megammr", (resp) => {
             if (!resp.response.enabled) {

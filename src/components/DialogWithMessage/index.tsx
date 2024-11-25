@@ -19,7 +19,7 @@ const DialogWithMessage = () => {
           onClick={dismiss}
           className="fixed z-30 top-0 left-0 bg-black opacity-70 w-screen h-screen"
         />
-        <div className="relative lg:mt-10 bg-black rounded border border-darkContrast w-full max-w-[500px] mx-5 lg:mx-auto z-40 mb-10 p-6">
+        <div className="relative lg:mt-10 bg-black rounded border border-darkContrast w-full max-w-[500px] mx-5 md:mx-auto z-40 mb-10 p-6">
           <div
             onClick={dismiss}
             className="absolute top-5 right-5 dark:text-neutral-500 hover:text-white cursor-pointer"

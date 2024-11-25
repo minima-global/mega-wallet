@@ -1,7 +1,7 @@
 import { Check } from "lucide-react";
 
 interface ModernCheckboxProps {
-  label: string;
+  label: React.ReactNode | string;
   checked: boolean;
   onChange: () => void;
 }

@@ -98,7 +98,7 @@ const Send = () => {
 
               if (respo.status) {
                 // update keyUsages
-                updateKeyUsage(_address, keyuses + 1);
+                updateKeyUsage(_address, Number(keyuses) + 1);
 
                 setLoading(false);
 

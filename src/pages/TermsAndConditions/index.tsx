@@ -22,14 +22,11 @@ const TermsAndConditions = () => {
           <div className="w-full h-[2px] bg-grey40 dark:bg-grey my-5 lg:my-5" />
           <div className="flex flex-col gap-4 text-xs lg:text-sm tracking-[0.2px] dark:text-grey40 mb-4">
             <p className="text-lg lg:text-xl lg:mb-1.5">
-              Please carefully review and confirm your acceptance of the
-              following Minima Terms of Use by checking the box provided:
+            Please carefully review and confirm your acceptance of the following Minima <a target="_blank" rel="noreferrer" className="underline" href="https://docs.minima.global/docs/terms/minidappterms/#section-d-minidapp-for-transacting-public-mega-wallet">Terms of Use</a> by checking the box provided:
             </p>
             <label>
               <ModernCheckbox
-                label="On your first use, you will generate a secret key. Keep this key
-                secure, as it will not be shown again after logging out. Losing
-                this key means losing access to your assets."
+                label={<>I confirm that I have fully read and understood the Minima Terms of Use, specifically <a target="_blank" rel="noreferrer" className="underline" href="https://docs.minima.global/docs/terms/minidappterms/#section-a-general-terms-applicable-to-all-minidapps">Section A - General Terms Applicable to all MiniDapps</a>, <a target="_blank" rel="noreferrer" className="underline" href="https://docs.minima.global/docs/terms/minidappterms/#section-d-minidapp-for-transacting-public-mega-wallet">Section D - Public Wallet</a> and <a target="_blank" rel="noreferrer" className="underline" href="https://docs.minima.global/docs/terms/minidappterms/#section-p-dealing-in-minima">Section P - Dealing in Minima</a>. I unconditionally agree to comply with the Terms of Use, including any future changes. This commitment is irrevocable and applies to all my interactions with Minima, eliminating the need for repeated confirmations with each use.</>}
                 onChange={() => setAccepted((prevState) => !prevState)}
                 checked={acccepted}
               />

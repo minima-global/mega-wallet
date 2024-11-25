@@ -25,26 +25,31 @@ const FOOTER_NAV = [
       {
         key: "overview",
         title: "Overview",
+        external: true,
         href: "https://minima.global/technology/overview",
       },
       {
         key: "key-features",
         title: "Key features",
+        external: true,
         href: "https://minima.global/technology/key-features",
       },
       {
         key: "vision",
         title: "Vision",
+        external: true,
         href: "https://minima.global/technology/vision",
       },
       {
         key: "the-minima-coin",
         title: "The Minima coin",
+        external: true,
         href: "https://minima.global/technology/the-minima-coin",
       },
       {
         key: "product-roadmap",
         title: "Product roadmap",
+        external: true,
         href: "https://minima.global/technology/product-roadmap",
       },
     ],
@@ -55,21 +60,25 @@ const FOOTER_NAV = [
       {
         key: "de-pin",
         title: "DePIN",
+        external: true,
         href: "https://minima.global/solutions/de-pin",
       },
       {
         key: "ai-at-the-edge",
         title: "AI at the edge",
+        external: true,
         href: "https://minima.global/solutions/ai-at-the-edge",
       },
       {
         key: "real-world-assets",
         title: "Real world assets",
+        external: true,
         href: "https://minima.global/solutions/real-world-assets",
       },
       {
         key: "enterprise-solutions",
         title: "Enterprise solutions",
+        external: true,
         href: "https://minima.global/solutions/enterprise-solutions",
       },
     ],
@@ -80,21 +89,25 @@ const FOOTER_NAV = [
       {
         key: "minidapps",
         title: "MiniDapps",
+        external: true,
         href: "https://minima.global/ecosystem/minidapps",
       },
       {
         key: "network-overview",
         title: "Network overview",
+        external: true,
         href: "https://minima.global/ecosystem/network-overview",
       },
       {
         key: "partnerships",
         title: "Partnerships",
+        external: true,
         href: "https://minima.global/ecosystem/partnerships",
       },
       {
         key: "we-are-de-pin",
         title: "We are DePIN",
+        external: true,
         href: "https://minima.global/ecosystem/we-are-de-pin",
       },
     ],
@@ -117,6 +130,7 @@ const FOOTER_NAV = [
       {
         key: "grants-program",
         title: "Grants program",
+        external: true,
         href: "https://minima.global/resources/grants-program",
       },
       {
@@ -128,6 +142,7 @@ const FOOTER_NAV = [
       {
         key: "contact-us",
         title: "Contact us",
+        external: true,
         href: "https://minima.global/contact-us",
       },
     ],
@@ -419,7 +434,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
 
 export default Footer;

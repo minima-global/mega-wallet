@@ -1,6 +1,14 @@
 # Changelog
 
+##### [2.0.6] - 25 November 24
+
+- Fixed send bug where setting key usage would increment with string instead of number
+
 ##### [2.0.5] - 08 November 24
+
+- Updated disclaimer
+
+##### [2.0.4] - 08 November 24
 
 - Added run a node button when running in public mode
 - Added footer when running in public mode
