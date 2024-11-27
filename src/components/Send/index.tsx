@@ -67,7 +67,7 @@ const Send = () => {
     >
       <section>
         <div className="flex items-center justify-between">
-          <h6 className="text-xl lg:text-2xl mb-1 lg:mb-4">Tokens</h6>
+          <h6 className="text-xl lg:text-2xl mb-1">Tokens</h6>
           <FetchBalanceButton />
         </div>
         <Formik
@@ -181,7 +181,7 @@ const Send = () => {
                       )}
                     </div>
                     <div className="relative">
-                      <div className="dark:text-grey40 mb-3">Key uses</div>
+                      <div className="dark:text-grey40 mb-3">Secret key uses</div>
                       <div className="bg-grey10 dark:bg-darkContrast px-4 py-3.5 rounded">
                         <div className="flex relative">
                           <input
@@ -263,7 +263,7 @@ const Send = () => {
                       </div>
                     </div>
                     <p className="text-xs lg:text-sm text-grey60">
-                      You must change your key uses number on every transaction.
+                      You must change your secret key uses number on every transaction.
                       This will increment automatically when you use the same
                       computer, but you must set it yourself if you change
                       machines.

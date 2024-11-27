@@ -24,13 +24,18 @@ const TermsAndConditions = () => {
             <p className="text-lg lg:text-xl lg:mb-1.5">
             Please carefully review and confirm your acceptance of the following Minima <a target="_blank" rel="noreferrer" className="underline" href="https://docs.minima.global/docs/terms/minidappterms/#section-d-minidapp-for-transacting-public-mega-wallet">Terms of Use</a> by checking the box provided:
             </p>
-            <label>
-              <ModernCheckbox
-                label={<>I confirm that I have fully read and understood the Minima Terms of Use, specifically <a target="_blank" rel="noreferrer" className="underline" href="https://docs.minima.global/docs/terms/minidappterms/#section-a-general-terms-applicable-to-all-minidapps">Section A - General Terms Applicable to all MiniDapps</a>, <a target="_blank" rel="noreferrer" className="underline" href="https://docs.minima.global/docs/terms/minidappterms/#section-d-minidapp-for-transacting-public-mega-wallet">Section D - Public Wallet</a> and <a target="_blank" rel="noreferrer" className="underline" href="https://docs.minima.global/docs/terms/minidappterms/#section-p-dealing-in-minima">Section P - Dealing in Minima</a>. I unconditionally agree to comply with the Terms of Use, including any future changes. This commitment is irrevocable and applies to all my interactions with Minima, eliminating the need for repeated confirmations with each use.</>}
-                onChange={() => setAccepted((prevState) => !prevState)}
-                checked={acccepted}
-              />
-            </label>
+            <div>
+              <div>
+                I confirm that I have fully read and understood the Minima Terms of Use, specifically <a target="_blank" rel="noreferrer" className="underline" href="https://docs.minima.global/docs/terms/minidappterms/#section-a-general-terms-applicable-to-all-minidapps">Section A - General Terms Applicable to all MiniDapps</a>, <a target="_blank" rel="noreferrer" className="underline" href="https://docs.minima.global/docs/terms/minidappterms/#section-d-minidapp-for-transacting-public-mega-wallet">Section D - Public Wallet</a> and <a target="_blank" rel="noreferrer" className="underline" href="https://docs.minima.global/docs/terms/minidappterms/#section-p-dealing-in-minima">Section P - Dealing in Minima</a>. I unconditionally agree to comply with the Terms of Use, including any future changes. This commitment is irrevocable and applies to all my interactions with Minima, eliminating the need for repeated confirmations with each use.
+              </div>
+              <div className="mt-6">
+                <ModernCheckbox
+                  label="I agree to the terms and conditions"
+                  onChange={() => setAccepted((prevState) => !prevState)}
+                  checked={acccepted}
+                />
+              </div>
+            </div>
           </div>
 
           <div className="mt-auto md:mt-4">

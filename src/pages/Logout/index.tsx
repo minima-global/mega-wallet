@@ -109,7 +109,7 @@ const Logout = () => {
           </h1>
           <div className="w-full h-[2px] bg-grey40 dark:bg-grey my-3 lg:my-6" />
           <p className="dark:text-grey40 text-sm lg:text-sm mb-6 mt-4 flex items-center gap-2">
-            If you haven't stored your secret code then this is your last
+            If you haven't stored your secret key then this is your last
             chance!
           </p>
           <div className="flex flex-row gap-3">
@@ -118,7 +118,7 @@ const Logout = () => {
                 <input
                   readOnly={true}
                   type={`${visibility ? "text" : "password"}`}
-                  placeholder="Your secret phrase"
+                  placeholder="Your secret key"
                   name="_seedPhrase"
                   value={loginForm._seedPhrase}
                   className={`${wrappedInputStyle} flex-grow`}
@@ -162,19 +162,19 @@ const Logout = () => {
 
           <div className="mt-4 mb-6">
             <InfoBox>
-              Make sure you store a copy of your secret somewhere safe. Hyphens
+              Make sure you store a copy of your secret key somewhere safe. Hyphens
               (-) are required. You cannot recover it later.
             </InfoBox>
           </div>
 
           <div>
-            <h5 className="mb-3">Key uses</h5>
+            <h5 className="mb-3">Secret key uses</h5>
             <div className="flex flex-row gap-3">
               <div className={`${inputWrapperStyle} flex-1`}>
                 <div className="flex">
                   <input
                     readOnly={true}
-                    placeholder="Your secret phrase"
+                    placeholder="Your secret key uses"
                     name="_seedPhrase"
                     value={_keyUsages[_address] ? _keyUsages[_address] : 1}
                     className={`${wrappedInputStyle} flex-grow`}
@@ -204,8 +204,7 @@ const Logout = () => {
             </div>
             <div className="mt-4 mb-6">
               <InfoBox>
-                We recommend taking a note of your key uses. This should be
-                increased each time you use the public wallet.
+                We recommend taking a note of your secret key uses. This should be increased each time you send a transaction.
               </InfoBox>
             </div>
           </div>

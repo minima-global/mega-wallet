@@ -5,6 +5,7 @@ export default {
     extend: {
       screens: {
         'iphone': '390px',
+        'pro-max': '430px',
       },
       colors: {
         main: "var(--main)",

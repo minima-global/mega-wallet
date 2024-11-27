@@ -184,7 +184,7 @@ const Login = () => {
           Minima Public Wallet
         </h1>
         <p className="block lg:flex text-sm dark:text-grey40 gap-2">
-          Login with your secret phrase or{" "}
+          Login with your secret key or{" "}
           <span className="hidden lg:inline-flex">
             <KeyIcon fill="currentColor" />
           </span>
@@ -201,7 +201,7 @@ const Login = () => {
               <div className="flex">
                 <input
                   type={`${visibility ? "text" : "password"}`}
-                  placeholder="Enter a secret phrase or generate one"
+                  placeholder="Enter a secret key or generate one"
                   name="_seedPhrase"
                   onChange={handleInputChange}
                   value={loginForm._seedPhrase}
@@ -244,7 +244,7 @@ const Login = () => {
           {loginForm._seedPhrase.length > 0 && (
             <div className="mt-6">
               <InfoBox>
-                Make sure you store a copy of your secret somewhere safe.
+                Make sure you store a copy of your secret key somewhere safe.
                 Hyphens (-) are required. You cannot recover it later.
               </InfoBox>
             </div>
@@ -291,7 +291,7 @@ const Login = () => {
               disabled={loading}
               className="text-white text-sm lg:text-base dark:text-white bg-black hover:bg-darkContrast w-full flex gap-2 items-center justify-center py-3.5"
             >
-              {generated ? "Regenerate" : "Generate"} secret phrase{" "}
+              {generated ? "Regenerate" : "Generate"} secret key{" "}
               <KeyIcon fill="currentColor" />
             </button>
           </div>

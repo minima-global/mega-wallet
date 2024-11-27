@@ -1,5 +1,17 @@
 # Changelog
 
+
+##### [2.0.8] - 27 November 24
+
+- Fixed error dialog background colour
+- Minor text updates
+
+##### [2.0.7] - 27 November 24
+
+- Minor design tweaks
+- Minor text updates
+- Secret key uses are now stored in local storage (as well as SQL)
+
 ##### [2.0.6] - 25 November 24
 
 - Fixed send bug where setting key usage would increment with string instead of number

@@ -23,6 +23,17 @@ export const primaryFormButtonStyle = `
   focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-opacity-50
   dark:focus:ring-neutral-400 dark:focus:ring-opacity-60
 `;
+export const outlineFormButtonStyle = `
+  w-full py-3 px-4 tracking-wide rounded-md
+  transition-colors
+  text-sm lg:text-base
+
+  text-white hover:text-grey40
+
+  focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-opacity-50
+  dark:focus:ring-neutral-400 dark:focus:ring-opacity-60
+`;
+
 export const inputWrapperStyle =
   "flex flex-col border-none bg-grey20 dark:bg-darkContrast px-4 py-3.5 rounded-lg justify-center";
 export const selectableTokenWrapperStyle =

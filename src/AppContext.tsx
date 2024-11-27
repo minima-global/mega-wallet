@@ -10,9 +10,6 @@ export const appContext = createContext({} as any);
 interface IProps {
   children: any;
 }
-interface KeyUsages {
-  address: number;
-}
 
 const AppProvider = ({ children }: IProps) => {
   const loaded = useRef(false);
@@ -49,7 +46,7 @@ const AppProvider = ({ children }: IProps) => {
   const [_address, setAddress] = useState<null | string>(null);
   const [_balance, setBalance] = useState<null | object[]>(null);
   const [_privateKey, setPrivateKey] = useState<null | string>(null);
-  const [_keyUsages, setKeyUsages] = useState<KeyUsages[]>([]);
+  const [_keyUsages, setKeyUsages] = useState<Record<string, number>>({});
   const [_script, setScript] = useState<null | string>(null);
   const [_isPublic, setIsPublic] = useState<boolean>(false);
 
@@ -198,8 +195,28 @@ const AppProvider = ({ children }: IProps) => {
               `SELECT * FROM cache WHERE name = 'KEYUSAGE'`,
             );
 
-            if (keyUsage) {
+            const keyUsagesFromStorage = localStorage.getItem("keyUsage");
+            const hasData = keyUsagesFromStorage !== null;
+
+            // a) if user only has data in localStorage and not in SQL, set it to the state
+            // b) if user only has data in SQL and not in localStorage, set it to the state
+            // c) check which number is higher and set the state to the higher number
+            if (!keyUsage && hasData) {
+              setKeyUsages(JSON.parse(keyUsagesFromStorage));
+            } else if (keyUsage && !hasData) {
               setKeyUsages(JSON.parse(keyUsage.DATA));
+            } else if (keyUsage && hasData) {
+              const computedKeyUsages = {};
+              const keyUsagesFromStorageParsed = JSON.parse(keyUsagesFromStorage);
+              const keyUsagesFromSQLParsed = JSON.parse(keyUsage.DATA);
+
+              const keys = new Set([...Object.keys(keyUsagesFromStorageParsed), ...Object.keys(keyUsagesFromSQLParsed)]);
+
+              keys.forEach(key => {
+                computedKeyUsages[key] = keyUsagesFromStorageParsed[key] > keyUsagesFromSQLParsed[key] ? keyUsagesFromStorageParsed[key] : keyUsagesFromSQLParsed[key];
+              });
+
+              setKeyUsages(computedKeyUsages);
             }
           })();
         }
@@ -326,6 +343,7 @@ const AppProvider = ({ children }: IProps) => {
     };
 
     setKeyUsages(updatedData);
+    localStorage.setItem("keyUsage", JSON.stringify(updatedData));
 
     const rows = await sql(`SELECT * FROM cache WHERE name = 'KEYUSAGE'`);
 

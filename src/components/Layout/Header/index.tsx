@@ -85,11 +85,11 @@ const Header = () => {
               <div className="col-span-8 flex items-center justify-end">
                 <nav className="cursor-pointer lg:block">
                   <ul
-                    className={`gap-3 lg:gap-4 flex items-center text-sm transition-all`}
+                    className={`gap-4 lg:gap-8 flex items-center text-sm transition-all`}
                   >
                     {_isPublic && (
                      <a target="_blank" href="https://docs.minima.global/docs/runanode/get_started/">
-                        <button className="text-xs lg:text-sm font-bold text-black dark:text-white rounded py-1.5 lg:py-2 px-2 lg:px-3 transition-colors border border-black dark:border-white hover:bg-white hover:text-black">
+                        <button className="p-0 text-xs lg:text-sm font-bold text-black dark:text-white transition-colors hover:text-grey40">
                           Run a node
                         </button>
                       </a>
@@ -97,7 +97,7 @@ const Header = () => {
                     {location.pathname === "/dashboard" && (
                       <li>
                         <button
-                          className="text-xs lg:text-sm font-bold text-black dark:text-white rounded py-1.5 lg:py-2 px-2 lg:px-3 transition-colors border border-black dark:border-white hover:bg-white hover:text-black"
+                          className="p-0 text-xs lg:text-sm font-bold text-black dark:text-white transition-colors hover:text-grey40"
                           onClick={handleLogout}
                         >
                           Logout
