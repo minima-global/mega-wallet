@@ -22,7 +22,7 @@ const DialogWithMessage = () => {
         <div className="relative lg:mt-10 bg-white dark:bg-black rounded border border-darkContrast w-full max-w-[500px] mx-5 md:mx-auto z-40 mb-10 p-6">
           <div
             onClick={dismiss}
-            className="absolute top-5 right-5 dark:text-neutral-500 hover:text-white cursor-pointer"
+            className="absolute top-5 right-5 dark:text-neutral-500 hover:text-neutral-600 dark:hover:text-white cursor-pointer"
           >
             <CloseIcon fill="currentColor" />
           </div>

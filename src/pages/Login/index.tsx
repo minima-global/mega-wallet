@@ -16,6 +16,7 @@ import ModernCheckbox from "../../components/UI/Toggle";
 import HelpIcon from "../../components/UI/Icons/HelpIcon";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import InfoBox from "../../components/UI/InfoBox";
+import DoNotShareModal from "../../components/DoNotShareModal";
 
 const Login = () => {
   const {
@@ -31,6 +32,7 @@ const Login = () => {
 
   const navigate = useNavigate();
   const [generated, setGenerated] = useState(false);
+  const [promptDoNotShare, setPromptDoNotShare] = useState(false);
 
   const [params] = useSearchParams();
 
@@ -76,6 +78,11 @@ const Login = () => {
   };
 
   const handleRememberMe = () => {
+    // if the user is checking the remember me checkbox, show the do not share modal
+    if (!loginForm._rememberMe) {
+      setPromptDoNotShare(true);
+    }
+
     setLoginForm((prevData) => ({
       ...prevData,
       ["_rememberMe"]: !prevData._rememberMe,
@@ -108,6 +115,12 @@ const Login = () => {
       ...prevData,
       [name]: value,
     }));
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Backspace") {
+      setGenerated(false);
+    }
   };
 
   const handleSubmit = (evt) => {
@@ -179,6 +192,7 @@ const Login = () => {
 
   return (
     <div className="w-full flex items-center justify-center pb-24 lg:pb-14">
+      <DoNotShareModal display={promptDoNotShare} dismiss={() => setPromptDoNotShare(false)} />
       <div className="w-full lg:w-[600px] m-4 lg:mx-auto bg-grey10 dark:bg-mediumDarkContrast p-4 lg:p-6 rounded-lg text-black dark:text-white">
         <h1 className="pt-0.5 text-2xl lg:text-3xl mb-3">
           Minima Public Wallet
@@ -204,6 +218,7 @@ const Login = () => {
                   placeholder="Enter a secret key or generate one"
                   name="_seedPhrase"
                   onChange={handleInputChange}
+                  onKeyDown={handleKeyDown}
                   value={loginForm._seedPhrase}
                   className={`${wrappedInputStyle} flex-grow`}
                 />
@@ -245,7 +260,7 @@ const Login = () => {
             <div className="mt-6">
               <InfoBox>
                 Make sure you store a copy of your secret key somewhere safe.
-                Hyphens (-) are required. You cannot recover it later.
+                Hyphens (-) are required. You cannot recover it later.<br/> <strong className="pt-5">Do not share this key with anyone!</strong>
               </InfoBox>
             </div>
           )}

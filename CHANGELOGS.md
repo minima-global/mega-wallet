@@ -1,5 +1,12 @@
 # Changelog
 
+##### [2.1.0] - 02 December 24
+
+- Added settings page
+- Moved toggle dark mode into settings
+- Delete account functionality that removes public wallet data from your device
+- Minor UI tweaks
+- Minor text updates
 
 ##### [2.0.8] - 27 November 24
 

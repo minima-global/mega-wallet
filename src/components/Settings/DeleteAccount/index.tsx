@@ -1,19 +1,20 @@
 import { useEffect, useState, useContext } from "react";
-import { appContext } from "../../AppContext";
+import { appContext } from "../../../AppContext";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import VisibleIcon from "../../components/UI/Icons/VisibleIcon";
-import HideIcon from "../../components/UI/Icons/HideIcon";
-import InfoBox from "../../components/UI/InfoBox";
-import { copyToClipboard } from "../../utils";
+import VisibleIcon from "../../../components/UI/Icons/VisibleIcon";
+import HideIcon from "../../../components/UI/Icons/HideIcon";
+import InfoBox from "../../../components/UI/InfoBox";
+import { copyToClipboard } from "../../../utils";
 import {
   inputIconStyle,
   inputWrapperStyle,
   primaryFormButtonStyle,
   wrappedInputStyle,
-} from "../../styles";
-import Backdrop from "../../components/Backdrop";
+} from "../../../styles";
+import Backdrop from "../../../components/Backdrop";
+import clearCookie from "../../../utils/clearCookie";
 
-const Logout = () => {
+const SettingsDeleteAccount: React.FC<{ display: boolean; dismiss: () => void }> = ({ display, dismiss }) => {
   const {
     loginForm,
     setLoginForm,
@@ -21,7 +22,6 @@ const Logout = () => {
     _keyUsages,
     resetAccount,
     _promptLogoutDialog,
-    setPromptLogoutDialog,
   } = useContext(appContext);
   const navigate = useNavigate();
   const [params] = useSearchParams();
@@ -87,25 +87,28 @@ const Logout = () => {
     }
   }, [params, setLoginForm]);
 
-  const handleOnClick = () => {
+  const handleDeleteAccount = () => {
+    localStorage.removeItem("first-time");
+    localStorage.removeItem("getBalanceLastCalled");
+    localStorage.removeItem("keyUsage");
+    localStorage.removeItem("darkMode");
+    localStorage.removeItem("dark-mode-pub");
+    localStorage.removeItem("unknown-app-uid");
+    clearCookie("rememberme");
+    clearCookie("secretsauce");
     resetAccount();
-    setPromptLogoutDialog(false);
-    navigate("/login");
-  };
-
-  const dismiss = () => {
-    setPromptLogoutDialog(false);
+    navigate("/info");
   };
 
   return (
     <div
-      className={`absolute z-50 top-0 left-0 w-full ${_promptLogoutDialog ? "block" : "hidden"}`}
+      className={`absolute z-50 top-0 left-0 w-full ${display ? "opacity-100" : "opacity-0 pointer-events-none"}`}
     >
-      <div className="h-screen w-full flex p-3 lg:p-0 items-center pb-14 lg:pb-12">
-        <Backdrop onClick={dismiss} />
-        <div className="relative z-50 bg-grey10 dark:bg-mediumDarkContrast rounded w-full max-w-[640px] min-h-[500px] mx-auto p-4 lg:p-6">
+      <div className="h-screen w-full flex p-3 lg:p-0 items-center pb-6">
+        <Backdrop />
+        <div className={`relative z-50 bg-grey10 dark:bg-mediumDarkContrast rounded w-full max-w-[640px] min-h-[500px] mx-auto p-4 lg:p-6 transition-all delay-100 ${display ? "opacity-100 translate-y-0" : "opacity-0 translate-y-[5px]"}`}>
           <h1 className="pt-0.5 text-xl lg:text-2xl mb-5">
-            Log out of this session
+            Delete account
           </h1>
           <div className="w-full h-[2px] bg-grey40 dark:bg-grey my-3 lg:my-6" />
           <p className="dark:text-grey40 text-sm lg:text-sm mb-6 mt-4 flex items-center gap-2">
@@ -210,8 +213,8 @@ const Logout = () => {
           </div>
 
           <div className="mt-auto md:mt-4 flex flex-col gap-4">
-            <button onClick={handleOnClick} className={primaryFormButtonStyle}>
-              Logout
+            <button onClick={handleDeleteAccount} className={primaryFormButtonStyle}>
+              Delete account
             </button>
             <button
               onClick={dismiss}
@@ -226,4 +229,4 @@ const Logout = () => {
   );
 };
 
-export default Logout;
+export default SettingsDeleteAccount;
