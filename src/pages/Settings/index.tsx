@@ -16,10 +16,10 @@ const Settings = () => {
     };
 
     const toggleDarkMode = () => {
-        if (document.body.classList.contains("dark")) {
-            document.body.classList.remove("dark");
+        if (document.documentElement.classList.contains("dark")) {
+            document.documentElement.classList.remove("dark");
         } else {
-            document.body.classList.add("dark");
+            document.documentElement.classList.add("dark");
         }
 
         localStorage.setItem(
@@ -58,7 +58,7 @@ const Settings = () => {
                     Settings
                 </h1>
                 <div className="flex flex-col gap-3">
-                    <div onClick={() => setDisplayHelp(true)} className="bg-grey20 hover:bg-grey40 dark:bg-darkContrast dark:hover:bg-mediumDarkContrast transition-colors cursor-pointer w-full px-5 py-4 rounded-lg">
+                    <div onClick={() => setDisplayHelp(true)} className="bg-grey20 hover:bg-grey40 dark:bg-darkContrast dark:hover:bg-mediumDarkContrast select-none transition-colors cursor-pointer w-full px-5 py-4 rounded-lg">
                         <div className="flex items-center gap-4">
                             <div className="w-[22px] min-w-[22px]">
                                 <svg
@@ -78,7 +78,7 @@ const Settings = () => {
                             Help
                         </div>
                     </div>
-                    <div onClick={toggleDarkMode} className="bg-grey20 hover:bg-grey40 dark:bg-darkContrast dark:hover:bg-mediumDarkContrast transition-colors cursor-pointer w-full px-5 py-4 rounded-lg">
+                    <div onClick={toggleDarkMode} className="bg-grey20 hover:bg-grey40 dark:bg-darkContrast dark:hover:bg-mediumDarkContrast select-none transition-colors cursor-pointer w-full px-5 py-4 rounded-lg">
                         <div className="flex items-center gap-4">
                             <div className="w-[22px] min-w-[22px]">
                                 {isDarkMode && (
@@ -103,10 +103,10 @@ const Settings = () => {
                                     </svg>
                                 )}
                             </div>
-                            {isDarkMode ? "Set light mode" : "Set dark mode"}
+                            {isDarkMode ? "Light mode" : "Dark mode"}
                         </div>
                     </div>
-                    <div onClick={() => setDisplayDeleteAccount(true)} className="bg-grey20 hover:bg-grey40 dark:bg-darkContrast dark:hover:bg-mediumDarkContrast transition-colors cursor-pointer w-full px-5 py-4 rounded-lg">
+                    <div onClick={() => setDisplayDeleteAccount(true)} className="bg-grey20 hover:bg-grey40 dark:bg-darkContrast dark:hover:bg-mediumDarkContrast select-none transition-colors cursor-pointer w-full px-5 py-4 rounded-lg">
                         <div className="flex items-center gap-4">
                             <div className="w-[22px] min-w-[22px]">
                                 <svg

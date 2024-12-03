@@ -1,5 +1,10 @@
 # Changelog
 
+##### [2.1.1] - 02 December 24
+
+- Minor UI tweaks
+- Minor text updates
+
 ##### [2.1.0] - 02 December 24
 
 - Added settings page

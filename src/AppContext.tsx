@@ -17,7 +17,7 @@ const AppProvider = ({ children }: IProps) => {
 
   const [isDarkMode, setIsDarkMode] = useState(() => {
     // Initialize state based on localStorage
-    return localStorage.getItem("dark-mode-pub") === "true";
+    return localStorage.getItem("dark-mode-pub") === "true" || !localStorage.getItem("dark-mode-pub");
   });
 
   useEffect(() => {
@@ -94,6 +94,7 @@ const AppProvider = ({ children }: IProps) => {
       localStorage.setItem("dark-mode-pub", "false");
     }
   }, [isDarkMode]); // Re-run effect when isDarkMode changes
+
   const getBalance = (clicked = false) => {
     if (!_address) return;
 

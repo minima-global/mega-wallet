@@ -80,7 +80,7 @@ const Header = () => {
                       <>
                         <li>
                           <button
-                            className="p-0 text-xs lg:text-sm font-bold text-black dark:text-white transition-colors hover:text-grey40"
+                            className="p-0 text-xs lg:text-sm font-bold text-black dark:text-white transition-colors hover:text-grey60 hover:dark:text-grey40"
                             onClick={() => navigate("/settings")}
                           >
                             Settings
