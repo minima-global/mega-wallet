@@ -24,9 +24,9 @@ const Settings = () => {
 
         localStorage.setItem(
             "darkMode",
-            (!!document.body.classList.contains("dark")).toString(),
+            (!!document.documentElement.classList.contains("dark")).toString(),
         );
-        setIsDarkMode(document.body.classList.contains("dark"));
+        setIsDarkMode(document.documentElement.classList.contains("dark"));
     };
 
     return (

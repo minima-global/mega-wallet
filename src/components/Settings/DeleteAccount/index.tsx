@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { appContext } from "../../../AppContext";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import VisibleIcon from "../../../components/UI/Icons/VisibleIcon";
 import HideIcon from "../../../components/UI/Icons/HideIcon";
 import InfoBox from "../../../components/UI/InfoBox";
@@ -24,7 +24,6 @@ const SettingsDeleteAccount: React.FC<{ display: boolean; dismiss: () => void }>
     _promptLogoutDialog,
   } = useContext(appContext);
   const navigate = useNavigate();
-  const [params] = useSearchParams();
   const [visibility, toggleVisiblity] = useState(false);
   const [copied, setCopied] = useState(false);
   const [copiedKeyUses, setCopiedKeyUses] = useState(false);
@@ -75,18 +74,6 @@ const SettingsDeleteAccount: React.FC<{ display: boolean; dismiss: () => void }>
     }
   }, [copiedKeyUses]);
 
-  useEffect(() => {
-    const secret = params.get("secret");
-    if (secret) {
-      toggleVisiblity(true);
-      // Automatically populate the secret into the loginForm._seedPhrase
-      setLoginForm((prevData) => ({
-        ...prevData,
-        _seedPhrase: secret,
-      }));
-    }
-  }, [params, setLoginForm]);
-
   const handleDeleteAccount = () => {
     localStorage.removeItem("first-time");
     localStorage.removeItem("getBalanceLastCalled");
@@ -94,6 +81,7 @@ const SettingsDeleteAccount: React.FC<{ display: boolean; dismiss: () => void }>
     localStorage.removeItem("darkMode");
     localStorage.removeItem("dark-mode-pub");
     localStorage.removeItem("unknown-app-uid");
+    setLoginForm({ _seedPhrase: "", _rememberMe: false, _secret: "" });
     clearCookie("rememberme");
     clearCookie("secretsauce");
     resetAccount();
