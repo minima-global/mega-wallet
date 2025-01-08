@@ -21,11 +21,11 @@ const Welcome = () => {
   }
 
   return (
-    <div className="w-full flex items-center justify-center pb-24 lg:pb-14">
-      <div className="w-full lg:w-[600px] m-4 lg:mx-auto bg-grey10 dark:bg-mediumDarkContrast p-4 lg:p-6 rounded-lg text-black dark:text-white">
+    <div className="w-full flex items-center justify-center pb-24 lg:pb-6">
+      <div className="w-full md:max-w-[600px] m-4 lg:mx-auto bg-grey10 dark:bg-mediumDarkContrast p-4 lg:p-6 rounded-lg text-black dark:text-white">
         <div className="flex flex-col">
           <HelpContent />
-          <div className="mt-auto">
+          <div className="mt-2">
             <div className="mt-1 flex flex-col gap-4">
               <button
                 type="button"

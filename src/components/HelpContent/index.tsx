@@ -3,25 +3,7 @@ const HelpContent = () => (
     <h1 className="pt-0.5 text-2xl lg:text-3xl">Minima Public Wallet</h1>
     <div className="w-full h-[2px] bg-grey40 dark:bg-grey my-5 lg:my-5" />
     <div className="flex flex-col gap-4 text-xs lg:text-sm tracking-[0.2px] dark:text-grey40 mb-4">
-      <p className="text-lg lg:text-xl lg:mb-1.5">
-        This is the official Public Wallet provided by Minima Global. It is
-        non-custodial and no private data is stored or recorded by Minima.
-      </p>
-      <p>
-        This wallet allows you to send, receive, and store Minima, custom
-        tokens, and NFTs without needing to run a Minima node.
-      </p>
-      <p className="font-bold">
-        On first use, you will generate a secret key. Keep this key secure, as
-        it will not be shown again after logging out. Losing this key means
-        losing access to your assets.
-      </p>
-      <p>For future access, log in using this same secret key.</p>
-      <p>
-        If you decide to run your own Minima node, simply send your assets to
-        your new node wallet address.
-      </p>
-      <div className="my-2 lg:my-4 mx-auto dark:text-main bg-yellow dark:bg-lightDarkContrast border-l-4 border-main px-5 py-3 rounded-[4px]">
+      <div className="mt-2 mb-2 lg:mb-2 mx-auto dark:text-main bg-yellow dark:bg-lightDarkContrast border-l-4 border-main px-5 py-3 rounded-[4px]">
         <div className="flex items-center justify-center">
           <span className="pr-5 hidden lg:block">
             <svg
@@ -38,14 +20,26 @@ const HelpContent = () => (
             </svg>
           </span>
           <p className="text-xs lg:text-sm">
-            If you prefer not to use the official Public Wallet and are unable
-            to run your own node, you may ask someone running a Minima node on a
-            server to set up a public wallet on your behalf. However, always
-            exercise caution—websites can be compromised or manipulated, so only
-            use wallet providers you know and trust.
+            This Public Wallet is provided by the host of this website. Always exercise caution—websites can be compromised or manipulated, so only use wallet providers you know and trust.
           </p>
         </div>
       </div>
+      <p>
+        Public Wallet is a simple, non-custodial Minima wallet.
+      </p>
+      <p>
+        This wallet allows you to send, receive, and store Minima, custom
+        tokens, and NFTs without needing to run a Minima node.
+      </p>
+      <p className="font-bold">
+        On first use, you will generate a secret key. Keep this key secure, as
+        it will not be shown again after logging out. Losing this key means
+        losing access to your assets.
+      </p>
+      <p>For future access, log in using this same secret key.</p>
+      <p>
+        If you decide to run your own Minima node, simply send your assets to your new node wallet address.
+      </p>
     </div>
   </>
 );

@@ -17,6 +17,7 @@ import HelpIcon from "../../components/UI/Icons/HelpIcon";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import InfoBox from "../../components/UI/InfoBox";
 import DoNotShareModal from "../../components/DoNotShareModal";
+import { removeLocalStorage, setLocalStorage } from "../../utils/localStorage";
 
 const Login = () => {
   const {
@@ -128,19 +129,20 @@ const Login = () => {
     setLoading(true);
 
     const isRememberMeChecked = loginForm._rememberMe;
-    const secretSauce = loginForm._seedPhrase.trim();
+    const secretKey = loginForm._seedPhrase.trim();
 
     if (isRememberMeChecked) {
       utils.setCookie("rememberme", "true", 7);
-      utils.setCookie("secretsauce", secretSauce, 7);
+      setLocalStorage("sk", secretKey);
     }
 
     if (!isRememberMeChecked) {
       utils.setCookie("rememberme", "", 365);
-      utils.setCookie("secretsauce", "", 365);
+      removeLocalStorage("sk");
     }
+
     // generate a key, set our balance, navigate to dashboard
-    createAccount(secretSauce);
+    createAccount(secretKey);
 
     handleNavigation("balance");
     promptLogin();
@@ -193,7 +195,7 @@ const Login = () => {
   return (
     <div className="w-full flex items-center justify-center pb-24 lg:pb-14">
       <DoNotShareModal display={promptDoNotShare} dismiss={() => setPromptDoNotShare(false)} />
-      <div className="w-full lg:w-[600px] m-4 lg:mx-auto bg-grey10 dark:bg-mediumDarkContrast p-4 lg:p-6 rounded-lg text-black dark:text-white">
+      <div className="w-full md:w-[600px] m-4 lg:mx-auto bg-grey10 dark:bg-mediumDarkContrast p-4 lg:p-6 rounded-lg text-black dark:text-white">
         <h1 className="pt-0.5 text-2xl lg:text-3xl mb-3">
           Minima Public Wallet
         </h1>

@@ -1,5 +1,14 @@
 # Changelog
 
+##### [2.2.0] - 08 January 25
+
+- Deprecated cookie storage for sk
+- Minor UI tweaks
+
+##### [2.1.2] - 13 December 24
+
+- Minor text changes
+
 ##### [2.1.1] - 02 December 24
 
 - Minor UI tweaks

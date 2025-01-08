@@ -13,6 +13,7 @@ import {
 } from "../../../styles";
 import Backdrop from "../../../components/Backdrop";
 import clearCookie from "../../../utils/clearCookie";
+import { removeLocalStorage } from "../../../utils/localStorage";
 
 const SettingsDeleteAccount: React.FC<{ display: boolean; dismiss: () => void }> = ({ display, dismiss }) => {
   const {
@@ -84,6 +85,7 @@ const SettingsDeleteAccount: React.FC<{ display: boolean; dismiss: () => void }>
     setLoginForm({ _seedPhrase: "", _rememberMe: false, _secret: "" });
     clearCookie("rememberme");
     clearCookie("secretsauce");
+    removeLocalStorage("sk");
     resetAccount();
     navigate("/info");
   };

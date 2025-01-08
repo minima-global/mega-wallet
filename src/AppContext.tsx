@@ -4,6 +4,9 @@ import * as utils from "./utils";
 import { sql } from "./utils/SQL";
 
 import { toast } from "react-toastify";
+import { getLocalStorage } from "./utils/localStorage";
+import clearCookie from "./utils/clearCookie";
+import { setLocalStorage } from "./utils/localStorage";
 
 export const appContext = createContext({} as any);
 
@@ -161,24 +164,6 @@ const AppProvider = ({ children }: IProps) => {
             }
           });
 
-          const rem = utils.getCookie("rememberme");
-
-          if (rem === "true") {
-            setLoginForm((prevState) => ({
-              ...prevState,
-              _rememberMe: true,
-            })); // this'll keep the state of the checkbox
-
-            const secretSauce: any = utils.getCookie("secretsauce");
-
-            setLoginForm((prevState) => ({
-              ...prevState,
-              _seedPhrase: secretSauce,
-            })); // this'll keep the state of the checkbox
-
-            createAccount(secretSauce);
-          }
-
           if (msg.event === "inited") {
             (window as any).MDS.cmd("status", (res) => {
               setTopBlock(res.response.chain.block);
@@ -232,16 +217,25 @@ const AppProvider = ({ children }: IProps) => {
       setLoginForm((prevState) => ({
         ...prevState,
         _rememberMe: true,
-      })); // this'll keep the state of the checkbox
+      }));
 
       const secretSauce: any = utils.getCookie("secretsauce");
 
-      setLoginForm((prevState) => ({
-        ...prevState,
-        _seedPhrase: secretSauce,
-      })); // this'll keep the state of the checkbox
+      if (secretSauce) {
+        setLocalStorage("sk", secretSauce);
+        clearCookie("secretsauce");
+      }
 
-      createAccount(secretSauce);
+      const secretKey: any = getLocalStorage("sk");
+
+      if (secretKey) {
+        setLoginForm((prevState) => ({
+          ...prevState,
+          _seedPhrase: secretKey,
+        }));
+  
+        createAccount(secretKey);
+      }
     }
   }, []);
 
