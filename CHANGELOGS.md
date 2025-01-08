@@ -2,7 +2,7 @@
 
 ##### [2.2.0] - 08 January 25
 
-- Deprecated cookie storage for sk
+- Deprecated the cookie for storing the sk
 - Minor UI tweaks
 
 ##### [2.1.2] - 13 December 24
