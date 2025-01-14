@@ -85,7 +85,7 @@ const Send = () => {
 
             // const keyuses = utils.randomInteger(1, 150000);
 
-            const rawTransaction = `sendfrom fromaddress:${_address} address:${address} amount:${amount} tokenid:${token.tokenid} script:"${_script}" privatekey:${_privateKey} keyuses:${keyuses}`;
+            const rawTransaction = `sendfrom fromaddress:${_address} address:${address} amount:${amount} tokenid:${token.tokenid} script:"${_script}" privatekey:${_privateKey} keyuses:${keyuses} mine:false`;
 
             (window as any).MDS.cmd(rawTransaction, function (respo) {
               if (!respo.status) {
