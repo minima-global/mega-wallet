@@ -1,5 +1,9 @@
 # Changelog
 
+##### [2.3.0] - 14 January 25
+
+- Sendfrom now uses mine:false
+
 ##### [2.2.0] - 08 January 25
 
 - Deprecated the cookie for storing the sk
