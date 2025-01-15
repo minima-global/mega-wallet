@@ -1,5 +1,4 @@
-import { PropsWithChildren, useContext } from "react";
-import { appContext } from "../../../AppContext";
+import { PropsWithChildren } from "react";
 
 const Link = ({
   rel,
@@ -110,9 +109,9 @@ const FOOTER_NAV = [
 ];
 
 const Footer: React.FC = () => {
-  const { _isPublic } = useContext(appContext);
+  const isHostedByMinimaGlobal = window.location.hostname.includes("minima.global");
 
-  if (!_isPublic) return null;
+  if (!isHostedByMinimaGlobal) return null;
 
   return (
     <footer className="w-full mt-20 lg:mb-20">

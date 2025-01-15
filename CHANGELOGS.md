@@ -1,5 +1,9 @@
 # Changelog
 
+##### [2.4.0] - 15 January 25
+
+- Only show footer if hosted by Minima Global
+
 ##### [2.3.0] - 14 January 25
 
 - Sendfrom now uses mine:false
