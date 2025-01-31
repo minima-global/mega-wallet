@@ -1,5 +1,9 @@
 # Changelog
 
+##### [2.4.1] - 31 January 25
+
+- Updated footer to show current year
+
 ##### [2.4.0] - 15 January 25
 
 - Only show footer if hosted by Minima Global
