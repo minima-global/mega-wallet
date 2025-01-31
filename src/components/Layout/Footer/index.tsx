@@ -109,6 +109,7 @@ const FOOTER_NAV = [
 ];
 
 const Footer: React.FC = () => {
+  const year = new Date().getFullYear();
   const isHostedByMinimaGlobal = window.location.hostname.includes("minima.global");
 
   if (!isHostedByMinimaGlobal) return null;
@@ -126,7 +127,7 @@ const Footer: React.FC = () => {
                 The Minima Public wallet enables you to send, receive, and store Minima, custom tokens, and NFTs without running a Minima node.
               </p>
               <p className="mb-4 text-xs text-grey">
-                All rights reserve Minima AG &copy;2024.
+                All rights reserved Minima AG &copy;{year}.
               </p>
               <div className="flex gap-2 text-xs text-grey lg:flex-col xl:flex-row">
                 <Link
