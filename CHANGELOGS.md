@@ -1,5 +1,11 @@
 # Changelog
 
+##### [2.5.0] - 05 February 25
+
+- Added a splash screen to the web wallet
+- Renabled public wallet to web wallet
+- Added "add to home screen" to the web wallet
+
 ##### [2.4.1] - 31 January 25
 
 - Updated footer to show the current year (dynamically instead of hardcoded)
@@ -96,7 +102,6 @@
 - Dark/Light mode switch
 - Copy changes
 - Design tweaks
-
 
 ##### [1.5.0] - 18 September 24
 

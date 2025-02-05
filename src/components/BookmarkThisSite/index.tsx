@@ -3,6 +3,7 @@ import { useState } from "react";
 const BookmarkThisSite = () => {
     const [enabled, setEnabled] = useState(false);
     const ios = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const android = /Android/.test(navigator.userAgent);
 
     const toggleModal = () => {
         setEnabled(!enabled);
@@ -33,6 +34,10 @@ const BookmarkThisSite = () => {
                 From your browser menu, select <strong>Add to home screen</strong>.
             </div>
         )
+    }
+
+    if (!android && !ios) {
+        return null;
     }
 
     return (

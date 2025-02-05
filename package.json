@@ -1,7 +1,7 @@
 {
   "name": "publicWallet",
   "private": true,
-  "version": "2.4.1",
+  "version": "2.5.0",
   "type": "module",
   "description": "This wallet enables you to send, receive, and store Minima, custom tokens, and NFTs without running a Minima node.",
   "scripts": {
