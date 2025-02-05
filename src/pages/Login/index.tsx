@@ -195,7 +195,7 @@ const Login = () => {
   return (
     <div className="w-full flex items-center justify-center pb-24 lg:pb-14">
       <DoNotShareModal display={promptDoNotShare} dismiss={() => setPromptDoNotShare(false)} />
-      <div className="w-full md:w-[600px] m-4 lg:mx-auto bg-grey10 dark:bg-mediumDarkContrast p-4 lg:p-6 rounded-lg text-black dark:text-white">
+      <div className="w-full md:w-[600px] m-4 lg:-mt-4 lg:mx-auto bg-grey10 dark:bg-mediumDarkContrast p-4 lg:p-6 rounded-lg text-black dark:text-white">
         <h1 className="pt-0.5 text-2xl lg:text-3xl mb-3">
           Minima Web Wallet
         </h1>

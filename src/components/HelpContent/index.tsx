@@ -1,6 +1,6 @@
-const HelpContent = () => (
+const HelpContent = ({ helpPage = true }) => (
   <>
-    <h1 className="pt-0.5 text-2xl lg:text-3xl">Minima Public Wallet</h1>
+    <h1 className="pt-0.5 text-2xl lg:text-3xl">Minima Web Wallet</h1>
     <div className="w-full h-[2px] bg-grey40 dark:bg-grey my-5 lg:my-5" />
     <div className="flex flex-col gap-4 text-xs lg:text-sm tracking-[0.2px] dark:text-grey40 mb-4">
       <div className="mt-2 mb-2 lg:mb-2 mx-auto dark:text-main bg-yellow dark:bg-lightDarkContrast border-l-4 border-main px-5 py-3 rounded-[4px]">
@@ -24,13 +24,17 @@ const HelpContent = () => (
           </p>
         </div>
       </div>
-      <p>
-        Web Wallet is a simple, non-custodial Minima wallet.
-      </p>
-      <p>
-        This wallet allows you to send, receive, and store Minima, custom
-        tokens, and NFTs without needing to run a Minima node.
-      </p>
+      {helpPage && (
+        <>
+          <p>
+            Web Wallet is a simple, non-custodial Minima wallet.
+          </p>
+          <p>
+            This wallet allows you to send, receive, and store Minima, custom
+            tokens, and NFTs without needing to run a Minima node.
+          </p>
+        </>
+      )}
       <p className="font-bold">
         On first use, you will generate a secret key. Keep this key secure, as
         it will not be shown again after logging out. Losing this key means

@@ -30,7 +30,7 @@ const Settings = () => {
     };
 
     return (
-        <div className="mt-0 pro-max:mt-[0px] lg:mt-[28px] xl:max-w-[600px] w-full p-4 px-5 lg:px-4 rounded-lg mx-auto">
+        <div className="mt-0 pro-max:mt-[0px] lg:mt-[28px] max-w-[600px] w-full p-4 px-5 lg:px-4 rounded-lg mx-auto">
             <SettingsHelp display={displayHelp} dismiss={() => setDisplayHelp(false)} />
             <SettingsDeleteAccount display={displayDeleteAccount} dismiss={() => setDisplayDeleteAccount(false)} />
             <div className="container mx-auto">
