@@ -2,9 +2,9 @@
 
 ##### [2.5.0] - 05 February 25
 
-- Added a splash screen to the web wallet
-- Renabled public wallet to web wallet
-- Added "add to home screen" to the web wallet
+- Added a splash screen to the web wallet to introduce the wallet
+- Re-named the public wallet to web wallet
+- Added "add to home screen" button for mobile devices
 
 ##### [2.4.1] - 31 January 25
 
