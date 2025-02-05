@@ -61,7 +61,7 @@ const FOOTER_NAV = [
         key: "terms_and_conditions",
         title: "Terms & conditions",
         external: true,
-        href: "https://docs.minima.global/docs/core/minidapp-terms#section-d-minidapp-for-transacting-public-mega-wallet",
+        href: "https://docs.minima.global/docs/core/minidapp-terms#section-d-minidapp-for-transacting-web-public-wallet",
       },
       {
         key: "privacy_policy",
@@ -142,7 +142,7 @@ const Footer: React.FC = () => {
                 <Link
                   target="_blank"
                   rel="noreferrer"
-                  href="https://docs.minima.global/docs/core/minidapp-terms#section-d-minidapp-for-transacting-public-mega-wallet"
+                  href="https://docs.minima.global/docs/core/minidapp-terms#section-d-minidapp-for-transacting-web-public-wallet"
                   className="hover:text-black dark:hover:text-white"
                 >
                   Terms and conditions

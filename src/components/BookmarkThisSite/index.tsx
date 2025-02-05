@@ -52,7 +52,7 @@ const BookmarkThisSite = () => {
             </li>
             <>
                 <div className={`z-[2000] fixed bottom-0 left-0 w-full ${enabled ? 'pointer-events-auto' : 'pointer-events-none'}`}>
-                    <div onClick={toggleModal} className={`relative z-10 bg-white dark:bg-contrast1 rounded-t-lg py-4 p-3.5 select-none transform-y-[100px] border-t border-[#111] border-opacity-10 dark:border-opacity-30 cursor-pointer transition-all duration-300 ${enabled ? '' : 'translate-y-[100%]'}`}>
+                    <div onClick={toggleModal} className={`relative z-10 bg-white dark:bg-contrast1 rounded-t-lg py-4 px-3.5 select-none transform-y-[100px] border-t border-[#111] border-opacity-10 dark:border-opacity-30 cursor-pointer transition-all duration-300 ${enabled ? '' : 'translate-y-[100%]'}`}>
                         <div className="grid grid-cols-12 mx-auto">
                             <div className="text-black dark:text-white col-span-11 flex items-center gap-5 pl-1 pr-2">
                                 <div>

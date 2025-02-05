@@ -1,5 +1,11 @@
 # Changelog
 
+##### [2.5.1] - 05 February 25
+
+- Minor text changes
+- Updated terms of condition links
+- Settings is now a button instead of a text link
+
 ##### [2.5.0] - 05 February 25
 
 - Added a splash screen to the web wallet to introduce the wallet
