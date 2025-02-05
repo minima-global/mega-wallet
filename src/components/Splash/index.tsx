@@ -31,11 +31,11 @@ const Splash = ({ display, dismiss }: SplashProps) => {
 
     return (
         <div className={`fixed top-0 left-0 w-full h-full bg-black z-[100] flex items-center justify-center ${display ? 'opacity-100' : 'opacity-0 pointer-events-none transition-opacity duration-[200ms]'}`}>
-            <div className="space-y-8 lg:space-y-10 w-full max-w-[540px] px-10 text-center">
+            <div className="space-y-8 lg:space-y-10 w-full max-w-[540px] px-10 text-center mb-4">
                 <div className="text-[22px] md:text-[30px] leading-[32px] md:leading-[44px] text-center">
                     <div className={`transition-opacity duration-500 ${step === 1 ? 'opacity-100 block' : 'opacity-0 hidden'}`}>
                         <h3 className="text-black dark:text-white font-bold md:text-[30px]">
-                            Welcome to<span className="block lg:hidden"/> Minima's Web Wallet
+                            Welcome to<span className="block"/> Minima's Web Wallet
                         </h3>
                     </div>
                     <div className={`transition-opacity duration-500 ${step === 2 ? 'opacity-100 block' : 'opacity-0 hidden'}`}>
