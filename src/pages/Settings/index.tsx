@@ -129,7 +129,7 @@ const Settings = () => {
                         <div className="text-sm">
                             This will remove all wallet related data from your device. Your
                             accounts exist on the Minima blockchain and are not related to the
-                            Public Wallet. You can always recover your accounts using your
+                            Web Wallet. You can always recover your accounts using your
                             Secret Key.
                         </div>
                     </div>

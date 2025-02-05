@@ -20,12 +20,12 @@ const HelpContent = () => (
             </svg>
           </span>
           <p className="text-xs lg:text-sm">
-            This Public Wallet is provided by the host of this website. Always exercise caution—websites can be compromised or manipulated, so only use wallet providers you know and trust.
+            This Web Wallet is provided by the host of this website. Always exercise caution—websites can be compromised or manipulated, so only use wallet providers you know and trust.
           </p>
         </div>
       </div>
       <p>
-        Public Wallet is a simple, non-custodial Minima wallet.
+        Web Wallet is a simple, non-custodial Minima wallet.
       </p>
       <p>
         This wallet allows you to send, receive, and store Minima, custom

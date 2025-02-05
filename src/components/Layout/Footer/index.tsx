@@ -121,10 +121,10 @@ const Footer: React.FC = () => {
           <div className="relative grid grid-cols-12">
             <div className="relative col-span-12 lg:col-span-5 xl:col-span-3">
               <h5 className="mb-3 mt-1 text-xl font-normal tracking-wider lg:-mt-3 lg:mb-5 xl:text-3xl">
-                Minima Public Wallet
+                Minima Web Wallet
               </h5>
               <p className="mb-4 max-w-[440px] text-xs leading-5 tracking-wide dark:text-grey20 lg:text-sm xl:max-w-full">
-                The Minima Public wallet enables you to send, receive, and store Minima, custom tokens, and NFTs without running a Minima node.
+                The Minima Web wallet enables you to send, receive, and store Minima, custom tokens, and NFTs without running a Minima node.
               </p>
               <p className="mb-4 text-xs text-grey">
                 All rights reserved Minima AG &copy;{year}.

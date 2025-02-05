@@ -17,7 +17,7 @@ const TermsAndConditions = () => {
       <div className="w-full lg:w-[600px] m-4 lg:mx-auto bg-grey10 dark:bg-mediumDarkContrast p-4 lg:p-6 rounded-lg text-black dark:text-white">
         <div className="flex flex-col">
           <h1 className="pt-0.5 text-2xl lg:text-3xl">
-            Public Wallet Disclaimer
+            Web Wallet Disclaimer
           </h1>
           <div className="w-full h-[2px] bg-grey40 dark:bg-grey my-5 lg:my-5" />
           <div className="flex flex-col gap-4 text-xs lg:text-sm tracking-[0.2px] dark:text-grey40 mb-4">

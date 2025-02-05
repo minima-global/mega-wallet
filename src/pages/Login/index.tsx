@@ -180,7 +180,7 @@ const Login = () => {
                 />
               </svg>
               <h1 className="text-2xl mb-4">
-                Minima Public Wallet is unavailable!
+                Minima Web Wallet is unavailable!
               </h1>
               <p className="text-sm mt-1">
                 A <code>-megammr</code> node is required to use this Wallet.
@@ -197,7 +197,7 @@ const Login = () => {
       <DoNotShareModal display={promptDoNotShare} dismiss={() => setPromptDoNotShare(false)} />
       <div className="w-full md:w-[600px] m-4 lg:mx-auto bg-grey10 dark:bg-mediumDarkContrast p-4 lg:p-6 rounded-lg text-black dark:text-white">
         <h1 className="pt-0.5 text-2xl lg:text-3xl mb-3">
-          Minima Public Wallet
+          Minima Web Wallet
         </h1>
         <p className="block lg:flex text-sm dark:text-grey40 gap-2">
           Login with your secret key or{" "}
