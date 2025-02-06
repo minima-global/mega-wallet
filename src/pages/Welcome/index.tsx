@@ -42,7 +42,7 @@ const Welcome = () => {
                 Continue
               </button>
               <a
-                href="https://docs.minima.global/docs/user-guides/public-wallet"
+                href="https://docs.minima.global/docs/user-guides/web-wallet"
                 target="_blank"
                 rel="noreferrer"
               >
