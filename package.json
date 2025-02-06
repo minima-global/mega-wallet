@@ -1,7 +1,7 @@
 {
-  "name": "publicWallet",
+  "name": "webWallet",
   "private": true,
-  "version": "2.5.2-megawallet",
+  "version": "2.5.2",
   "type": "module",
   "description": "This wallet enables you to send, receive, and store Minima, custom tokens, and NFTs without running a Minima node.",
   "scripts": {
