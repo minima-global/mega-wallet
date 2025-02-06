@@ -2,7 +2,7 @@
 
 ##### [2.5.2] - 06 February 25
 
-- Show 'Add to home screen' button on mobile device even when not on dashboard or settings page
+- The 'Add to home screen' button now appears on all pages
 - Minor text changes
 
 ##### [2.5.1] - 05 February 25
